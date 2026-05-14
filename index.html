@@ -1,762 +1,840 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FOMO-дайджест — 14 мая 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #F5F2EC;
-    --ink: #111010;
-    --muted: #6B6760;
-    --accent-1: #C8441A;
-    --accent-2: #2D5A8E;
-    --accent-3: #4A8C5C;
-    --accent-4: #8B3A7E;
-    --rule: #D8D4CC;
-    --card-bg: #EDEAE3;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FOMO-дайджест — 15 мая 2026</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fbf8f2;
+      --ink: #1b1d1f;
+      --muted: #5f655f;
+      --line: #d6d0c5;
+      --accent: #b14d28;
+      --accent-2: #2f6b62;
+      --accent-3: #314f7c;
+      --shadow: rgba(27, 29, 31, 0.08);
+      --max: 1280px;
+    }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
+    html {
+      scroll-behavior: smooth;
+      background: linear-gradient(180deg, #e9e3d8 0%, var(--bg) 22%, #efe9de 100%);
+    }
 
-  .masthead {
-    border-bottom: 2px solid var(--ink);
-    padding: 2rem 0 1.5rem;
-    margin: 0 2rem;
-  }
-  .masthead-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .masthead-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .masthead-logo span { color: var(--accent-1); }
-  .masthead-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    text-align: right;
-    line-height: 1.6;
-  }
-  .masthead-tagline {
-    width: 100%;
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--rule);
-    margin-top: 0.8rem;
-  }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+      line-height: 1.55;
+      background:
+        radial-gradient(circle at top left, rgba(177, 77, 40, 0.07), transparent 28%),
+        radial-gradient(circle at top right, rgba(47, 107, 98, 0.08), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+    }
 
-  .deck {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 2rem;
-  }
-  .deck-headline {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-    line-height: 1.25;
-    font-weight: 400;
-    max-width: 640px;
-    margin-bottom: 1.2rem;
-  }
-  .deck-headline em { color: var(--accent-1); font-style: italic; }
+    a {
+      color: inherit;
+      text-decoration-color: rgba(177, 77, 40, 0.45);
+      text-underline-offset: 0.18em;
+    }
 
-  .toc-strip {
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    padding: 0.9rem 0;
-    margin-bottom: 2.5rem;
-  }
-  .toc-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2rem 0;
-    line-height: 1.9;
-  }
-  .toc-inner a {
-    color: var(--ink);
-    text-decoration: none;
-    margin-right: 0.5rem;
-  }
-  .toc-inner a:hover { color: var(--accent-1); }
-  .toc-label { color: var(--muted); margin-right: 0.5rem; }
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
 
-  .section-header {
-    max-width: 900px;
-    margin: 3rem auto 0;
-    padding: 0.6rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border-top: 2px solid var(--ink);
-  }
-  .section-header h2 {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-  }
-  .section-header .section-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.5rem;
-    line-height: 1;
-    color: var(--rule);
-    margin-left: auto;
-  }
+    .masthead {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid rgba(27, 29, 31, 0.08);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.46)),
+        linear-gradient(120deg, rgba(177, 77, 40, 0.08), rgba(49, 79, 124, 0.08));
+      box-shadow: 0 18px 60px var(--shadow);
+    }
 
-  .article {
-    max-width: 900px;
-    margin: 0 auto 3rem;
-    padding: 0 2rem;
-  }
-  .article-inner {
-    display: grid;
-    grid-template-columns: 1fr 200px;
-    gap: 2rem;
-    padding: 2rem 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .article-inner.reverse { grid-template-columns: 200px 1fr; }
-  .article-inner.reverse .article-visual { order: -1; }
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 999px;
+      pointer-events: none;
+    }
 
-  .article-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.7rem;
-    flex-wrap: wrap;
-  }
-  .article-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 0.15em 0.45em;
-    letter-spacing: 0.05em;
-  }
-  .source-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    border: 1px solid var(--rule);
-    padding: 0.15em 0.5em;
-    color: var(--muted);
-  }
-  .article h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 0.7rem;
-    letter-spacing: -0.01em;
-  }
-  .article-thesis {
-    font-style: italic;
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    line-height: 1.55;
-  }
-  .article-summary {
-    font-size: 0.92rem;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    color: #2a2926;
-  }
-  .article-summary p + p { margin-top: 0.6rem; }
-  .takeaway {
-    background: var(--card-bg);
-    border-left: 3px solid var(--accent-1);
-    padding: 0.8rem 1rem;
-    font-size: 0.87rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  .takeaway strong {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent-1);
-    display: block;
-    margin-bottom: 0.3rem;
-  }
-  .article-link {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent-2);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-  .article-link:hover { color: var(--accent-1); }
-  .article-link::after { content: ' →'; }
+    .masthead::before {
+      width: 220px;
+      height: 220px;
+      right: -64px;
+      top: -64px;
+      border: 1px solid rgba(47, 107, 98, 0.22);
+    }
 
-  .article-visual {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 0.2rem;
-  }
-  .article-visual svg {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-  }
+    .masthead::after {
+      width: 140px;
+      height: 140px;
+      left: -36px;
+      bottom: -52px;
+      background: linear-gradient(135deg, rgba(177, 77, 40, 0.12), rgba(49, 79, 124, 0.02));
+    }
 
-  footer {
-    border-top: 2px solid var(--ink);
-    margin: 3rem 2rem 0;
-    padding: 2rem 0 3rem;
-  }
-  .footer-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-  footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-  footer strong {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--ink);
-    display: block;
-    margin-bottom: 0.4rem;
-  }
+    .topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
 
-  @media (max-width: 640px) {
-    .article-inner,
-    .article-inner.reverse { grid-template-columns: 1fr; }
-    .article-inner.reverse .article-visual { order: 0; }
-    .article-visual { justify-content: flex-start; }
-    .article-visual svg { max-width: 140px; }
-    .masthead { margin: 0 1rem; }
-    .deck, .toc-inner, .article, .section-header, .footer-inner { padding-left: 1rem; padding-right: 1rem; }
-    footer { margin: 2rem 1rem 0; }
-  }
-</style>
+    .topline span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topline span::before {
+      content: "";
+      width: 20px;
+      height: 1px;
+      background: rgba(27, 29, 31, 0.22);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-weight: 700;
+      line-height: 1.02;
+    }
+
+    h1 {
+      max-width: 10ch;
+      font-size: clamp(48px, 7vw, 110px);
+      letter-spacing: 0;
+    }
+
+    .deck {
+      max-width: 820px;
+      margin-top: 18px;
+      font-size: clamp(18px, 2.3vw, 25px);
+      line-height: 1.3;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.55fr 0.95fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .hero-note,
+    .hero-stats,
+    .method,
+    .story,
+    .footer-card {
+      background: rgba(251, 248, 242, 0.8);
+      border: 1px solid rgba(27, 29, 31, 0.08);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-note,
+    .hero-stats,
+    .method,
+    .footer-card {
+      padding: 18px 18px 16px;
+    }
+
+    .hero-note p,
+    .hero-stats p,
+    .method p,
+    .footer-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .hero-stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px 14px;
+      align-items: baseline;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(27, 29, 31, 0.08);
+    }
+
+    .metric:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .metric strong {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .method {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .method ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .contents {
+      margin: 30px 0 22px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .contents a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid rgba(27, 29, 31, 0.08);
+      background: rgba(255,255,255,0.58);
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .contents a:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.82);
+    }
+
+    .section-title {
+      margin: 38px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(27, 29, 31, 0.22);
+    }
+
+    .stories {
+      display: grid;
+      gap: 18px;
+    }
+
+    .story {
+      padding: 18px;
+      box-shadow: 0 12px 36px rgba(27, 29, 31, 0.05);
+    }
+
+    .story-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .open-link {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid rgba(27, 29, 31, 0.1);
+      font-size: 12px;
+      text-decoration: none;
+      white-space: nowrap;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .story h2 {
+      margin-bottom: 14px;
+      font-size: clamp(28px, 3vw, 42px);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .visual {
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(27, 29, 31, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.65)),
+        linear-gradient(135deg, rgba(177, 77, 40, 0.05), rgba(47, 107, 98, 0.05));
+      padding: 10px;
+    }
+
+    .visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .story p {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+
+    .why {
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
+      font-weight: 600;
+    }
+
+    .takeaway {
+      margin-bottom: 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(27, 29, 31, 0.08);
+    }
+
+    .takeaway strong {
+      color: var(--accent-2);
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 32px;
+    }
+
+    .footer-card h3 {
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .footer-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .small {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .contents {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .story-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visual {
+        max-width: 240px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page { padding: 16px 14px 40px; }
+      .masthead { padding: 18px; }
+      .contents { grid-template-columns: 1fr; }
+      .story { padding: 14px; }
+      .story-head {
+        flex-direction: column;
+        align-items: start;
+      }
+      .open-link { white-space: normal; }
+      .story p { font-size: 15px; }
+    }
+  </style>
 </head>
 <body>
-
-<header>
-  <div class="masthead">
-    <div class="masthead-inner">
-      <div class="masthead-logo">FOMO<span>·</span>дайджест</div>
-      <div class="masthead-meta">
-        14 мая 2026<br>
-        Выпуск № 2026-20<br>
-        10 материалов
+  <div class="page">
+    <header class="masthead">
+      <div class="topline">
+        <span>FOMO-дайджест</span>
+        <span>Выпуск недели 8–14 мая 2026</span>
+        <span>Собрано 15 мая 2026</span>
       </div>
-      <p class="masthead-tagline">Для ИИ- и креативных специалистов · Еженедельная редакционная подборка</p>
-    </div>
+      <h1>Сигналы, которые не стоит пропускать</h1>
+      <p class="deck">
+        Эта неделя снова про смещение интерфейса: AI все заметнее переезжает из режима «ответь мне» в режим
+        «работай рядом со мной» или «делай вместо меня». Параллельно креативная индустрия уже не спорит только
+        о самом факте AI, а пытается отделить полезное ускорение от унылой подмены вкуса, ремесла и смысла.
+      </p>
+
+      <div class="hero-grid">
+        <section class="hero-note">
+          <div class="eyebrow">Редакторская позиция</div>
+          <p>
+            В этот номер вошли 12 материалов, а не 15. По части источников окно 8–14 мая 2026 оказалось либо
+            слишком слабым по качеству, либо недостаточно надежным по открытой датировке и контексту. Поэтому
+            выпуск получился короче максимума, но плотнее по сигналу.
+          </p>
+        </section>
+
+        <section class="hero-stats">
+          <div class="metric">
+            <strong>12</strong>
+            <p>материалов с подтвержденной датой и внятной практической ценностью</p>
+          </div>
+          <div class="metric">
+            <strong>6</strong>
+            <p>источников реально дали сильные кандидаты в нужном окне</p>
+          </div>
+          <div class="metric">
+            <strong>2</strong>
+            <p>главные линии недели: режимы работы с агентами и переоценка человеческого сигнала</p>
+          </div>
+        </section>
+      </div>
+    </header>
+
+    <section class="method">
+      <div class="eyebrow">Как читать номер</div>
+      <p>
+        Я собрал только материалы из заданного списка источников. Для каждого оставил не просто пересказ, а
+        короткий редакторский вывод: что именно произошло, почему это важно сейчас и что с этим делать дизайнеру,
+        арт-директору, контент-команде, продуктовой команде или AI-native специалисту.
+      </p>
+      <ul>
+        <li>Начните с Every и The Rundown, если вам важны свежие рабочие паттерны и продуктовые сигналы.</li>
+        <li>Зайдите в The Batch и Import AI, если нужен макро-контекст и понимание, куда едет инфраструктура.</li>
+        <li>Не пропускайте Creative Boom и Jeff Bullas: там лучше всего видно, как меняется ценность вкуса и исполнения.</li>
+      </ul>
+    </section>
+
+    <nav class="contents" aria-label="Содержание">
+      <a href="#s1">01. AI work splits in two</a>
+      <a href="#s2">02. The Batch: video, chips, jobs</a>
+      <a href="#s3">03. Import AI: optionality</a>
+      <a href="#s4">04. AI co-mathematician</a>
+      <a href="#s5">05. 96% идей умирают</a>
+      <a href="#s6">06. TML interaction models</a>
+      <a href="#s7">07. Fallacy of the 16-hour agent</a>
+      <a href="#s8">08. Creative confidence under AI</a>
+      <a href="#s9">09. Mining context from life</a>
+      <a href="#s10">10. Gemini Intelligence era</a>
+      <a href="#s11">11. Anthropic enterprise rise</a>
+      <a href="#s12">12. Opus 4.7 glow-up</a>
+    </nav>
+
+    <div class="section-title">Материалы недели</div>
+    <main class="stories">
+      <article class="story" id="s1">
+        <div class="story-head">
+          <div class="meta">08 May 2026 · Every / Context Window</div>
+          <a class="open-link" href="https://every.to/context-window/ai-work-is-splitting-in-two">Открыть источник</a>
+        </div>
+        <h2>AI Work Is Splitting in Two</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Схема двух режимов AI-работы">
+              <rect x="6" y="10" width="88" height="80" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <line x1="50" y1="16" x2="50" y2="84" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <circle cx="30" cy="32" r="10" fill="#b14d28" fill-opacity=".15" stroke="#b14d28"/>
+              <circle cx="70" cy="32" r="10" fill="#2f6b62" fill-opacity=".15" stroke="#2f6b62"/>
+              <path d="M20 56 C26 48, 34 48, 40 56" fill="none" stroke="#b14d28" stroke-width="2"/>
+              <path d="M60 56 C66 48, 74 48, 80 56" fill="none" stroke="#2f6b62" stroke-width="2"/>
+              <rect x="18" y="63" width="24" height="10" fill="#b14d28" fill-opacity=".18"/>
+              <rect x="58" y="63" width="24" height="10" fill="#2f6b62" fill-opacity=".18"/>
+              <text x="30" y="78" text-anchor="middle" font-size="6" fill="#1b1d1f">collab</text>
+              <text x="70" y="78" text-anchor="middle" font-size="6" fill="#1b1d1f">delegate</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: статья очень точно формулирует главный интерфейсный сдвиг недели — AI больше не один жанр, а два разных режима труда.</p>
+            <p>Every сводит сигнал из релизов OpenAI и Anthropic к простой и полезной рамке: часть AI-продуктов становится «напарником у стола», а часть — «исполнителем на длинной дистанции». Это не косметическое различие. Один класс инструментов нужен для совместного мышления, быстрых развилок, правок и исследования; второй — для задач, которые вы реально готовы отдать в облако, снабдив целью, бюджетом и ограничениями.</p>
+            <p>Самое ценное здесь не новостная часть, а редакторская ясность. Если не различать collaboration и delegation, легко либо переоценить автономию агентов, либо недооценить ценность моделей, которые хороши именно в совместной работе. Для креативной команды это особенно важно: не всякая задача выигрывает от полного «автопилота», а многие выигрывают от плотного совместного итеративного режима.</p>
+            <p class="takeaway"><strong>Что делать:</strong> разложить свои AI-сценарии на две корзины уже сейчас: где вам нужен соавтор с быстрым пинг-понгом, а где — исполнитель с четким контрактом на результат.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s2">
+        <div class="story-head">
+          <div class="meta">08 May 2026 · DeepLearning.AI / The Batch</div>
+          <a class="open-link" href="https://www.deeplearning.ai/the-batch/issue-352">Открыть источник</a>
+        </div>
+        <h2>Seedance Makes A Splash, Nvidia's AI-Guided Chip Designs, Helping Robots Not Forget</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Четыре блока выпуска">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <rect x="14" y="14" width="30" height="24" fill="#314f7c" fill-opacity=".16" stroke="#314f7c"/>
+              <rect x="56" y="14" width="30" height="24" fill="#b14d28" fill-opacity=".16" stroke="#b14d28"/>
+              <rect x="14" y="50" width="30" height="24" fill="#2f6b62" fill-opacity=".16" stroke="#2f6b62"/>
+              <rect x="56" y="50" width="30" height="24" fill="#1b1d1f" fill-opacity=".08" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <text x="29" y="28" text-anchor="middle" font-size="6">video</text>
+              <text x="71" y="28" text-anchor="middle" font-size="6">chips</text>
+              <text x="29" y="64" text-anchor="middle" font-size="6">robots</text>
+              <text x="71" y="64" text-anchor="middle" font-size="6">jobs</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: это один из немногих еженедельных выпусков, где в одном месте сходятся креативный софт, инфраструктура и трудовой контекст.</p>
+            <p>The Batch удачно собирает четыре линии. Первая — ByteDance выводит Seedance 2.0 в CapCut, то есть сильная видеогенерация получает массовый интерфейс, а не остается лабораторной демонстрацией. Вторая — Nvidia уже использует AI на нескольких этапах проектирования чипов, и это важный сигнал о том, что автоматизация ускоряет не только контент, но и саму вычислительную инфраструктуру. Третья — роботы учатся новым задачам без катастрофического забывания, а значит у embodied AI постепенно появляется более реалистичный путь к многошаговой полезности. Четвертая — Andrew Ng спорит с тезисом о «jobpocalypse» и смещает разговор к неравномерному, но не обязательно обвальному изменению рынка труда.</p>
+            <p>Для креативной аудитории самый сильный фрагмент тут — Seedance в CapCut. Когда новая модель появляется внутри привычного инструмента, это меняет не headline, а повседневный порог использования. Не нужно ждать, когда видео-AI станет идеальным: достаточно того, что он начал встраиваться в уже освоенные продакшн-цепочки.</p>
+            <p class="takeaway"><strong>Что делать:</strong> следить не только за тем, какая модель лучшая на бумаге, но и за тем, в какой продукт она встроилась. Именно встроенность, а не лидерборд, чаще всего меняет реальные workflow.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s3">
+        <div class="story-head">
+          <div class="meta">11 May 2026 · Jack Clark / Import AI</div>
+          <a class="open-link" href="https://jack-clark.net/2026/05/11/import-ai-456-rsi-and-economic-growth-radical-optionality-for-ai-regulation-and-a-neural-computer/">Открыть источник</a>
+        </div>
+        <h2>Import AI 456: RSI, radical optionality и странный, но полезный policy-мышечный тонус</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Развилка регулирования">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <line x1="50" y1="22" x2="50" y2="78" stroke="#1b1d1f" stroke-opacity=".2" stroke-dasharray="3 3"/>
+              <circle cx="50" cy="22" r="8" fill="#314f7c" fill-opacity=".18" stroke="#314f7c"/>
+              <path d="M50 30 L24 56" stroke="#b14d28" stroke-width="2.4"/>
+              <path d="M50 30 L50 56" stroke="#2f6b62" stroke-width="2.4"/>
+              <path d="M50 30 L76 56" stroke="#314f7c" stroke-width="2.4"/>
+              <rect x="16" y="58" width="16" height="10" fill="#b14d28" fill-opacity=".18"/>
+              <rect x="42" y="58" width="16" height="10" fill="#2f6b62" fill-opacity=".18"/>
+              <rect x="68" y="58" width="16" height="10" fill="#314f7c" fill-opacity=".18"/>
+              <text x="24" y="74" text-anchor="middle" font-size="5">freeze</text>
+              <text x="50" y="74" text-anchor="middle" font-size="5">prepare</text>
+              <text x="76" y="74" text-anchor="middle" font-size="5">ignore</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: материал полезен не как очередной алармизм, а как напоминание, что зрелая позиция по AI — это не только «ускорять» или «запрещать».</p>
+            <p>В новом Import AI Jack Clark вытаскивает на поверхность идею radical optionality: вместо преждевременного жесткого регулирования или расслабленного невмешательства государствам стоит заранее строить инструменты, каналы информации и юридические механизмы, которые пригодятся, если AI резко усилит влияние на экономику и общество. Это менее эффектная позиция, чем громкие призывы, но именно поэтому она интересна: она предлагает институциональную готовность вместо позы.</p>
+            <p>Для креативных и AI-команд ценность тут в другом. По мере того как агенты становятся не просто чатами, а реальными исполнителями, всем, кто строит продукты и процессы, придется работать в мире более частых policy-поворотов, compliance-слоев и новых ожиданий к наблюдаемости систем. Тот, кто думает об этом заранее, выигрывает в устойчивости.</p>
+            <p class="takeaway"><strong>Что делать:</strong> закладывать в AI-продукты и внутренние workflows не только скорость, но и будущую управляемость: журналирование, права доступа, понятные точки отключения и объяснимые цепочки действий.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s4">
+        <div class="story-head">
+          <div class="meta">11 May 2026 · The Rundown</div>
+          <a class="open-link" href="https://www.therundown.ai/p/google-deepmind-powerful-ai-co-mathematician">Открыть источник</a>
+        </div>
+        <h2>Google DeepMind’s powerful AI co-mathematician</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Команда агентов для математических задач">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <circle cx="50" cy="22" r="9" fill="#314f7c" fill-opacity=".18" stroke="#314f7c"/>
+              <circle cx="26" cy="54" r="8" fill="#2f6b62" fill-opacity=".18" stroke="#2f6b62"/>
+              <circle cx="50" cy="54" r="8" fill="#b14d28" fill-opacity=".18" stroke="#b14d28"/>
+              <circle cx="74" cy="54" r="8" fill="#1b1d1f" fill-opacity=".08" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <path d="M50 31 L26 46 M50 31 L50 46 M50 31 L74 46" stroke="#1b1d1f" stroke-opacity=".28"/>
+              <rect x="20" y="72" width="60" height="8" fill="#314f7c" fill-opacity=".12" stroke="#314f7c"/>
+              <text x="50" y="78" text-anchor="middle" font-size="5.4">proof / search / review</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: здесь особенно наглядно видно, что агентный подход уже перестал быть чисто кодинговой историей и начинает заходить в исследовательские домены.</p>
+            <p>The Rundown описывает co-mathematician DeepMind как систему, построенную не по принципу «спроси одну модель и жди чудо», а как оркестрацию: координатор, параллельные ветки работы, поиск литературы, код, попытки доказательств и review-циклы. Самый живой момент — история с математиком Марком Лакенби, который увидел сильную стратегию доказательства в ответе, ранее отклоненном внутренними reviewers системы.</p>
+            <p>Это отличный пример того, как AI повышает потолок человеческой работы не за счет полного замещения, а за счет расширения пространства идей. Для креативных профессий урок прямой: качественная ценность AI все чаще лежит не в «готовой финалке», а в том, что система перебирает больше ходов и странных стратегий, чем человек успевает вручную.</p>
+            <p class="takeaway"><strong>Что делать:</strong> строить пайплайны, где AI генерирует больше направлений, чем вы бы придумали сами, а человек остается тем, кто распознает действительно сильный ход среди шума.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s5">
+        <div class="story-head">
+          <div class="meta">11 May 2026 · Jeff Bullas / Jeff’s Jabs</div>
+          <a class="open-link" href="https://www.jeffbullas.com/ideas-die-unseen/">Открыть источник</a>
+        </div>
+        <h2>96% of Ideas Die Before Anyone Sees Them. AI Is Changing That.</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Воронка идей и реализации">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <path d="M18 24 H82 L62 48 H38 Z" fill="#b14d28" fill-opacity=".16" stroke="#b14d28"/>
+              <rect x="44" y="48" width="12" height="20" fill="#2f6b62" fill-opacity=".18" stroke="#2f6b62"/>
+              <rect x="34" y="72" width="32" height="10" fill="#314f7c" fill-opacity=".16" stroke="#314f7c"/>
+              <text x="50" y="19" text-anchor="middle" font-size="6">ideas</text>
+              <text x="50" y="60" text-anchor="middle" font-size="5.5">AI</text>
+              <text x="50" y="79" text-anchor="middle" font-size="5.5">launch</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: текст немного большой по жесту, но у него есть полезное ядро — AI снижает не только стоимость производства, но и барьер между замыслом и первым реальным запуском.</p>
+            <p>Jeff Bullas строит аргумент вокруг старой проблемы: идей всегда было больше, чем ресурсов на исполнение. Его тезис не в том, что AI magically заменит творчество, а в том, что он сжимает три исторических барьера сразу — доступ к экспертизе, время выполнения и стоимость старта. Из-за этого появляется больше шансов довести сырую мысль до MVP, кампании, продукта, курса, бренда или полноценного теста гипотезы.</p>
+            <p>Самый полезный кусок статьи — не оптимистическая риторика, а финальный поворот: когда execution становится дешевле для всех, дорожает не производство как таковое, а содержательная разница. Иными словами, AI не отменяет необходимость вкуса, опыта и личной интонации; наоборот, он делает их еще более дефицитными на фоне общего перепроизводства.</p>
+            <p class="takeaway"><strong>Что делать:</strong> использовать AI не как фабрику объема, а как двигатель быстрой материализации идей. Делать меньше «контента ради контента» и больше прототипов, тестов и форм, где ваша личная оптика действительно различима.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s6">
+        <div class="story-head">
+          <div class="meta">12 May 2026 · The Rundown</div>
+          <a class="open-link" href="https://www.therundown.ai/p/mira-murati-tml-upends-how-humans-work-with-ai">Открыть источник</a>
+        </div>
+        <h2>Mira Murati's TML upends how humans work with AI</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Петля live-взаимодействия">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <circle cx="34" cy="30" r="10" fill="#b14d28" fill-opacity=".16" stroke="#b14d28"/>
+              <circle cx="66" cy="30" r="10" fill="#2f6b62" fill-opacity=".16" stroke="#2f6b62"/>
+              <rect x="32" y="58" width="36" height="12" rx="6" fill="#314f7c" fill-opacity=".16" stroke="#314f7c"/>
+              <path d="M44 35 C47 46, 47 48, 46 58" fill="none" stroke="#1b1d1f" stroke-opacity=".28"/>
+              <path d="M56 35 C53 46, 53 48, 54 58" fill="none" stroke="#1b1d1f" stroke-opacity=".28"/>
+              <path d="M25 30 H17 M83 30 H75" stroke="#1b1d1f" stroke-opacity=".22" stroke-width="1.6"/>
+              <text x="34" y="33" text-anchor="middle" font-size="5.5">you</text>
+              <text x="66" y="33" text-anchor="middle" font-size="5.5">AI</text>
+              <text x="50" y="66" text-anchor="middle" font-size="5">streaming</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: материал показывает альтернативную ветку будущего AI — не агент, который исчезает в фоне, а система, с которой можно работать в живом темпе, перебивая, показывая и направляя на лету.</p>
+            <p>Thinking Machines Lab выводит на сцену interaction models: систему, которая держит поток голоса, видео и текста короткими чанками, не заставляя пользователя каждый раз ждать «хода модели». При этом отдельный фоновый слой может делать более медленные рассуждения и тулзовые действия, пока передний слой остается в разговоре. Это не просто новая техническая деталь, а полноценная ставка на другой пользовательский опыт.</p>
+            <p>Для дизайнеров и креативных директоров этот материал особенно важен, потому что многие визуальные и концептуальные задачи плохо живут в turn-based интерфейсе. Там нужен ритм совместной работы: показать референс, поправить акцент, остановить направление, сменить критерий прямо в процессе. Если эта категория продуктов выстрелит, мы получим не просто «умнее модель», а другой жанр инструмента.</p>
+            <p class="takeaway"><strong>Что делать:</strong> при тестировании новых AI-интерфейсов оценивать не только качество ответа, но и темп взаимодействия. В ряде креативных задач именно ритм совместной работы станет главным преимуществом.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s7">
+        <div class="story-head">
+          <div class="meta">12 May 2026 · Every / Context Window</div>
+          <a class="open-link" href="https://every.to/context-window/the-fallacy-of-the-16-hour-agent">Открыть источник</a>
+        </div>
+        <h2>The Fallacy of the 16-hour Agent</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="График горизонта надежности">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <line x1="20" y1="78" x2="82" y2="78" stroke="#1b1d1f" stroke-opacity=".22"/>
+              <line x1="20" y1="78" x2="20" y2="20" stroke="#1b1d1f" stroke-opacity=".22"/>
+              <path d="M20 70 C34 66, 42 58, 48 46 S62 24, 78 22" fill="none" stroke="#2f6b62" stroke-width="2.6"/>
+              <path d="M20 72 C34 70, 42 68, 48 61 S62 52, 78 46" fill="none" stroke="#b14d28" stroke-width="2.2" stroke-dasharray="4 3"/>
+              <text x="78" y="18" text-anchor="end" font-size="5.5">50%</text>
+              <text x="78" y="42" text-anchor="end" font-size="5.5">80%</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: статья полезно охлаждает хайп вокруг длинных агентных прогонов и возвращает разговор к вопросу, какой уровень надежности вам вообще нужен.</p>
+            <p>Every разбирает свежие метрики METR и показывает, как легко неправильно читать красивую картинку про 16-часовой горизонт. Главная мысль: длительность в этом тесте — это прокси сложности задачи, а не обещание, что агент правда можно безболезненно отпускать в автономку на такой срок. Более того, результат сильно меняется, если смотреть не на 50% успеха, а на 80% надежности.</p>
+            <p>Это очень практичный материал для всех, кто сейчас поддается соблазну продавать себе и команде «полностью автономных» агентов. На реальной работе ценность часто не в максимальном горизонте, а в том, насколько предсказуемо система проходит именно ваш тип задач. И эта разница между вау-графиком и рабочим SLA будет только важнее.</p>
+            <p class="takeaway"><strong>Что делать:</strong> мерить не абстрактный восторг от автономии, а свой фактический longest trusted run: сколько времени и на каких типах задач вы готовы не смотреть агенту через плечо.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s8">
+        <div class="story-head">
+          <div class="meta">12 May 2026 · Creative Boom</div>
+          <a class="open-link" href="https://www.creativeboom.com/tips/how-do-you-stay-confident-when-the-whole-industry-feels-shaky/">Открыть источник</a>
+        </div>
+        <h2>How do you stay confident when the whole industry feels shaky?</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Компас уверенности">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <circle cx="50" cy="50" r="24" fill="none" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <path d="M50 30 L57 50 L50 70 L43 50 Z" fill="#b14d28" fill-opacity=".2" stroke="#b14d28"/>
+              <line x1="50" y1="26" x2="50" y2="20" stroke="#1b1d1f" stroke-opacity=".25"/>
+              <line x1="50" y1="80" x2="50" y2="74" stroke="#1b1d1f" stroke-opacity=".25"/>
+              <line x1="26" y1="50" x2="20" y2="50" stroke="#1b1d1f" stroke-opacity=".25"/>
+              <line x1="80" y1="50" x2="74" y2="50" stroke="#1b1d1f" stroke-opacity=".25"/>
+              <text x="50" y="16" text-anchor="middle" font-size="5.5">taste</text>
+              <text x="84" y="52" text-anchor="end" font-size="5.5">tools</text>
+              <text x="50" y="91" text-anchor="middle" font-size="5.5">craft</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: редкий полезный текст не про новые модели, а про эмоциональную гигиену креативной профессии в момент AI-перегрева.</p>
+            <p>Creative Boom собирает голоса практиков, которые предлагают удивительно трезвую рамку. Да, AI добавил шум, тревогу и давление на бюджеты, но далеко не все проблемы индустрии сводятся к нему. Многие участники разговора говорят о более скучных, но важных вещах: позиционирование, продажи, удержание собственного вкуса, различие между AI для хозяйственных задач и AI как заменой самого ядра практики.</p>
+            <p>Сильнее всего звучит мысль о том, что рынок сейчас одновременно переоценивает автоматизацию и недооценивает человеческий сигнал. Чем больше появляется «удобного» синтетического контента, тем выше потенциальная ценность работ, в которых ощутимы ремесло, культурная чувствительность и личная перспектива. Это не романтическая утешалка, а реальный рыночный контртренд.</p>
+            <p class="takeaway"><strong>Что делать:</strong> отделить AI-полезность от AI-паники. Автоматизировать рутину, но не позволять инфошуму размывать собственный вкус, голос и критерии качества.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s9">
+        <div class="story-head">
+          <div class="meta">13 May 2026 · Every / Context Window</div>
+          <a class="open-link" href="https://every.to/context-window/mining-your-life-for-context">Открыть источник</a>
+        </div>
+        <h2>Mining Your Life for Context</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Граф личного контекста">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <circle cx="28" cy="30" r="8" fill="#b14d28" fill-opacity=".16" stroke="#b14d28"/>
+              <circle cx="70" cy="24" r="8" fill="#314f7c" fill-opacity=".16" stroke="#314f7c"/>
+              <circle cx="54" cy="54" r="10" fill="#2f6b62" fill-opacity=".16" stroke="#2f6b62"/>
+              <circle cx="26" cy="72" r="7" fill="#1b1d1f" fill-opacity=".08" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <circle cx="78" cy="72" r="7" fill="#b14d28" fill-opacity=".12" stroke="#b14d28"/>
+              <path d="M34 34 L48 48 L62 29 M54 64 L32 68 M58 61 L73 69" fill="none" stroke="#1b1d1f" stroke-opacity=".24"/>
+              <text x="54" y="57" text-anchor="middle" font-size="5.2">context</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: это хороший сдвиг от банального «накидай побольше контекста» к более зрелому вопросу — какой именно контекст вообще стоит поднимать из цифрового следа.</p>
+            <p>Every возвращается к идее Claude Code как второго мозга и показывает, что сам по себе доступ к архивам заметок, переписок, встреч и обрывков мыслей мало что дает. Реальная ценность начинается только тогда, когда у человека есть внятная цель: какую линию он пытается довести, какой документ собрать, какое решение уточнить. Материал связывает это с практикой Noah Brier и более общим разговором о том, как AI помогает не просто хранить знания, а выуживать из разбросанной жизни содержательную нить.</p>
+            <p>Для контент-команд, исследователей и стратегов это особенно актуально. Мы уже живем в мире, где сырого контекста много. Дефицит — не доступ, а редакторская воля: что именно извлекать, как структурировать и какие куски прошлого действительно двигают текущую работу вперед.</p>
+            <p class="takeaway"><strong>Что делать:</strong> собирать AI-вспомогательные архивы не по принципу «скормить всё», а по принципу «поднять ровно то, что помогает довести мысль до формы».</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s10">
+        <div class="story-head">
+          <div class="meta">13 May 2026 · The Rundown</div>
+          <a class="open-link" href="https://www.therundown.ai/p/android-enters-its-gemini-intelligence-era">Открыть источник</a>
+        </div>
+        <h2>Android enters its Gemini Intelligence era</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Экосистема устройств с единым интеллектом">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <rect x="18" y="24" width="18" height="30" rx="3" fill="#b14d28" fill-opacity=".16" stroke="#b14d28"/>
+              <rect x="41" y="18" width="40" height="26" rx="3" fill="#314f7c" fill-opacity=".16" stroke="#314f7c"/>
+              <rect x="56" y="54" width="20" height="18" rx="3" fill="#2f6b62" fill-opacity=".16" stroke="#2f6b62"/>
+              <circle cx="40" cy="62" r="10" fill="none" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <path d="M36 62 H44 M40 58 V66" stroke="#1b1d1f" stroke-opacity=".4"/>
+              <path d="M36 39 H41 M59 44 V54 M76 44 V54" stroke="#1b1d1f" stroke-opacity=".24"/>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: это не очередной апдейт ассистента, а сигнал, что Google пытается сделать AI системным слоем устройств, а не приложением поверх них.</p>
+            <p>Rundown описывает Android Show как ранний, но уже показательный поворот: Gemini начинает связывать ноутбуки, телефоны, Chrome, курсорные интерфейсы и on-screen context в одну платформенную историю. Особенно важна сама формулировка Gemini Intelligence — это попытка продавать не функцию, а общий слой поведения, который переходит между устройствами и приложениями.</p>
+            <p>Для креативной индустрии это важно потому, что многие следующие UX-сдвиги придут не из отдельных «AI apps», а из того, как платформа начнет подмешивать интеллект в уже знакомые жесты: курсор, диктовку, браузинг, виджеты, переключение между рабочими поверхностями. И это влияет на дизайн ожиданий пользователей куда сильнее, чем отдельный релиз модели.</p>
+            <p class="takeaway"><strong>Что делать:</strong> смотреть на платформенные апдейты как на изменение поведения интерфейса в целом. Следующие конкурентные преимущества будут рождаться на стыке AI и привычных системных жестов, а не только в новых standalone-сервисах.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s11">
+        <div class="story-head">
+          <div class="meta">14 May 2026 · The Rundown</div>
+          <a class="open-link" href="https://www.therundown.ai/p/the-enterprise-shift-openai-saw-coming">Открыть источник</a>
+        </div>
+        <h2>The enterprise shift OpenAI saw coming</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Смена лидерства в enterprise adoption">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <line x1="20" y1="78" x2="82" y2="78" stroke="#1b1d1f" stroke-opacity=".22"/>
+              <rect x="24" y="48" width="16" height="30" fill="#314f7c" fill-opacity=".18" stroke="#314f7c"/>
+              <rect x="44" y="44" width="16" height="34" fill="#b14d28" fill-opacity=".18" stroke="#b14d28"/>
+              <rect x="64" y="34" width="16" height="44" fill="#2f6b62" fill-opacity=".18" stroke="#2f6b62"/>
+              <text x="32" y="86" text-anchor="middle" font-size="5">2025</text>
+              <text x="52" y="86" text-anchor="middle" font-size="5">pivot</text>
+              <text x="72" y="86" text-anchor="middle" font-size="5">2026</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: история про enterprise adoption — это не «корпоративная скука», а лучший ранний индикатор того, какие AI-привычки перестают быть игрушкой и становятся рабочей нормой.</p>
+            <p>Rundown опирается на новый AI Index от Ramp и показывает, что Anthropic впервые вышел вперед по платному бизнес-использованию среди их выборки. Ключевой фактор — не только бренд Claude, а конкретно Claude Code и выход за пределы инженерных команд в финансы, legal и research. То есть победа здесь не про громкость медийного хайпа, а про то, где AI реально оплачивают из рабочего бюджета.</p>
+            <p>Для креативных лидов это важный сигнал второго порядка. Если enterprise начинает платить за более глубокие agentic workflows, значит рынок все меньше довольствуется «умным чатиком» и все больше хочет системы, которую можно встроить в реальные роли, процессы и права доступа. А это влияет и на то, как будут переупакованы следующие волны креативного софта.</p>
+            <p class="takeaway"><strong>Что делать:</strong> смотреть на корпоративное внедрение как на ранний тест практической ценности. Если модель или инструмент начинают получать бюджет вне инженерии, к ним стоит присмотреться гораздо внимательнее.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="story" id="s12">
+        <div class="story-head">
+          <div class="meta">14 May 2026 · Every / Context Window</div>
+          <a class="open-link" href="https://every.to/context-window/opus-4-7-reels-us-back-in">Открыть источник</a>
+        </div>
+        <h2>Opus 4.7 Reels Us Back In</h2>
+        <div class="story-grid">
+          <div class="visual">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Матрица сравнений моделей">
+              <rect x="8" y="8" width="84" height="84" fill="#fbf8f2" stroke="#1b1d1f" stroke-opacity=".15"/>
+              <rect x="18" y="18" width="28" height="24" fill="#2f6b62" fill-opacity=".18" stroke="#2f6b62"/>
+              <rect x="54" y="18" width="28" height="24" fill="#314f7c" fill-opacity=".18" stroke="#314f7c"/>
+              <rect x="18" y="52" width="28" height="24" fill="#b14d28" fill-opacity=".18" stroke="#b14d28"/>
+              <rect x="54" y="52" width="28" height="24" fill="#1b1d1f" fill-opacity=".08" stroke="#1b1d1f" stroke-opacity=".2"/>
+              <text x="32" y="31" text-anchor="middle" font-size="5.5">speed</text>
+              <text x="68" y="31" text-anchor="middle" font-size="5.5">planning</text>
+              <text x="32" y="65" text-anchor="middle" font-size="5.5">creative</text>
+              <text x="68" y="65" text-anchor="middle" font-size="5.5">security</text>
+            </svg>
+          </div>
+          <div>
+            <p class="why">Почему это важно: это не сухой benchmark, а хороший пример того, как реальная пользовательская репутация модели может заметно меняться уже после первого впечатления.</p>
+            <p>Every фиксирует локальный, но ценный сдвиг: Opus 4.7, который часть команды уже почти списала на фоне Codex и GPT-5.5, вдруг начал выглядеть сильнее в ряде сценариев — особенно там, где важны планирование, параллельность мышления и более «редакторское» чувство текста. Появление fast mode добавляет к этому новую практическую переменную: теперь вопрос уже не только в качестве, но и в том, какой баланс скорости и глубины вы выбираете под конкретный тип работы.</p>
+            <p>На полях статья еще цепляет пару важных сигналов: уязвимость supply chain может находиться не в коде, а в build-системе, а борьба с AI-словечками превращается в отдельный уровень пост-редактуры. В сумме выходит хороший портрет зрелой AI-рутины: модель оценивают не по фан-базе, а по тому, как она ведет себя в конкретном рабочем окружении.</p>
+            <p class="takeaway"><strong>Что делать:</strong> время от времени переоценивать уже знакомые модели на живых задачах. Их практический профиль может измениться быстрее, чем ваша внутренняя репутационная карта рынка.</p>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <section class="footer-grid">
+      <div class="footer-card">
+        <div class="eyebrow">Общий вывод номера</div>
+        <h3>AI взрослеет в интерфейсе</h3>
+        <p>
+          Если сжать неделю до одной фразы, то она звучит так: победит не просто самая умная модель, а тот класс
+          инструментов, который лучше попадает в ритм реальной работы. Где-то это значит более автономных агентов,
+          а где-то — более плотный, живой режим совместного мышления. Для креативной индустрии это хорошие новости:
+          вкус, отбор и человеческий сигнал не исчезают, а становятся ценнее на фоне удешевившегося исполнения.
+        </p>
+      </div>
+
+      <div class="footer-card">
+        <div class="eyebrow">Что отсеяно</div>
+        <h3>Почему выпуск не на 15 материалов</h3>
+        <ul>
+          <li>WIRED по тегу creativity дал релевантные тексты, но не в нужном недельном окне.</li>
+          <li>Zvi в открытом веб-доступе не дал достаточно надежно индексируемых свежих материалов на этот интервал.</li>
+          <li>Публичные Telegram-посты по части каналов были видны, но без достаточно надежной открытой датировки и контекстной проверки я их не включал.</li>
+          <li>Creative Boom, Jack Clark и Jeff Bullas в нужном окне дали меньше сильных кандидатов, чем Every и The Rundown.</li>
+        </ul>
+      </div>
+    </section>
+
+    <p class="small">
+      FOMO-дайджест собран как один самодостаточный HTML-файл. Все визуалы встроены прямо в документ, так что номер
+      можно открывать локально без внешних зависимостей.
+    </p>
   </div>
-</header>
-
-<div class="deck">
-  <h1 class="deck-headline">Голос обгоняет текст, агенты делятся на два класса, Маск сдаёт ферму конкуренту — и почему 93-летний иллюстратор важнее любого <em>AI-релиза</em> этой недели.</h1>
-  <div class="toc-strip">
-    <div class="toc-inner">
-      <span class="toc-label">В выпуске</span>
-      <a href="#s1">GPT-Realtime-2</a> ·
-      <a href="#s2">Anthropic + SpaceX</a> ·
-      <a href="#s3">AI Work Split</a> ·
-      <a href="#s4">OpenAI Phone</a> ·
-      <a href="#s5">Anthropic Institute</a> ·
-      <a href="#s6">16h Agent Fallacy</a> ·
-      <a href="#s7">Gallup 50%</a> ·
-      <a href="#s8">DeepMind + EVE</a> ·
-      <a href="#s9">Birmingham Design</a> ·
-      <a href="#s10">Quentin Blake</a>
-    </div>
-  </div>
-</div>
-
-<div class="section-header">
-  <h2>Инструменты и модели</h2>
-  <span class="section-num">01—04</span>
-</div>
-
-<!-- #01 -->
-<div class="article" id="s1">
-  <div class="article-inner">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#01</span>
-        <span class="source-tag">The Rundown AI</span>
-        <span>8 мая 2026</span>
-      </div>
-      <h2>GPT-Realtime-2: голосовые агенты наконец думают во время разговора</h2>
-      <p class="article-thesis">OpenAI выпустил три новые голосовые модели. Главная — Realtime-2 — работает на уровне GPT-5, рассуждает без пауз, вызывает несколько инструментов одновременно и переводит на 70+ языков в реальном времени.</p>
-      <div class="article-summary">
-        <p>По бенчмарку Big Bench Audio модель набрала 96.6% против 81.4% у предшественника — прирост в 15 процентных пунктов. Zillow, Priceline и Deutsche Telekom уже строят на ней продукты для недвижимости, путешествий и клиентского сервиса.</p>
-        <p>Смысл изменения прост: turn-based era голосового ИИ подходит к концу. Предыдущие модели умолкали пока искали ответ — Realtime-2 продолжает разговор. Это разные interaction model, не просто более быстрый ответ.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Если вы делаете продукт с голосовым интерфейсом или исследуете новые UX-паттерны — Realtime-2 меняет базовые ожидания. Для дизайнеров: пора пересматривать сценарии голосового взаимодействия с нуля.
-      </div>
-      <a class="article-link" href="https://www.therundown.ai/p/openai-closes-reasoning-gap-in-voice-agents" target="_blank">Читать в The Rundown AI</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <rect x="18" y="90" width="10" height="20" rx="2" fill="#D8D4CC"/>
-        <rect x="34" y="75" width="10" height="50" rx="2" fill="#D8D4CC"/>
-        <rect x="50" y="60" width="10" height="80" rx="2" fill="#2D5A8E"/>
-        <rect x="66" y="50" width="10" height="100" rx="2" fill="#2D5A8E"/>
-        <rect x="82" y="38" width="10" height="124" rx="2" fill="#C8441A"/>
-        <rect x="98" y="48" width="10" height="104" rx="2" fill="#C8441A"/>
-        <rect x="114" y="58" width="10" height="84" rx="2" fill="#2D5A8E"/>
-        <rect x="130" y="70" width="10" height="60" rx="2" fill="#2D5A8E"/>
-        <rect x="146" y="80" width="10" height="40" rx="2" fill="#D8D4CC"/>
-        <rect x="162" y="88" width="10" height="24" rx="2" fill="#D8D4CC"/>
-        <text x="100" y="178" font-family="DM Mono, monospace" font-size="8" fill="#6B6760" text-anchor="middle">Big Bench Audio · 96.6% (+15 пп)</text>
-        <text x="100" y="22" font-family="DM Mono, monospace" font-size="9" fill="#111010" text-anchor="middle">Голос думает в реальном времени</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #02 -->
-<div class="article" id="s2">
-  <div class="article-inner reverse">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#02</span>
-        <span class="source-tag">The Rundown AI</span>
-        <span>7 мая 2026</span>
-      </div>
-      <h2>Anthropic арендует Colossus у Маска — и удваивает лимиты Claude Code</h2>
-      <p class="article-thesis">Ещё несколько месяцев назад Маск называл Anthropic «мизантропической». Теперь сдаёт им суперкластер на 220К GPU. Это одновременно сделка о compute, политика и удар по OpenAI.</p>
-      <div class="article-summary">
-        <p>Anthropic подписал соглашение с SpaceX об аренде всего кластера Colossus 1 — 300+ МВт суперкластера в Мемфисе с более чем 220 тысячами GPU Nvidia. Немедленный эффект для пользователей: 5-часовые лимиты использования Claude Code удвоились на всех платных тарифах, пиковые ограничения сняты.</p>
-        <p>The Information также сообщил, что Anthropic взял обязательство потратить $200 млрд на облако и чипы Google в течение пяти лет — это 40%+ доходного backlog Google Cloud. Контекст: compute стал отдельным бизнесом, и лаборатории без собственной инфраструктуры зависят от тех, кто её строит.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Практически: если вы используете Claude Code или API — производительность и лимиты улучшились прямо сейчас. Стратегически: это сигнал о новой экономике compute как услуги между конкурентами.
-      </div>
-      <a class="article-link" href="https://www.therundown.ai/p/anthropic-spacex-ai-become-unlikely-compute-partners" target="_blank">Читать в The Rundown AI</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <rect x="16" y="28" width="72" height="72" rx="4" fill="none" stroke="#2D5A8E" stroke-width="1.5"/>
-        <text x="52" y="58" font-family="DM Mono, monospace" font-size="8" fill="#2D5A8E" text-anchor="middle">SpaceXAI</text>
-        <text x="52" y="72" font-family="DM Mono, monospace" font-size="7" fill="#6B6760" text-anchor="middle">Colossus 1</text>
-        <text x="52" y="85" font-family="DM Mono, monospace" font-size="7" fill="#6B6760" text-anchor="middle">220K GPU</text>
-        <line x1="96" y1="64" x2="112" y2="64" stroke="#C8441A" stroke-width="2"/>
-        <polygon points="112,60 120,64 112,68" fill="#C8441A"/>
-        <rect x="124" y="28" width="60" height="72" rx="4" fill="none" stroke="#C8441A" stroke-width="1.5"/>
-        <text x="154" y="62" font-family="DM Mono, monospace" font-size="8" fill="#C8441A" text-anchor="middle">Anthropic</text>
-        <text x="154" y="76" font-family="DM Mono, monospace" font-size="7" fill="#6B6760" text-anchor="middle">Claude Code</text>
-        <rect x="20" y="120" width="160" height="38" rx="3" fill="#F5F2EC" stroke="#D8D4CC"/>
-        <text x="100" y="136" font-family="DM Mono, monospace" font-size="8" fill="#111010" text-anchor="middle">Лимиты Claude Code</text>
-        <text x="100" y="151" font-family="DM Mono, monospace" font-size="10" fill="#C8441A" text-anchor="middle" font-weight="500">× 2 на всех тарифах</text>
-        <text x="100" y="178" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">«враги» → партнёры по compute</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #03 -->
-<div class="article" id="s3">
-  <div class="article-inner">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#03</span>
-        <span class="source-tag">Every.to · Context Window</span>
-        <span>8 мая 2026</span>
-      </div>
-      <h2>AI Work Is Splitting in Two: делегирование против коллаборации</h2>
-      <p class="article-thesis">Every зафиксировали раскол, который уже произошёл в их команде: одни агенты работают автономно фоном, другие — живые партнёры в реальном времени. Это разные системы с разными требованиями.</p>
-      <div class="article-summary">
-        <p>Первый режим — долгоработающие агенты делегирования (Managed Agents, Codex, OpenClaw): им передаётся задача целиком, человек включается только на проверку результата. Второй — модели реального времени: ассистент рядом пока думаешь и пишешь.</p>
-        <p>Ной Бриер из Alephic формулирует точно: «AI-инженерная команда похожа не на завод Форда, а на студию Уорхола». Главная проблема не в пропускной способности — в том, чтобы все участники, люди и агенты, строили одно и то же видение. Вывод: нужно онбордить агентов так же серьёзно, как сотрудников. И явно разграничивать, какой режим работы подходит для каждого типа задач.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Аудит своего AI-стека: что вы делегируете насовсем, а с чем работаете в реальном времени? Если не разделяете эти паттерны сознательно — скорее всего используете оба инструмента хуже оптимума.
-      </div>
-      <a class="article-link" href="https://every.to/context-window/ai-work-is-splitting-in-two" target="_blank">Читать на Every.to</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <line x1="100" y1="22" x2="100" y2="58" stroke="#111010" stroke-width="1.5"/>
-        <circle cx="100" cy="22" r="4" fill="#111010"/>
-        <line x1="100" y1="58" x2="50" y2="92" stroke="#2D5A8E" stroke-width="1.5"/>
-        <rect x="18" y="92" width="64" height="52" rx="4" fill="none" stroke="#2D5A8E" stroke-width="1.5"/>
-        <text x="50" y="112" font-family="DM Mono, monospace" font-size="7.5" fill="#2D5A8E" text-anchor="middle">Делегирование</text>
-        <text x="50" y="124" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">Managed Agents</text>
-        <text x="50" y="135" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">Codex · OpenClaw</text>
-        <line x1="100" y1="58" x2="150" y2="92" stroke="#C8441A" stroke-width="1.5"/>
-        <rect x="118" y="92" width="64" height="52" rx="4" fill="none" stroke="#C8441A" stroke-width="1.5"/>
-        <text x="150" y="112" font-family="DM Mono, monospace" font-size="7.5" fill="#C8441A" text-anchor="middle">Коллаборация</text>
-        <text x="150" y="124" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">Realtime models</text>
-        <text x="150" y="135" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">Live assistants</text>
-        <text x="100" y="172" font-family="DM Mono, monospace" font-size="7.5" fill="#111010" text-anchor="middle">Разные задачи → разные системы</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #04 -->
-<div class="article" id="s4">
-  <div class="article-inner reverse">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#04</span>
-        <span class="source-tag">The Rundown AI</span>
-        <span>6 мая 2026</span>
-      </div>
-      <h2>OpenAI ускоряет AI-смартфон — массовое производство в первой половине 2027</h2>
-      <p class="article-thesis">Аналитик Мин-Чи Куо переносит дату на год вперёд. Два AI-чипа, нативный агент, 30 млн устройств в 2027–28. Открытый вопрос: это тот же проект, что с Джони Айвом?</p>
-      <div class="article-summary">
-        <p>Ключевые характеристики: усиленный image signal processor с HDR-пайплайном для агентного визуального восприятия, два AI-процессора для параллельной обработки зрения и языка, MediaTek как единственный поставщик. Прогноз: суммарные поставки 2027–28 могут достичь 30 млн устройств.</p>
-        <p>Куо объясняет ускорение IPO-амбициями OpenAI и нарастающей конкуренцией в сегменте AI-телефонов. Неясность остаётся: OpenAI в прошлом году купил io — компанию Джони Айва — за $6.5 млрд, обещав устройство «за пределами экранов». По этому проекту конкретики до сих пор нет.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Для продуктовых дизайнеров и UX-команд: если AI-телефон с двумя чипами и нативным агентом выходит в 2027, конец 2026-го — последний момент переосмыслить взаимодействие вашего продукта с агентным устройством.
-      </div>
-      <a class="article-link" href="https://www.therundown.ai/p/openai-ai-phone-just-jumped-the-line" target="_blank">Читать в The Rundown AI</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <rect x="65" y="22" width="70" height="118" rx="10" fill="none" stroke="#111010" stroke-width="2"/>
-        <rect x="75" y="32" width="50" height="78" rx="3" fill="#F5F2EC"/>
-        <rect x="78" y="37" width="20" height="14" rx="2" fill="#2D5A8E" opacity="0.85"/>
-        <text x="88" y="47" font-family="DM Mono, monospace" font-size="5.5" fill="white" text-anchor="middle">Vision</text>
-        <rect x="102" y="37" width="20" height="14" rx="2" fill="#C8441A" opacity="0.85"/>
-        <text x="112" y="47" font-family="DM Mono, monospace" font-size="5.5" fill="white" text-anchor="middle">LLM</text>
-        <rect x="78" y="58" width="44" height="20" rx="2" fill="#4A8C5C" opacity="0.12"/>
-        <text x="100" y="72" font-family="DM Mono, monospace" font-size="7" fill="#4A8C5C" text-anchor="middle">AI Agent</text>
-        <line x1="50" y1="163" x2="160" y2="163" stroke="#D8D4CC" stroke-width="1"/>
-        <circle cx="70" cy="163" r="3" fill="#D8D4CC"/>
-        <text x="70" y="177" font-family="DM Mono, monospace" font-size="7" fill="#6B6760" text-anchor="middle">2026</text>
-        <circle cx="145" cy="163" r="5" fill="#C8441A"/>
-        <text x="145" y="177" font-family="DM Mono, monospace" font-size="7" fill="#C8441A" text-anchor="middle">2027</text>
-        <text x="145" y="188" font-family="DM Mono, monospace" font-size="6" fill="#6B6760" text-anchor="middle">30M units</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<div class="section-header">
-  <h2>Исследования и сигналы</h2>
-  <span class="section-num">05—07</span>
-</div>
-
-<!-- #05 -->
-<div class="article" id="s5">
-  <div class="article-inner">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#05</span>
-        <span class="source-tag">The Rundown AI</span>
-        <span>8 мая 2026</span>
-      </div>
-      <h2>Anthropic Institute: «пожарные учения» на случай intelligence explosion</h2>
-      <p class="article-thesis">Новое исследовательское подразделение Anthropic опубликовало официальную повестку — и в ней прямым текстом: подготовка к самоулучшающимся системам как к реальному сценарию.</p>
-      <div class="article-summary">
-        <p>The Anthropic Institute (TAI) — исследовательское крыло внутри компании — опубликовало формальную повестку. Спектр тем: угрозы безопасности, экономические сдвиги, управление. Самое важное: планирование в сценарии самоулучшающихся моделей. TAI предлагает холодновоенные «горячие линии» между лабораториями и правительствами и «fire drill» — учения на случай резкого скачка возможностей.</p>
-        <p>Институт сидит внутри Anthropic и имеет доступ к данным использования Claude, внутренним workflow и сигналам безопасности — до того, как они попадают на рынок. Обязательства на публикацию: Economic Index, ежемесячные опросы работников, threat research. Это прямое продолжение поста Джека Кларка о self-improving systems — теперь официальная программа.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Следить за публикациями TAI — особенно Economic Index. Для AI-продуктовых команд: разработка стратегических позиций до возможного скачка возможностей — это риск-менеджмент, не паранойя.
-      </div>
-      <a class="article-link" href="https://www.therundown.ai/p/openai-closes-reasoning-gap-in-voice-agents" target="_blank">Читать в The Rundown AI</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <polyline points="20,162 50,157 80,148 100,132 120,108 140,72 160,30" fill="none" stroke="#C8441A" stroke-width="2"/>
-        <line x1="20" y1="98" x2="178" y2="98" stroke="#111010" stroke-width="1" stroke-dasharray="4,3"/>
-        <text x="178" y="95" font-family="DM Mono, monospace" font-size="7" fill="#111010" text-anchor="end">порог</text>
-        <circle cx="120" cy="108" r="5" fill="#C8441A"/>
-        <text x="128" y="103" font-family="DM Mono, monospace" font-size="6.5" fill="#C8441A">fire drill</text>
-        <text x="100" y="180" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">Время →</text>
-        <text x="18" y="20" font-family="DM Mono, monospace" font-size="7.5" fill="#111010">Intelligence Explosion</text>
-        <text x="18" y="30" font-family="DM Mono, monospace" font-size="7.5" fill="#111010">Readiness Agenda · TAI</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #06 -->
-<div class="article" id="s6">
-  <div class="article-inner reverse">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#06</span>
-        <span class="source-tag">Every.to · Context Window</span>
-        <span>12 мая 2026</span>
-      </div>
-      <h2>The Fallacy of the 16-hour Agent: длина сессии — не метрика успеха</h2>
-      <p class="article-thesis">Every разбирают центральный миф агентного хайпа: агент, работающий 16 часов без присмотра, — не победа автоматизации, а источник непредвиденных рисков.</p>
-      <div class="article-summary">
-        <p>Данные METR показывают прогресс: автономные возможности ИИ выросли с 30-секундных задач в 2022 году до 12-часовых в 2026-м, к концу года ожидаются 100-часовые сессии. Но Every задают правильный вопрос: насколько предсказуемым остаётся агент без человека несколько часов подряд?</p>
-        <p>Ключевой вывод: навык распределения задач между режимами (что делегировать, а что контролировать) — новая мета-компетенция. «The allocation economy was only right about half the work». Perplexity формулирует явные правила для навыков агентов — что является валидным инпутом, когда агент должен остановиться и спросить. Это зрелый подход к агентной архитектуре.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Если вы строите агентные пайплайны: длина сессии агента — не метрика успеха. Метрика — предсказуемость исхода. Начинайте с явных правил остановки, валидации и точек передачи контроля.
-      </div>
-      <a class="article-link" href="https://every.to/context-window/the-fallacy-of-the-16-hour-agent" target="_blank">Читать на Every.to</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <rect x="25" y="142" width="18" height="18" rx="2" fill="#D8D4CC"/>
-        <text x="34" y="173" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">2022</text>
-        <text x="34" y="183" font-family="DM Mono, monospace" font-size="6" fill="#6B6760" text-anchor="middle">30 сек</text>
-        <rect x="83" y="110" width="18" height="50" rx="2" fill="#2D5A8E" opacity="0.7"/>
-        <text x="92" y="173" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">2026</text>
-        <text x="92" y="183" font-family="DM Mono, monospace" font-size="6" fill="#2D5A8E" text-anchor="middle">12 часов</text>
-        <rect x="141" y="55" width="18" height="105" rx="2" fill="#C8441A" opacity="0.4"/>
-        <text x="150" y="173" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">2026+</text>
-        <text x="150" y="183" font-family="DM Mono, monospace" font-size="6" fill="#C8441A" text-anchor="middle">100 часов?</text>
-        <text x="150" y="45" font-family="DM Serif Display, serif" font-size="22" fill="#C8441A" text-anchor="middle">?</text>
-        <text x="100" y="22" font-family="DM Mono, monospace" font-size="8" fill="#111010" text-anchor="middle">Длина сессии ≠ Качество исхода</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #07 -->
-<div class="article" id="s7">
-  <div class="article-inner">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#07</span>
-        <span class="source-tag">DeepLearning.AI · The Batch</span>
-        <span>8 мая 2026</span>
-      </div>
-      <h2>Gallup: половина американских работников уже использует ИИ на работе</h2>
-      <p class="article-thesis">Первое большое социологическое измерение AI-адопции в США — ИИ помогает работать продуктивнее, но не замещает людей. Главный предиктор принятия — менеджерская поддержка, а не качество инструмента.</p>
-      <div class="article-summary">
-        <p>Gallup опросил 23 700 сотрудников в феврале 2026. Ключевые цифры: 13% используют ИИ ежедневно (было 4% в 2023), 28% — несколько раз в неделю (было 11%). Итого около 50% хотя бы изредка применяют ИИ. 65% из них говорят, что он улучшил продуктивность.</p>
-        <p>Что мешает остальным: желание работать по-старому, этические опасения, privacy, или ощущение что ИИ не помогает. Важно: компании с внятной AI-стратегией и поддерживающими менеджерами показывают вдвое более высокий уровень использования. Эндрю Нг прямо полемизирует с нарративом «AI jobpocalypse»: его прогноз — «AI jobapalooza», волна новых AI-рабочих мест.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Для команд, внедряющих ИИ: данные Gallup подтверждают — главный рычаг не инструмент, а менеджерская культура. Без поддержки руководства адопция остаётся низкой даже при доступе к инструментам.
-      </div>
-      <a class="article-link" href="https://charonhub.deeplearning.ai/issue-352/" target="_blank">Читать в The Batch</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <circle cx="100" cy="105" r="55" fill="none" stroke="#D8D4CC" stroke-width="20"/>
-        <circle cx="100" cy="105" r="55" fill="none" stroke="#4A8C5C" stroke-width="20"
-          stroke-dasharray="172.7 172.7" stroke-dashoffset="86.4" transform="rotate(-90 100 105)"/>
-        <text x="100" y="99" font-family="DM Serif Display, serif" font-size="26" fill="#111010" text-anchor="middle">50%</text>
-        <text x="100" y="116" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">используют ИИ</text>
-        <rect x="28" y="172" width="10" height="10" rx="1" fill="#4A8C5C"/>
-        <text x="44" y="181" font-family="DM Mono, monospace" font-size="7.5" fill="#111010">Используют</text>
-        <rect x="112" y="172" width="10" height="10" rx="1" fill="#D8D4CC"/>
-        <text x="128" y="181" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760">Нет</text>
-        <text x="100" y="26" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">Ежедневно: 4% (2023) → 13% (2026)</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<div class="section-header">
-  <h2>Индустрия и культура</h2>
-  <span class="section-num">08—10</span>
-</div>
-
-<!-- #08 -->
-<div class="article" id="s8">
-  <div class="article-inner reverse">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#08</span>
-        <span class="source-tag">The Rundown AI</span>
-        <span>7 мая 2026</span>
-      </div>
-      <h2>DeepMind берёт EVE Online в качестве AI-полигона: 23 года живой экономики</h2>
-      <p class="article-thesis">После Go, Atari, StarCraft и SIMA следующий тестовый стенд DeepMind — не матч, а живое общество с рынками, войнами и 23-летней историей. Это другой тип задачи.</p>
-      <div class="article-summary">
-        <p>Google DeepMind приобрёл миноритарную долю в Fenris Creations — студии-спинофф от CCP Games. Суть соглашения: DeepMind получает offline-клон EVE для запуска AI-агентов. CEO Fenris охарактеризовал EVE как «одну из немногих сред, где интеллект можно тестировать внутри чего-то, что уже ведёт себя как живой мир».</p>
-        <p>EVE Online работает 23 года на едином сервере, где игроки формируют корпорации, устанавливают рыночные цены и проводят многодневные битвы с ущербом на сотни тысяч долларов. Хасабис: Atari DQN → AlphaGo → AlphaStar → SIMA — следующий шаг логичен. Смена рамки: не «выиграть матч», а «функционировать в сложной непредсказуемой среде».</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Сигнал для продуктовых команд: следующий шаг AI-агентов — не «победить», а «функционировать в открытой среде». Это меняет метрики оценки агентов и требования к их дизайну.
-      </div>
-      <a class="article-link" href="https://www.therundown.ai/p/anthropic-spacex-ai-become-unlikely-compute-partners" target="_blank">Читать в The Rundown AI</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <circle cx="30" cy="30" r="1.5" fill="#D8D4CC"/>
-        <circle cx="70" cy="15" r="1" fill="#D8D4CC"/>
-        <circle cx="155" cy="25" r="2" fill="#D8D4CC"/>
-        <circle cx="182" cy="55" r="1" fill="#D8D4CC"/>
-        <circle cx="18" cy="80" r="1.5" fill="#D8D4CC"/>
-        <circle cx="172" cy="110" r="1" fill="#D8D4CC"/>
-        <circle cx="100" cy="100" r="52" fill="#2D5A8E" opacity="0.06"/>
-        <circle cx="100" cy="100" r="52" fill="none" stroke="#2D5A8E" stroke-width="1.5"/>
-        <line x1="48" y1="100" x2="152" y2="100" stroke="#2D5A8E" stroke-width="0.5" opacity="0.4"/>
-        <line x1="100" y1="48" x2="100" y2="152" stroke="#2D5A8E" stroke-width="0.5" opacity="0.4"/>
-        <circle cx="100" cy="75" r="5" fill="#C8441A"/>
-        <circle cx="78" cy="110" r="4" fill="#4A8C5C"/>
-        <circle cx="122" cy="110" r="4" fill="#4A8C5C"/>
-        <circle cx="100" cy="125" r="3" fill="#2D5A8E"/>
-        <line x1="100" y1="75" x2="78" y2="110" stroke="#D8D4CC" stroke-width="1"/>
-        <line x1="100" y1="75" x2="122" y2="110" stroke="#D8D4CC" stroke-width="1"/>
-        <line x1="78" y1="110" x2="100" y2="125" stroke="#D8D4CC" stroke-width="1"/>
-        <line x1="122" y1="110" x2="100" y2="125" stroke="#D8D4CC" stroke-width="1"/>
-        <text x="100" y="180" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">EVE Online · 23 года · 1 сервер</text>
-        <text x="100" y="20" font-family="DM Mono, monospace" font-size="7.5" fill="#2D5A8E" text-anchor="middle">Живой мир как AI-полигон</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #09 -->
-<div class="article" id="s9">
-  <div class="article-inner">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#09</span>
-        <span class="source-tag">Creative Boom</span>
-        <span>13 мая 2026</span>
-      </div>
-      <h2>Birmingham Design Festival 2026: тема «More Than Human» — прямой ответ на момент</h2>
-      <p class="article-thesis">Когда главный дизайн-фестиваль Великобритании выбирает тему об отношениях человека и нечеловеческого — это не абстрактная философия, а прямой ответ на то, что происходит в профессии прямо сейчас.</p>
-      <div class="article-summary">
-        <p>Birmingham Design Festival 2026 объявил тему «More Than Human» — исследование того, что значит быть человеком в контексте ИИ, биотехнологий, изменения климата и экосистем. Фестиваль пройдёт 4–14 сентября в Бирмингеме.</p>
-        <p>Программный директор Джемима Монтагью формулирует: «Дизайн всегда отражал момент, в котором он существует. Этот момент требует переосмыслить не только то, что мы делаем, но и для кого и почему». Это второй за несколько недель крупный дизайн-форум после OFFF Barcelona, формулирующий вопрос ребром — и в том же направлении.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Отметить в календаре: 4–14 сентября, Бирмингем. «More Than Human» — одна из наиболее точных рамок для того, что сейчас происходит с дизайн-профессией.
-      </div>
-      <a class="article-link" href="https://www.creativeboom.com/news/the-theme-of-this-years-birmingham-design-festival-couldnt-be-more-apt/" target="_blank">Читать на Creative Boom</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <circle cx="80" cy="68" r="16" fill="none" stroke="#111010" stroke-width="1.5"/>
-        <line x1="80" y1="84" x2="80" y2="122" stroke="#111010" stroke-width="1.5"/>
-        <line x1="80" y1="98" x2="62" y2="113" stroke="#111010" stroke-width="1.5"/>
-        <line x1="80" y1="98" x2="98" y2="113" stroke="#111010" stroke-width="1.5"/>
-        <line x1="80" y1="122" x2="66" y2="146" stroke="#111010" stroke-width="1.5"/>
-        <line x1="80" y1="122" x2="94" y2="146" stroke="#111010" stroke-width="1.5"/>
-        <line x1="108" y1="92" x2="130" y2="92" stroke="#C8441A" stroke-width="2"/>
-        <line x1="119" y1="81" x2="119" y2="103" stroke="#C8441A" stroke-width="2"/>
-        <ellipse cx="155" cy="92" rx="28" ry="44" fill="none" stroke="#2D5A8E" stroke-width="1.5"/>
-        <line x1="127" y1="92" x2="183" y2="92" stroke="#2D5A8E" stroke-width="0.8" stroke-dasharray="3,2"/>
-        <text x="100" y="173" font-family="DM Serif Display, serif" font-size="11" fill="#111010" text-anchor="middle">More Than Human</text>
-        <text x="100" y="186" font-family="DM Mono, monospace" font-size="7" fill="#6B6760" text-anchor="middle">BDF · 4–14 сентября 2026</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- #10 -->
-<div class="article" id="s10">
-  <div class="article-inner reverse">
-    <div class="article-body">
-      <div class="article-meta">
-        <span class="article-num">#10</span>
-        <span class="source-tag">Creative Boom</span>
-        <span>5 мая 2026</span>
-      </div>
-      <h2>В 93 года Квентин Блейк открыл первый иллюстрационный центр — спустя 25 лет после замысла</h2>
-      <p class="article-thesis">The Illustration Centre — постоянный дом для иллюстрации как серьёзного искусства. В год, когда генеративный ИИ переопределяет «картинку», это культурное высказывание, а не просто открытие учреждения.</p>
-      <div class="article-summary">
-        <p>Квентин Блейк — иллюстратор Роальда Даля, лауреат Hans Christian Andersen Award — открыл The Illustration Centre в Лондоне. Идею он вынашивал с конца 1990-х: 25 лет ушло на поиск помещения, финансирование, институциональную поддержку.</p>
-        <p>Блейк формулирует просто: иллюстрация всегда была «прикладным» искусством второго сорта — не живопись, не графика. Центр существует, чтобы изменить это восприятие. Здесь будут проходить выставки, резиденции, образовательные программы. В контексте 2026 года — когда модели создают визуальный контент быстрее любого иллюстратора — пространство, посвящённое авторскому ручному языку, читается как аргумент в культурной дискуссии.</p>
-      </div>
-      <div class="takeaway">
-        <strong>Что с этим делать</strong>
-        Следить за программой The Illustration Centre — это будет одно из немногих мест, где разговор об иллюстрации ведётся системно. Для дизайнеров: само существование такого института — аргумент в пользу специфики авторского визуального языка.
-      </div>
-      <a class="article-link" href="https://www.creativeboom.com/news/at-93-quentin-blake-has-finally-opened-the-illustration-centre-hes-spent-25-years-fighting-for/" target="_blank">Читать на Creative Boom</a>
-    </div>
-    <div class="article-visual">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="#EDEAE3"/>
-        <line x1="28" y1="105" x2="172" y2="105" stroke="#D8D4CC" stroke-width="2"/>
-        <circle cx="28" cy="105" r="5" fill="#D8D4CC"/>
-        <text x="28" y="120" font-family="DM Mono, monospace" font-size="7.5" fill="#6B6760" text-anchor="middle">~1999</text>
-        <text x="28" y="130" font-family="DM Mono, monospace" font-size="6.5" fill="#6B6760" text-anchor="middle">замысел</text>
-        <circle cx="172" cy="105" r="7" fill="#4A8C5C"/>
-        <text x="172" y="120" font-family="DM Mono, monospace" font-size="7.5" fill="#4A8C5C" text-anchor="middle">2026</text>
-        <text x="172" y="130" font-family="DM Mono, monospace" font-size="6.5" fill="#4A8C5C" text-anchor="middle">открытие</text>
-        <text x="100" y="93" font-family="DM Mono, monospace" font-size="8" fill="#6B6760" text-anchor="middle">25 лет</text>
-        <line x1="92" y1="42" x2="110" y2="72" stroke="#111010" stroke-width="3" stroke-linecap="round"/>
-        <line x1="85" y1="56" x2="92" y2="42" stroke="#111010" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="112" cy="74" r="4" fill="#C8441A"/>
-        <text x="100" y="168" font-family="DM Serif Display, serif" font-size="34" fill="#111010" text-anchor="middle" opacity="0.1">93</text>
-        <text x="100" y="182" font-family="DM Mono, monospace" font-size="7.5" fill="#111010" text-anchor="middle">The Illustration Centre · London</text>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="footer-inner">
-    <div>
-      <strong>FOMO-дайджест</strong>
-      <p>Еженедельная редакционная подборка<br>для ИИ- и креативных специалистов.</p>
-      <p style="margin-top:0.5rem">Выпуск 2026-20 · 14 мая 2026 · 10 материалов</p>
-    </div>
-    <p style="max-width:280px">Источники: The Rundown AI, DeepLearning.AI The Batch,<br>Every.to, Creative Boom, Anthropic Research.</p>
-  </div>
-</footer>
-
 </body>
 </html>
