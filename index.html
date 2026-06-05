@@ -1,1159 +1,749 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FOMO-дайджест: 21-27 мая 2026</title>
-  <style>
-    :root {
-      --bg: #f4efe7;
-      --paper: #fbf8f3;
-      --ink: #121212;
-      --muted: #5b574f;
-      --line: rgba(18, 18, 18, 0.12);
-      --shadow: 0 18px 60px rgba(18, 18, 18, 0.08);
-      --radius: 22px;
-      --serif: "Georgia", "Times New Roman", serif;
-      --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(193, 102, 70, 0.10), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(26, 104, 82, 0.10), transparent 32%),
-        var(--bg);
-      color: var(--ink);
-      font-family: var(--sans);
-      line-height: 1.45;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .page {
-      width: min(1220px, calc(100vw - 32px));
-      margin: 0 auto;
-      padding: 24px 0 48px;
-    }
-
-    .masthead {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
-      align-items: stretch;
-      min-height: min(88svh, 900px);
-    }
-
-    .hero-panel,
-    .brief-panel,
-    .section,
-    .card,
-    .modal-sheet {
-      background: rgba(251, 248, 243, 0.82);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-panel {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100%;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(135deg, rgba(193, 102, 70, 0.15), transparent 35%),
-        linear-gradient(315deg, rgba(26, 104, 82, 0.10), transparent 30%);
-      pointer-events: none;
-    }
-
-    .masthead-top,
-    .hero-body,
-    .hero-footer,
-    .brief-panel > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      flex-wrap: wrap;
-    }
-
-    .eyebrow .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: 0.7;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin: 0;
-    }
-
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(38px, 5.6vw, 86px);
-      line-height: 0.96;
-      max-width: 11ch;
-      margin-top: 18px;
-    }
-
-    .hero-dek {
-      margin-top: 18px;
-      font-size: clamp(16px, 1.65vw, 21px);
-      max-width: 38ch;
-      color: #222;
-    }
-
-    .hero-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .metric {
-      padding: 12px 14px;
-      border: 1px solid rgba(18, 18, 18, 0.08);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.42);
-      min-height: 88px;
-    }
-
-    .metric-value {
-      font-family: var(--serif);
-      font-size: clamp(26px, 2.8vw, 38px);
-      line-height: 1;
-    }
-
-    .metric-label {
-      margin-top: 8px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-    }
-
-    .hero-promo {
-      margin-top: 28px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 18px;
-      align-items: end;
-    }
-
-    .hero-promo h2 {
-      font-size: clamp(24px, 2.4vw, 34px);
-      line-height: 1.02;
-      font-family: var(--serif);
-      max-width: 14ch;
-    }
-
-    .hero-promo p {
-      color: var(--muted);
-      max-width: 34ch;
-    }
-
-    .brief-panel {
-      padding: 24px;
-      display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 20px;
-      min-height: 100%;
-    }
-
-    .brief-title {
-      font-family: var(--serif);
-      font-size: clamp(24px, 2.8vw, 40px);
-      line-height: 1;
-    }
-
-    .brief-copy {
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 42ch;
-    }
-
-    .signals {
-      display: grid;
-      gap: 12px;
-    }
-
-    .signal {
-      padding: 14px 16px;
-      border: 1px solid rgba(18, 18, 18, 0.08);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.55);
-    }
-
-    .signal h3 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .signal p {
-      font-size: 16px;
-      line-height: 1.35;
-    }
-
-    .editor-note {
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-      display: grid;
-      gap: 8px;
-    }
-
-    .editor-note strong {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .section {
-      margin-top: 22px;
-      padding: 22px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: flex-end;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .section-head h2 {
-      font-family: var(--serif);
-      font-size: clamp(26px, 2.8vw, 42px);
-      line-height: 1;
-    }
-
-    .section-head p {
-      max-width: 48ch;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .deck {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      padding: 18px;
-      display: grid;
-      gap: 14px;
-      min-width: 0;
-      cursor: pointer;
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-    }
-
-    .card:hover,
-    .card:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 48px rgba(18, 18, 18, 0.12);
-      border-color: rgba(18, 18, 18, 0.2);
-      outline: none;
-    }
-
-    .card.heroish {
-      grid-column: span 7;
-      min-height: 520px;
-      align-content: space-between;
-    }
-
-    .card.feature {
-      grid-column: span 5;
-      min-height: 520px;
-    }
-
-    .card.standard {
-      grid-column: span 4;
-      min-height: 420px;
-    }
-
-    .card.compact {
-      grid-column: span 3;
-      min-height: 360px;
-    }
-
-    .card-topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      min-width: 0;
-    }
-
-    .badge-mark {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      flex: 0 0 auto;
-      background: var(--accent, #222);
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent, #222) 14%, transparent);
-    }
-
-    .visual {
-      position: relative;
-      min-height: 160px;
-      border-radius: 18px;
-      border: 1px solid rgba(18, 18, 18, 0.08);
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 35%, white) 0, transparent 22%),
-        radial-gradient(circle at 80% 28%, color-mix(in srgb, var(--accent-2) 40%, white) 0, transparent 24%),
-        linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, white), color-mix(in srgb, var(--accent-2) 18%, white));
-    }
-
-    .visual::before,
-    .visual::after {
-      content: "";
-      position: absolute;
-      inset: auto;
-      border-radius: 999px;
-      opacity: 0.78;
-    }
-
-    .visual::before {
-      width: 58%;
-      height: 58%;
-      right: -8%;
-      bottom: -12%;
-      background:
-        repeating-linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.10) 0 8px,
-          rgba(255, 255, 255, 0.34) 8px 15px
-        );
-      transform: rotate(-14deg);
-    }
-
-    .visual::after {
-      width: 42%;
-      height: 42%;
-      left: 8%;
-      top: 10%;
-      border: 1px solid rgba(255, 255, 255, 0.46);
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-    }
-
-    .visual-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-      background-size: 24px 24px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.15));
-    }
-
-    .visual-content {
-      position: absolute;
-      inset: 0;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      z-index: 1;
-    }
-
-    .visual-code {
-      align-self: flex-start;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(18, 18, 18, 0.08);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-    }
-
-    .visual-word {
-      font-family: var(--serif);
-      font-size: clamp(26px, 3vw, 48px);
-      line-height: 0.95;
-      max-width: 9ch;
-    }
-
-    .card-title {
-      font-family: var(--serif);
-      font-size: clamp(26px, 2.4vw, 42px);
-      line-height: 0.98;
-      text-wrap: balance;
-    }
-
-    .card.standard .card-title {
-      font-size: clamp(22px, 2vw, 31px);
-    }
-
-    .card.compact .card-title {
-      font-size: clamp(20px, 1.8vw, 28px);
-    }
-
-    .card-summary {
-      font-size: 15px;
-      color: #252525;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card.heroish .card-summary,
-    .card.feature .card-summary {
-      -webkit-line-clamp: 4;
-    }
-
-    .card.standard .card-summary {
-      -webkit-line-clamp: 4;
-    }
-
-    .card.compact .card-summary {
-      -webkit-line-clamp: 3;
-    }
-
-    .card-takeaway {
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 14px;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      -webkit-line-clamp: 3;
-    }
-
-    .section-mini {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .mini-block {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.56);
-      border: 1px solid rgba(18, 18, 18, 0.08);
-    }
-
-    .mini-block strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .mini-block p {
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .footer-note {
-      margin-top: 20px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: stretch;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(18, 18, 18, 0.56);
-      z-index: 40;
-    }
-
-    .modal.is-open {
-      display: flex;
-    }
-
-    .modal-sheet {
-      width: min(1100px, 100%);
-      max-height: 100%;
-      overflow: auto;
-      padding: 24px;
-      position: relative;
-      display: grid;
-      gap: 22px;
-    }
-
-    .modal-close {
-      position: sticky;
-      top: 0;
-      justify-self: end;
-      z-index: 3;
-      border: 1px solid rgba(18, 18, 18, 0.12);
-      background: rgba(251, 248, 243, 0.92);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .modal-layout {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .detail-visual {
-      min-height: 460px;
-      border-radius: 22px;
-    }
-
-    .detail-head {
-      display: grid;
-      gap: 14px;
-    }
-
-    .detail-title {
-      font-family: var(--serif);
-      font-size: clamp(34px, 4vw, 64px);
-      line-height: 0.95;
-      text-wrap: balance;
-    }
-
-    .detail-lead {
-      font-size: 18px;
-      line-height: 1.5;
-      color: #242424;
-    }
-
-    .detail-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      color: var(--muted);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .detail-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(18, 18, 18, 0.12);
-      background: #171717;
-      color: #fff;
-      font-size: 14px;
-    }
-
-    .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .detail-box {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(18, 18, 18, 0.08);
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .detail-box h3 {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .detail-box p {
-      font-size: 15px;
-      line-height: 1.55;
-    }
-
-    .detail-box ul {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .detail-box li + li {
-      margin-top: 8px;
-    }
-
-    .detail-full {
-      display: grid;
-      gap: 12px;
-    }
-
-    .detail-full h3 {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .detail-full p {
-      font-size: 16px;
-      line-height: 1.65;
-      max-width: 76ch;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-
-    @media (max-width: 1024px) {
-      .masthead,
-      .modal-layout,
-      .section-mini {
-        grid-template-columns: 1fr;
-      }
-
-      .card.heroish,
-      .card.feature,
-      .card.standard,
-      .card.compact {
-        grid-column: span 6;
-      }
-
-      .detail-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .page {
-        width: min(100vw - 20px, 100%);
-        padding-top: 10px;
-        padding-bottom: 30px;
-      }
-
-      .hero-panel,
-      .brief-panel,
-      .section,
-      .modal-sheet {
-        padding: 18px;
-      }
-
-      .hero-promo,
-      .hero-metrics {
-        grid-template-columns: 1fr;
-      }
-
-      .deck {
-        grid-template-columns: 1fr;
-      }
-
-      .card.heroish,
-      .card.feature,
-      .card.standard,
-      .card.compact {
-        grid-column: auto;
-        min-height: auto;
-      }
-
-      .visual,
-      .detail-visual {
-        min-height: 220px;
-      }
-
-      .modal {
-        padding: 10px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMO — Выпуск 30 мая – 5 июня 2026</title>
+<style>
+  :root{
+    --bg:#0e0e10;
+    --panel:#161619;
+    --panel-2:#1d1d22;
+    --ink:#f5f3ee;
+    --muted:#9b9aa3;
+    --line:#2a2a30;
+    --accent:#ff4d2e;
+    --accent-2:#ffd23f;
+    --green:#39d98a;
+    --maxw:1240px;
+    --serif:"Georgia","Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- HEADER ---------- */
+  header.masthead{
+    border-bottom:1px solid var(--line);
+    padding:38px 0 30px;
+  }
+  .mast-top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:16px;}
+  .mark{
+    width:54px;height:54px;flex:0 0 54px;
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, #ff6a4d, var(--accent) 60%, #c0260f);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06), 0 8px 30px rgba(255,77,46,.35);
+  }
+  .mark svg{width:32px;height:32px;display:block;}
+  .brand h1{
+    font-family:var(--serif);
+    font-size:30px;letter-spacing:.5px;margin:0;font-weight:700;
+  }
+  .brand .sub{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+  .issue-tag{
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:8px 16px;white-space:nowrap;
+  }
+  .daterange{
+    margin-top:30px;
+    display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+  }
+  .daterange .big{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(38px,7vw,84px);
+    line-height:.95;
+    letter-spacing:-1px;
+    background:linear-gradient(92deg,#fff 0%, #ffd6c9 55%, var(--accent) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .daterange .yr{font-family:var(--serif);font-size:clamp(38px,7vw,84px);line-height:.95;color:var(--line);font-weight:700;}
+
+  /* ---------- SECTION TITLES ---------- */
+  .sec-head{display:flex;align-items:center;gap:16px;margin:54px 0 22px;}
+  .sec-head h2{font-size:14px;letter-spacing:3px;text-transform:uppercase;margin:0;font-weight:700;}
+  .sec-head .ln{height:1px;background:var(--line);flex:1;}
+  .sec-head .count{font-size:12px;color:var(--muted);letter-spacing:1px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:0;
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:var(--panel);cursor:pointer;
+    transition:border-color .2s, transform .2s;
+  }
+  .hero:hover{border-color:#3c3c46;}
+  .hero .img-wrap{position:relative;min-height:420px;background:#000;overflow:hidden;}
+  .hero .img-wrap img{width:100%;height:100%;object-fit:cover;}
+  .hero .img-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,0) 60%, rgba(22,22,25,.9) 100%);pointer-events:none;}
+  .hero .body{padding:40px 38px;display:flex;flex-direction:column;justify-content:center;}
+  .badge{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-2);border:1px solid rgba(255,210,63,.4);padding:5px 11px;border-radius:999px;margin-bottom:18px;}
+  .hero h3{font-family:var(--serif);font-size:clamp(28px,3.4vw,42px);line-height:1.05;margin:0 0 16px;letter-spacing:-.5px;}
+  .hero .deck{font-size:17px;color:#d8d6cf;margin:0 0 22px;max-width:46ch;}
+  .meta{font-size:12.5px;color:var(--muted);letter-spacing:.3px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .meta .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block;}
+  .readmore{margin-top:24px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+
+  /* ---------- SECONDARY GRID ---------- */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .card{
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);
+    cursor:pointer;display:flex;flex-direction:column;transition:border-color .2s, transform .2s;
+  }
+  .card:hover{border-color:#3c3c46;transform:translateY(-2px);}
+  .card .img-wrap{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;}
+  .card .img-wrap img{width:100%;height:100%;object-fit:cover;}
+  .card .body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;}
+  .card h3{font-family:var(--serif);font-size:24px;line-height:1.12;margin:0 0 12px;letter-spacing:-.3px;}
+  .card .deck{font-size:15px;color:#cbc9c2;margin:0 0 18px;}
+  .card .meta{margin-top:auto;}
+
+  /* graphic (no-photo) module */
+  .gmod{position:relative;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .gmod .tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+  .gmod .mono{font-family:var(--serif);font-size:clamp(30px,4.4vw,56px);font-weight:700;line-height:.95;text-align:center;letter-spacing:-1px;}
+  .g-prod{background:linear-gradient(135deg,#241c54,#3b2a8c 55%,#6c4bd6);}
+  .g-social{background:linear-gradient(135deg,#0b3a2e,#11705a 60%,#1fae86);}
+  .g-film{background:linear-gradient(135deg,#3a0f12,#7a1c22 55%,#c0392b);}
+  .g-cannes{background:linear-gradient(135deg,#1a1a1f,#33333d 60%,#c9a24b);}
+
+  /* ---------- VISUAL GALLERY ---------- */
+  #visual-gallery{margin-top:20px;}
+  .gallery-intro{font-size:15px;color:var(--muted);max-width:70ch;margin:0 0 26px;}
+  .gallery{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  }
+  .g-card{
+    position:relative;border-radius:14px;overflow:hidden;cursor:pointer;background:#000;
+    border:1px solid var(--line);transition:transform .22s, border-color .2s;
+    aspect-ratio:1/1;
+  }
+  .g-card:hover{transform:translateY(-3px);border-color:var(--accent);}
+  .g-card .ph{position:absolute;inset:0;overflow:hidden;background:#000;}
+  .g-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .35s;}
+  .g-card:hover .ph img{transform:scale(1.06);}
+  .g-card .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 32%, rgba(0,0,0,.55) 68%, rgba(0,0,0,.92) 100%);}
+  .g-card .num{position:absolute;top:10px;left:12px;z-index:3;font-family:var(--serif);font-size:13px;color:var(--accent-2);font-weight:700;text-shadow:0 1px 5px #000;}
+  .g-card .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px 15px 15px;}
+  .g-card .cap .t{font-family:var(--serif);font-size:16px;line-height:1.14;margin:0 0 5px;letter-spacing:-.2px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.85);}
+  .g-card .cap .a{font-size:11.5px;color:rgba(255,255,255,.82);letter-spacing:.3px;text-shadow:0 1px 6px rgba(0,0,0,.85);}
+  /* make first two cards span larger for image-first dominance */
+  .gallery .g-card.feat{grid-column:span 2;aspect-ratio:16/9;}
+  .gallery .g-card.feat .cap .t{font-size:21px;}
+
+  /* ---------- MODAL ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(6,6,8,.82);backdrop-filter:blur(4px);
+    display:none;align-items:flex-start;justify-content:center;z-index:100;
+    padding:40px 18px;overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    max-width:760px;width:100%;overflow:hidden;animation:rise .25s ease;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .modal .m-img{width:100%;max-height:360px;object-fit:cover;background:#000;display:block;}
+  .modal .m-graphic{height:160px;display:flex;align-items:center;justify-content:center;}
+  .modal .m-body{padding:34px 38px 40px;}
+  .modal .m-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-2);margin-bottom:14px;}
+  .modal h2{font-family:var(--serif);font-size:32px;line-height:1.08;margin:0 0 14px;letter-spacing:-.5px;}
+  .modal .m-meta{font-size:12.5px;color:var(--muted);margin-bottom:24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .modal .m-lead{font-size:17px;color:#e3e1da;margin:0 0 26px;line-height:1.55;}
+  .m-block{margin:0 0 24px;}
+  .m-block h4{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:0 0 9px;}
+  .m-block p{margin:0;font-size:15.5px;color:#cdcbc4;line-height:1.6;}
+  .m-source{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:14px;color:var(--accent-2);text-decoration:none;border:1px solid rgba(255,210,63,.35);padding:10px 16px;border-radius:999px;}
+  .m-source:hover{background:rgba(255,210,63,.08);}
+  .m-close{position:fixed;top:24px;right:26px;z-index:120;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .m-close:hover{border-color:var(--accent);}
+
+  /* ---------- RELEASES COLUMN ---------- */
+  .releases{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:30px 34px 30px;}
+  .releases .lead{font-size:14.5px;color:var(--muted);max-width:74ch;margin:0 0 22px;line-height:1.55;}
+  .rel-item{display:grid;grid-template-columns:160px 1fr;gap:22px;padding:22px 0;border-top:1px solid var(--line);}
+  .rel-item:first-of-type{border-top:none;padding-top:4px;}
+  .rel-head .name{font-family:var(--serif);font-size:21px;line-height:1.08;margin:0 0 7px;letter-spacing:-.3px;}
+  .rel-head .when{display:inline-block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-2);}
+  .rel-body p{margin:0 0 11px;font-size:15px;color:#cdcbc4;line-height:1.58;}
+  .rel-body a{font-size:13px;color:var(--accent-2);text-decoration:none;border-bottom:1px solid rgba(255,210,63,.35);padding-bottom:1px;}
+  .rel-body a:hover{border-color:var(--accent-2);}
+  @media(max-width:620px){.rel-item{grid-template-columns:1fr;gap:8px;}}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);margin-top:70px;padding:34px 0 60px;color:var(--muted);font-size:13px;}
+  footer .f-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  footer a{color:var(--muted);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:920px){
+    .hero{grid-template-columns:1fr;}
+    .hero .img-wrap{min-height:240px;aspect-ratio:16/9;}
+    .hero .img-wrap::after{background:linear-gradient(180deg,rgba(0,0,0,0) 60%, rgba(22,22,25,.9) 100%);}
+    .grid-2{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .gallery .g-card.feat{grid-column:span 2;}
+  }
+  @media(max-width:560px){
+    .gallery{grid-template-columns:1fr;}
+    .gallery .g-card.feat{grid-column:span 1;}
+    .modal .m-body{padding:26px 22px 32px;}
+    .brand h1{font-size:24px;}
+  }
+</style>
 </head>
 <body>
-  <div class="page">
-    <header class="masthead">
-      <section class="hero-panel" aria-labelledby="issue-title">
-        <div class="masthead-top">
-          <div class="eyebrow">
-            <span>FOMO-дайджест</span>
-            <span class="dot"></span>
-            <span>Полный недельный диапазон</span>
-            <span class="dot"></span>
-            <span>21-27 мая 2026</span>
-          </div>
-        </div>
-        <div class="hero-body">
-          <h1 id="issue-title" class="hero-title">AI уже не рядом с креативным стеком. Он вшивается прямо внутрь него.</h1>
-          <p class="hero-dek">
-            За неделю рынок еще сильнее сместился от отдельных моделей к рабочим средам, где генерация, управление стилем, аудио,
-            видео и прозрачность контента становятся частью одного потока.
-          </p>
-          <div class="hero-metrics" aria-label="Ключевые метрики выпуска">
-            <div class="metric">
-              <div class="metric-value">8</div>
-              <div class="metric-label">Сильных материалов</div>
-            </div>
-            <div class="metric">
-              <div class="metric-value">4</div>
-              <div class="metric-label">Продуктовых релиза</div>
-            </div>
-            <div class="metric">
-              <div class="metric-value">4</div>
-              <div class="metric-label">Практических сигнала</div>
-            </div>
-          </div>
-        </div>
-        <div class="hero-footer">
-          <div class="hero-promo">
-            <div>
-              <h2>Главная линия недели: интерфейсом для генерации становится не чат, а весь workflow.</h2>
-            </div>
-            <p>
-              Runway идет в агентные среды, Krea усиливает контроль над стилем, ElevenLabs собирает полноценный аудиостек,
-              а YouTube поднимает стандарты прозрачности для AI-видео.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <aside class="brief-panel" aria-labelledby="brief-title">
-        <div class="eyebrow">
-          <span>Редакторский радар</span>
-        </div>
-        <h2 id="brief-title" class="brief-title">Что действительно важно на этой неделе</h2>
-        <p class="brief-copy">
-          Выпуск получился компактным, но плотным: без слабых новостей ради объема и с чуть повышенным приоритетом для историй,
-          где AI уже меняет креативную практику, а не просто обещает это сделать.
-        </p>
-        <div class="signals">
-          <div class="signal">
-            <h3>1. Agents + Creative Tools</h3>
-            <p>Креативные сервисы перестают ждать, пока пользователь вручную переключится между окнами: генерация заезжает прямо в среду, где уже идет работа.</p>
-          </div>
-          <div class="signal">
-            <h3>2. Style Is the Product</h3>
-            <p>Следующий уровень дифференциации не просто качество картинки, а воспроизводимый контроль над эстетикой, брендом и материалом.</p>
-          </div>
-          <div class="signal">
-            <h3>3. Audio Matures Fast</h3>
-            <p>Рынок аудио уходит от демо-возможностей к инфраструктуре: музыкальные модели, голосовые маркетплейсы и масштабируемое продакшн-применение.</p>
-          </div>
-          <div class="signal">
-            <h3>4. Provenance Goes Mainstream</h3>
-            <p>Маркировка AI-контента становится не нишевой этикой, а частью продуктовой поверхности больших платформ.</p>
-          </div>
-        </div>
-        <div class="editor-note">
-          <strong>Как читать номер</strong>
-          <p>Сначала крупные сдвиги, затем более прикладные кейсы. Клик по любой карточке открывает detail-view именно этого материала.</p>
-        </div>
-      </aside>
-    </header>
-
-    <main class="section" aria-labelledby="stories-title">
-      <div class="section-head">
+<!-- ===================== HEADER ===================== -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="#fff" stroke-width="2"/>
+            <path d="M16 7l2.6 2 .9 3.1-3.5 2.4-3.5-2.4.9-3.1L16 7z" fill="#fff"/>
+            <path d="M16 16l3.5 2.4-1.3 4.1h-4.4l-1.3-4.1L16 16z" fill="#fff" opacity="0.55"/>
+          </svg>
+        </span>
         <div>
-          <div class="eyebrow">
-            <span>Подборка недели</span>
-          </div>
-          <h2 id="stories-title">8 историй, которые стоит унести с собой</h2>
-        </div>
-        <p>
-          Один и тот же диапазон во всем выпуске: с четверга 21 мая 2026 по среду 27 мая 2026 включительно.
-          Внутри есть и крупные продуктовые релизы, и более показательные сигналы для креативных команд.
-        </p>
-      </div>
-
-      <div id="deck" class="deck" aria-live="polite"></div>
-
-      <div class="section-mini">
-        <div class="mini-block">
-          <strong>Короткий вывод</strong>
-          <p>Если еще месяц назад казалось, что главный вопрос в том, какая модель сильнее, то теперь все больше решает то, в какой рабочий контур она встроена и насколько хорошо умеет держать контекст бренда, формы и задачи.</p>
-        </div>
-        <div class="mini-block">
-          <strong>Что не вошло</strong>
-          <p>Мы сознательно не добивали номер слабыми корпоративными анонсами и широкими AI-обещаниями без внятного продуктового или культурного последствия.</p>
+          <h1>FOMO</h1>
+          <div class="sub">AI · Creative · Brand Cases</div>
         </div>
       </div>
-
-      <p class="footer-note">
-        Все ссылки в detail-view ведут на первоисточники. Если дата была надежно подтверждена, она показана в карточке и детальном экране.
-      </p>
-    </main>
-  </div>
-
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="detail-title">
-      <button id="modal-close" class="modal-close" type="button">Закрыть</button>
-      <div id="detail-root"></div>
+      <div class="issue-tag">Выпуск № 23 · еженедельно</div>
+    </div>
+    <div class="daterange">
+      <span class="big">30 мая — 5 июня</span>
+      <span class="yr">2026</span>
     </div>
   </div>
+</header>
 
-  <script>
-    const items = [
-      {
-        id: "runway-mcp",
-        layout: "heroish",
-        accent: "#9f4c2c",
-        accent2: "#e0b66d",
-        category: "Hero",
-        source: "Runway",
-        date: "27 мая 2026",
-        title: "Runway запустил MCP и встроил генерацию изображений и видео прямо в агентные среды",
-        summary: "Runway выпустил собственный MCP-сервер, через который его генеративные инструменты можно подключать к ChatGPT, Claude, Cursor и другим MCP-совместимым агентам. Идея не в еще одном окне для промптов, а в том, чтобы визуальный продакшн жил внутри той же рабочей сессии, где уже пишутся код, копирайт и продуктовые сценарии.",
-        why: "Это важный сдвиг для дизайнеров, бренд-команд и продуктовых команд: генерация визуалов все меньше похожа на отдельный сервис и все больше на встроенную функцию рабочего процесса. Когда продуктовые видео, hero assets и вариации промо-изображений можно запрашивать прямо из агентной среды, меняется не только скорость, но и сама логика сборки кампаний и интерфейсов.",
-        takeaway: "Имеет смысл протестировать сценарии, где один и тот же агентный поток собирает текст, код и визуалы без ручных переключений между сервисами.",
-        expanded: "Runway подает MCP как полноценную generation studio внутри агента. В официальном анонсе перечислены практические use case'ы: маркетинговое видео из product page, набор новых visual assets по референсу товара, character-led ad по сцене и реплике, а также визуалы для сайтов и приложений. Отдельно важно, что доступ идет к нескольким актуальным моделям сразу, а авторизация привязана к существующему тарифу Runway без отдельного API-ключа.",
-        link: "https://runwayml.com/news/mcp",
-        word: "Workflow",
-        code: "MCP / agent-native video"
-      },
-      {
-        id: "youtube-ai-labels",
-        layout: "feature",
-        accent: "#a81818",
-        accent2: "#f06b56",
-        category: "Platform",
-        source: "YouTube",
-        date: "27 мая 2026",
-        title: "YouTube сделал AI-маркировку заметнее и начал автоматически определять значимый фотогенеративный контент",
-        summary: "YouTube переносит label для фотореалистичного и существенно измененного AI-контента в более заметную точку интерфейса: под плеер у длинных видео и поверх кадра в Shorts. Параллельно платформа начинает автоматически применять label, если система обнаруживает значимое использование AI, даже когда автор сам этого не указал.",
-        why: "Для креативной индустрии это сильный сигнал: provenance и disclosure выходят из зоны внутренних правил платформы и становятся видимой частью пользовательского опыта. Видеокоманды, бренды и авторы больше не могут рассчитывать, что вопрос прозрачности останется на уровне мелкого метаданных-следа.",
-        takeaway: "Стоит пересмотреть свои процессы публикации AI-видео и заранее считать disclosure частью креативной упаковки, а не последним чекбоксом перед релизом.",
-        expanded: "YouTube подчеркивает, что единый формат маркировки теперь применяется ко всему фотореалистичному и существенно AI-сгенерированному или AI-измененному контенту. Для менее реалистичных, анимированных или слегка модифицированных материалов disclosure уходит в расширенное описание. Важная деталь: label сам по себе не влияет на рекомендации или монетизацию, но становится стандартным слоем контекста для зрителя.",
-        link: "https://blog.youtube/news-and-events/improving-ai-labels-viewers-creators/",
-        word: "Disclosure",
-        code: "visible labels / auto-detection"
-      },
-      {
-        id: "storytel-elevenlabs",
-        layout: "standard",
-        accent: "#174f6d",
-        accent2: "#7cb8d4",
-        category: "Case",
-        source: "ElevenLabs x Storytel",
-        date: "27 мая 2026",
-        title: "Storytel вместе с ElevenLabs переупаковывает аудиокнигу как настраиваемый формат, а не фиксированную запись",
-        summary: "Storytel рассказал, как строит Voice Switcher на базе ElevenLabs: слушатель может выбрать между оригинальным человеческим диктором и AI-озвучкой той же книги. Толчком к функции стали пользовательские данные: проблема часто была не в книге, а в несовпадении с голосом рассказчика.",
-        why: "Это уже не демонстрация «AI умеет читать текст», а новая логика упаковки контента. Для медиа и издательских продуктов это важный прецедент: один и тот же объект можно выпускать как адаптируемый experience, где меняется не только язык, но и характер подачи.",
-        takeaway: "Имеет смысл смотреть на аудио и видео не как на финальный файл, а как на слой, который можно персонализировать по голосу, тону и формату доставки.",
-        expanded: "В кейсе особенно показательно то, что Storytel и ElevenLabs вместе дорабатывали качество Nordic voices и опирались на собственные данные издателя. Сейчас Voice Switcher уже вышел в Швеции, Дании и Финляндии, а долгосрочная цель — сделать такую схему доступной для всей библиотеки. Это хороший пример того, как AI не просто удешевляет локализацию, а меняет саму продуктовую конструкцию аудиокниги.",
-        link: "https://elevenlabs.io/blog/storytel-rethinks-audiobook-narration-with-voice-switcher-built-on-elevenlabs",
-        word: "Narration",
-        code: "voice switcher / audiobook UX"
-      },
-      {
-        id: "elevenlabs-music-v2",
-        layout: "standard",
-        accent: "#3a2c7f",
-        accent2: "#9a85ff",
-        category: "Release",
-        source: "ElevenLabs",
-        date: "26 мая 2026",
-        title: "ElevenLabs выпустил Music v2 и делает ставку на коммерчески пригодный AI-аудиостек",
-        summary: "Music v2 обещает лучшее качество вокала, инструментовки и аранжировки, поддержку более сложных жанровых переходов и более точный контроль над треком, включая inpainting отдельных участков. Модель одновременно обслуживает три продуктовых контура компании: музыку для креаторов, API-встраивание и branded content.",
-        why: "Это важный шаг для брендов, контент-команд и продакшна, которым нужен не просто генератор фоновых треков, а более управляемый и правовой внятный инструмент. ElevenLabs явно двигается в сторону платформы, где голос, музыка и коммерческое использование живут в одном экосистемном пакете.",
-        takeaway: "Если вы делаете сериальные форматы, рекламу или social-first видео, стоит проверить AI-музыку не как gimmick, а как быстрый слой для темповых вариаций, локализаций и черновых саунд-концептов.",
-        expanded: "В анонсе компания отдельно делает акцент на improved inpainting, секционную сборку композиции и multilingual support, а еще снижает цену на генерацию. Для брендов важнее другое: ElevenLabs подает продукт как licensed и commercial-ready решение без sync fees и clearance delays. Это очень прагматичный язык для рынка, который устал от сильных демо и слабой пригодности в реальном продакшне.",
-        link: "https://elevenlabs.io/blog/introducing-music-v2",
-        word: "Soundtrack",
-        code: "music model / inpainting / licensed"
-      },
-      {
-        id: "elevenlabs-creator-economy",
-        layout: "compact",
-        accent: "#1e6c48",
-        accent2: "#7ec4a7",
-        category: "Economy",
-        source: "ElevenLabs",
-        date: "22 мая 2026",
-        title: "Голосовые авторы уже заработали на ElevenLabs больше $22 млн",
-        summary: "За полгода выплаты авторам голосов в Voice Library выросли с $11 млн до более чем $22 млн. Компания подает это как новую экономику голосового IP, где монетизация идет не через разовую сессию, а через постоянный usage-based доход.",
-        why: "Для креативной индустрии это один из самых конкретных сигналов недели: AI-рынок все чаще строится не только вокруг инструментов, но и вокруг новых моделей авторской экономики. Важен не только генератор, а то, как у создателя появляется управляемый, лицензируемый и масштабируемый цифровой актив.",
-        takeaway: "Стоит следить за тем, как подобные marketplace-модели будут работать в музыке, визуальных стилях и брендовых ассетах, а не только в голосе.",
-        expanded: "ElevenLabs описывает Voice Marketplace как смену модели заработка: голос становится активом, который работает в радио, аудиокнигах, играх, e-learning и маркетинге, а автор зарабатывает с каждого использования. В статье есть показательные creator stories, где доход от платформы уже превосходит результаты традиционной карьеры. Это не снимает вопросов о рынке труда, но показывает, что инфраструктура монетизации AI-активов становится вполне осязаемой.",
-        link: "https://elevenlabs.io/blog/22-million-earned-by-voice-creators-on-elevenlabs",
-        word: "IP",
-        code: "voice marketplace / payouts"
-      },
-      {
-        id: "krea-lora",
-        layout: "compact",
-        accent: "#805521",
-        accent2: "#efc16c",
-        category: "Tooling",
-        source: "Krea",
-        date: "21 мая 2026",
-        title: "Krea добавил LoRA training для Krea 2 и сделал стиль еще более управляемым",
-        summary: "Krea запустил beta-обучение LoRA для Krea 2, чтобы пользователи могли тренировать модель на собственном стиле, объекте или персонаже и сразу использовать это в image tool. Компания делает акцент именно на style control, а не только на предметной точности.",
-        why: "Это важная история для дизайнеров и art-direction команд, потому что рынок постепенно переходит от «сгенерируй красиво» к «удержи нужный визуальный почерк и повтори его в серии». В реальной работе это намного ближе к нуждам бренда и кампании, чем просто единичная удачная картинка.",
-        takeaway: "Если у команды есть повторяемая эстетика, сейчас хороший момент проверить, как fine-tuning стиля может сократить ручные циклы отбора и доработки.",
-        expanded: "В анонсе Krea отдельно пишет, что новое качество заключается в удержании style, character и material identity на уровне, которого компания не видела в своих прежних backbone-решениях. Важны и детали процесса: минимум три изображения, автокапшены набора, приватность тренировочных изображений по умолчанию и возможность комбинировать несколько LoRA внутри генерации.",
-        link: "https://www.krea.ai/blog/krea-2-lora-training",
-        word: "Style",
-        code: "LoRA / brandable image control"
-      },
-      {
-        id: "superside-krea",
-        layout: "compact",
-        accent: "#0f5161",
-        accent2: "#7cc6c5",
-        category: "Workflow",
-        source: "Krea x Superside",
-        date: "21 мая 2026",
-        title: "Superside через Krea показывает, что AI для креативного сервиса уже измеряется не вау-эффектом, а скоростью цикла",
-        summary: "В customer story Krea рассказывает, что Superside сократил типичный пятидневный creative workflow до одного дня. Даже при минимуме деталей сам заголовок кейса важен: речь не о генерации ради генерации, а о сервисной производительности.",
-        why: "Это показательный сдвиг в языке рынка. Когда агентства и creative-as-a-service игроки начинают продавать AI не как эксперимент, а как способ перестроить SLA, производственный ритм и маржинальность, значит инструмент уже вошел в операционный слой бизнеса.",
-        takeaway: "Полезно считать AI не только в штуках контента, но и во времени прохождения задачи: от первого брифа до клиентски пригодного результата.",
-        expanded: "Даже короткий формат публикации работает здесь как маркер. Krea выводит на первый план не модельную новизну, а бизнес-показатель: how Superside scales creative production. Для студий, in-house команд и сервисных продуктовых команд это, возможно, более важный KPI, чем очередной benchmark картинки.",
-        link: "https://www.krea.ai/customer-stories/superside-one-day-instead-of-five",
-        word: "Cycle",
-        code: "5 days -> 1 day"
-      },
-      {
-        id: "gemini-home",
-        layout: "feature",
-        accent: "#1d6b53",
-        accent2: "#9ad3b8",
-        category: "Platform",
-        source: "Google",
-        date: "21 мая 2026",
-        title: "Google разворачивает Gemini for Home как full-stack платформу для сервисов и устройств",
-        summary: "Google открыл Gemini for Home для операторов, провайдеров и hardware-партнеров, объединив Home APIs, camera intelligence, Ask Home и Home Brief в более полную AI-платформу для бытовых сервисов. Это уже не просто умный дом с голосовой командой, а инфраструктура для проактивных домашних сценариев.",
-        why: "Для продуктовых и experience-команд здесь важен более широкий сигнал: большие платформы продолжают превращать AI в слой, который связывает интерфейс, сенсоры, данные и брендовый сервис. Даже если ваш рынок не smart home, логика одна и та же: ценность смещается от отдельной функции к orchestration поверх среды.",
-        takeaway: "Стоит внимательнее смотреть на продукты, где AI не отвечает на вопрос, а собирает сводку, контекст и действие из длинного хвоста сигналов.",
-        expanded: "Google описывает три базовые способности: camera intelligence, Ask Home и Home Brief. Отдельно компания делает ставку на партнеров и референсные аппаратные дизайны, чтобы сократить барьер входа в AI-native hardware. В креативной плоскости это интересно как пример того, как narrative про assistant окончательно уступает narrative про ambient system, работающую в фоне и собирающую пользовательский опыт из множества слоев.",
-        link: "https://developers.googleblog.com/empowering-service-providers-and-hardware-partners-with-gemini-for-home/",
-        word: "Ambient",
-        code: "AI home / full-stack service"
-      }
-    ];
+<div class="wrap">
 
-    const deck = document.getElementById("deck");
-    const modal = document.getElementById("modal");
-    const detailRoot = document.getElementById("detail-root");
-    const closeButton = document.getElementById("modal-close");
+  <!-- ===================== HERO ===================== -->
+  <div class="sec-head">
+    <h2>Кейс недели</h2><span class="ln"></span><span class="count">главный материал</span>
+  </div>
 
-    function renderDeck() {
-      deck.innerHTML = items.map((item) => `
-        <article
-          class="card ${item.layout}"
-          data-id="${item.id}"
-          tabindex="0"
-          role="button"
-          aria-label="Открыть материал: ${escapeHtml(item.title)}"
-          style="--accent:${item.accent}; --accent-2:${item.accent2};"
-        >
-          <div class="card-topline">
-            <div class="badge">
-              <span class="badge-mark" aria-hidden="true"></span>
-              <span>${item.category}</span>
-            </div>
-            <span>${item.date}</span>
-          </div>
-          <div class="visual" aria-hidden="true">
-            <div class="visual-grid"></div>
-            <div class="visual-content">
-              <div class="visual-code">${item.code}</div>
-              <div class="visual-word">${item.word}</div>
-            </div>
-          </div>
-          <div>
-            <div class="eyebrow">
-              <span>${item.source}</span>
-            </div>
-            <h3 class="card-title">${item.title}</h3>
-          </div>
-          <p class="card-summary">${item.summary}</p>
-          <p class="card-takeaway">${item.takeaway}</p>
-        </article>
-      `).join("");
-    }
+  <article class="hero" data-id="adidas" tabindex="0">
+    <div class="img-wrap">
+      <img src="https://img.youtube.com/vi/mJJY53qhJe0/maxresdefault.jpg"
+           onerror="this.onerror=null;this.src='https://img.youtube.com/vi/mJJY53qhJe0/hqdefault.jpg';"
+           alt="Кадр из ролика adidas Backyard Legends: молодой Дэвид Бекхэм и звёзды футбола">
+    </div>
+    <div class="body">
+      <span class="badge">● Реклама · Generative AI</span>
+      <h3>adidas «Backyard Legends»: как ИИ-омоложение перестало быть фокусом</h3>
+      <p class="deck">Тимоти Шаламе, Месси, Бэд Банни и помолодевший Дэвид Бекхэм с ирокезом — в ролике к ЧМ-2026 ИИ работает так аккуратно, что о нём забываешь. Редкий случай, когда генеративные технологии служат истории, а не наоборот.</p>
+      <div class="meta">
+        <span>adidas × производственная команда</span><span class="dot"></span>
+        <span>YouTube / Creative Bloq</span><span class="dot"></span>
+        <span>12 мая 2026</span>
+      </div>
+      <div class="readmore">Открыть разбор →</div>
+    </div>
+  </article>
 
-    function renderDetail(item) {
-      detailRoot.innerHTML = `
-        <section class="modal-layout" style="--accent:${item.accent}; --accent-2:${item.accent2};">
-          <div class="visual detail-visual" aria-hidden="true">
-            <div class="visual-grid"></div>
-            <div class="visual-content">
-              <div class="visual-code">${item.code}</div>
-              <div class="visual-word">${item.word}</div>
-            </div>
-          </div>
-          <div class="detail-head">
-            <div class="eyebrow">
-              <span>${item.category}</span>
-              <span class="dot"></span>
-              <span>${item.source}</span>
-            </div>
-            <h2 id="detail-title" class="detail-title">${item.title}</h2>
-            <p class="detail-lead">${item.summary}</p>
-            <div class="detail-meta">
-              <span>${item.date}</span>
-              <span>Оригинальный источник</span>
-              <span>Период выпуска: 21-27 мая 2026</span>
-            </div>
-            <a class="detail-link" href="${item.link}" target="_blank" rel="noreferrer">Открыть первоисточник</a>
-          </div>
-        </section>
+  <!-- ===================== SECONDARY ===================== -->
+  <div class="sec-head">
+    <h2>Сильные кейсы</h2><span class="ln"></span><span class="count">реклама · бренд · продакшн</span>
+  </div>
 
-        <section class="detail-grid">
-          <div class="detail-box">
-            <h3>Что произошло</h3>
-            <p>${item.expanded}</p>
-          </div>
-          <div class="detail-box">
-            <h3>Почему это важно</h3>
-            <p>${item.why}</p>
-          </div>
-          <div class="detail-box">
-            <h3>Практический takeaway</h3>
-            <p>${item.takeaway}</p>
-          </div>
-        </section>
+  <div class="grid-2">
 
-        <section class="detail-full">
-          <h3>Редакторский смысл</h3>
-          <p>${buildEditorialLine(item)}</p>
-        </section>
-      `;
-    }
+    <article class="card" data-id="prada" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://cdn.mos.cms.futurecdn.net/4jskbL82ag3tiCpt6QPHRG.jpg"
+             alt="Кадр кампании Prada Satellites II: Хидео Кодзима и Николас Виндинг Рефн как космические путешественники">
+      </div>
+      <div class="body">
+        <h3>Prada «Satellites II»: Кодзима, Рефн и эстетика ИИ-трэша</h3>
+        <p class="deck">Шестиминутный sci-fi-тизер byNWR с октопусом-кайдзю превращает «слоповатость» ИИ-видео в осознанный приём — оммаж ретро-эксплуатационному кино.</p>
+        <div class="meta"><span>Prada × byNWR</span><span class="dot"></span><span>30 мая 2026</span></div>
+      </div>
+    </article>
 
-    function buildEditorialLine(item) {
-      const lines = {
-        "runway-mcp": "Runway здесь важен не просто как еще один генератор видео, а как индикатор того, что creative tooling начинает встраиваться в агентный контур на тех же правах, что и кодовые или текстовые инструменты. Для рынков дизайна, контента и digital product это почти наверняка предвещает волну новых связок между production, prototyping и go-to-market.",
-        "youtube-ai-labels": "История YouTube важна тем, что AI-transparency переезжает из policy-документов в основной интерфейс. Когда это делает одна из главных видеоплатформ мира, меняются не только правила публикации, но и ожидания аудитории по отношению к тому, как выглядит честная работа с синтетическим контентом.",
-        "storytel-elevenlabs": "Storytel показывает, что AI может менять не только стоимость производства, но и сам формат медиа-объекта. Если narrational layer становится переключаемым, то следующими могут стать темп, интонация, возрастной режим подачи и вообще вся логика адаптивного медиа.",
-        "elevenlabs-music-v2": "В Music v2 интересно то, что ElevenLabs собирает уже не отдельную audio feature, а системный стек для креаторов, брендов и разработчиков. Это повышает шансы, что AI-музыка быстрее дойдет до реального коммерческого использования, чем многие ожидали.",
-        "elevenlabs-creator-economy": "Цифра в $22 млн важна не сама по себе, а как подтверждение того, что вокруг AI-инструментов формируется слой новой креативной экономики. Следить стоит не только за платформами, но и за тем, как они перераспределяют ценность между инструментом, владельцем IP и конечным заказчиком.",
-        "krea-lora": "Krea довольно точно считывает потребность рынка: креативным командам нужен не просто высокий realism, а надежный control over taste. LoRA training для собственного стиля — это шаг именно в эту сторону.",
-        "superside-krea": "Кейс Superside стоит читать как напоминание, что главным полем битвы AI в креативе скоро станет throughput. Побеждать будут не только те, у кого сильнее модель, но и те, кто научится быстрее превращать бриф в пригодный, согласуемый и тиражируемый результат.",
-        "gemini-home": "Google показывает, как AI все чаще проектируется не как point feature, а как orchestration layer поверх устройств, подписок и контекста. Этот паттерн полезно держать в голове всем, кто строит продукты, где опыт складывается из множества каналов и точек касания."
-      };
-      return lines[item.id] || "";
-    }
+    <article class="card" data-id="colby" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://mma.prnewswire.com/media/2994656/Colby2_General.jpg"
+             alt="Визуал к бренд-споту Colby2, созданному полностью средствами ИИ">
+      </div>
+      <div class="body">
+        <h3>Colby2: первый полностью ИИ-снятый рекламный фильм за 30 лет режиссёра</h3>
+        <p class="deck">Кинематографичный спот о семье, прожитой под одной крышей, собран в режиссёрском ИИ-пайплайне: визуал, музыка и озвучка — генеративные, управление — человеческое.</p>
+        <div class="meta"><span>Colby2 / Стив Колби</span><span class="dot"></span><span>4 июня 2026</span></div>
+      </div>
+    </article>
 
-    function openDetail(id) {
-      const item = items.find((entry) => entry.id === id);
-      if (!item) return;
-      renderDetail(item);
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      history.replaceState(null, "", `#${id}`);
-    }
+    <article class="card" data-id="jose" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://i.ytimg.com/vi/cMHycdt9bJk/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/cMHycdt9bJk/hqdefault.jpg';"
+             alt="Хосе Моуринью рядом со своим ИИ-двойником из социального сериала José vs. Mourinho">
+      </div>
+      <div class="body">
+        <h3>Coca-Cola «José vs. Mourinho»: ИИ-сериал ежедневных футбольных дебатов</h3>
+        <p class="deck">Footballco и Coca-Cola превращают турнир в ежедневный контент-движок: более 200 коротких ИИ-роликов с виртуальными комментаторами для YouTube, TikTok и Instagram.</p>
+        <div class="meta"><span>Coca-Cola × Footballco</span><span class="dot"></span><span>ЧМ-2026</span></div>
+      </div>
+    </article>
 
-    function closeDetail() {
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      history.replaceState(null, "", window.location.pathname);
-    }
+    <article class="card" data-id="tribeca" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://variety.com/wp-content/uploads/2026/05/Still-2026-05-19-141021_5.18.1.png?w=1000&h=563&crop=1"
+             alt="Кадр из полностью ИИ-сгенерированной докудрамы Dreams of Violets">
+      </div>
+      <div class="body">
+        <h3>Tribeca берёт в программу полностью ИИ-фильм «Dreams of Violets»</h3>
+        <p class="deck">Студия Fountain 0 сделала 75-минутную докудраму о гражданском сопротивлении в Тегеране целиком средствами ИИ — и крупный фестиваль впервые поставил её в программу.</p>
+        <div class="meta"><span>Tribeca Festival / Fountain 0</span><span class="dot"></span><span>премьера 10 июня</span></div>
+      </div>
+    </article>
 
-    function handleCardActivation(event) {
-      const card = event.target.closest(".card");
-      if (!card) return;
-      openDetail(card.dataset.id);
-    }
+  </div>
 
-    function escapeHtml(value) {
-      return value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
-    }
+  <!-- ===================== NEWS ===================== -->
+  <div class="sec-head">
+    <h2>Контекст недели</h2><span class="ln"></span><span class="count">2 ключевые новости</span>
+  </div>
 
-    deck.addEventListener("click", handleCardActivation);
-    deck.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      const card = event.target.closest(".card");
-      if (!card) return;
-      event.preventDefault();
-      openDetail(card.dataset.id);
-    });
+  <div class="grid-2">
+    <article class="card" data-id="cannes" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://img-cdn.publive.online/fit-in/1200x675/bmi/media/media_files/2025/06/18/cannes_lions-9b127652.jpeg"
+             alt="Сцена фестиваля Cannes Lions, который в 2026 вводит Creative Brand Lion и AI Craft">
+      </div>
+      <div class="body">
+        <h3>Cannes Lions 2026 вводит Creative Brand Lion и обязательное раскрытие ИИ</h3>
+        <p class="deck">К изданию 22–26 июня заявлены новые AI Craft-подкатегории, кодекс поведения, инструменты детекции и обязательная декларация использования ИИ.</p>
+        <div class="meta"><span>Cannes Lions</span><span class="dot"></span><span>фестиваль 22–26 июня 2026</span></div>
+      </div>
+    </article>
 
-    closeButton.addEventListener("click", closeDetail);
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        closeDetail();
-      }
-    });
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && modal.classList.contains("is-open")) {
-        closeDetail();
-      }
-    });
+    <article class="card" data-id="models" tabindex="0">
+      <div class="img-wrap">
+        <img src="https://d8r3hf.cachecloud.net/cms/2026-05-28/20260528030425_lvqmgpem.png"
+             alt="Иллюстрация к обзору волны релизов ИИ-моделей июня 2026">
+      </div>
+      <div class="body">
+        <h3>Июнь-2026: волна релизов моделей меняет инструментальный слой</h3>
+        <p class="deck">В один месяц сходятся сразу несколько сюжетов — Gemini 3.5 Pro, Claude Mythos, Grok 5, — но большая часть ещё не в проде. Разбираемся, что реально доступно, а что пока слух.</p>
+        <div class="meta"><span>Google · Anthropic · xAI</span><span class="dot"></span><span>июнь 2026</span></div>
+      </div>
+    </article>
+  </div>
 
-    renderDeck();
+  <!-- ===================== VISUAL GALLERY ===================== -->
+  <div class="sec-head" id="visual-gallery">
+    <h2>Visual Gallery</h2><span class="ln"></span><span class="count">8 визуальных кейсов</span>
+  </div>
+  <p class="gallery-intro">Битва генеративной рекламы ЧМ-2026: восемь роликов, где ИИ стал частью бренд-языка — от поэтичных монтажей до откровенного «слопа». Смотрите на сам кадр; текст здесь — только подпись.</p>
 
-    const initialId = window.location.hash.replace("#", "");
-    if (initialId) {
-      openDetail(initialId);
-    }
-  </script>
+  <div class="gallery">
+
+    <div class="g-card feat" data-id="pepsi" tabindex="0">
+      <div class="ph"><span class="num">01</span>
+        <img src="https://img.youtube.com/vi/UWFnOdU33MQ/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/UWFnOdU33MQ/hqdefault.jpg';"
+             alt="Кадр из Pepsi Football Nation: фанатский баттл с генеративными вставками и Дэвидом Бекхэмом">
+      </div>
+      <div class="cap"><p class="t">Pepsi «Football Nation»</p><span class="a">Pepsi · genAI · фанатский баннер-баттл</span></div>
+    </div>
+
+    <div class="g-card feat" data-id="coke-uncanned" tabindex="0">
+      <div class="ph"><span class="num">02</span>
+        <img src="https://img.youtube.com/vi/jNHDWcoNzVA/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/jNHDWcoNzVA/hqdefault.jpg';"
+             alt="Кадр из Coca-Cola Uncanned Emotions: ИИ-кадры банок Coca-Cola в движении">
+      </div>
+      <div class="cap"><p class="t">Coca-Cola «Uncanned Emotions»</p><span class="a">Coca-Cola × Ogilvy / WPP Open X</span></div>
+    </div>
+
+    <div class="g-card" data-id="lays" tabindex="0">
+      <div class="ph"><span class="num">03</span>
+        <img src="https://img.youtube.com/vi/sS_05OLVkxU/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/sS_05OLVkxU/hqdefault.jpg';"
+             alt="Кадр из Lay's Most Epic Watch Party: Месси, Бекхэм и Стив Карелл на вечеринке болельщиков">
+      </div>
+      <div class="cap"><p class="t">Lay's «Most Epic Watch Party»</p><span class="a">Lay's · фан-движок на WhatsApp</span></div>
+    </div>
+
+    <div class="g-card" data-id="budweiser" tabindex="0">
+      <div class="ph"><span class="num">04</span>
+        <img src="https://img.youtube.com/vi/w0oRTljtx0o/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/w0oRTljtx0o/hqdefault.jpg';"
+             alt="Кадр из Budweiser Let It Pour: Эрлинг Холанд и Юрген Клопп в сюрреалистичном ролике">
+      </div>
+      <div class="cap"><p class="t">Budweiser «Let It Pour»</p><span class="a">Budweiser · Холанд × Клопп</span></div>
+    </div>
+
+    <div class="g-card" data-id="coooors" tabindex="0">
+      <div class="ph"><span class="num">05</span>
+        <img src="https://img.youtube.com/vi/SbmYOQIIEBg/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/SbmYOQIIEBg/hqdefault.jpg';"
+             alt="Кадр из The Coooors Call: обыгрывание легендарного крика GOOOOAL как названия бренда">
+      </div>
+      <div class="cap"><p class="t">Coors «The Coooors Call»</p><span class="a">Coors · бренд из крика «GOOOOAL»</span></div>
+    </div>
+
+    <div class="g-card" data-id="duracell" tabindex="0">
+      <div class="ph"><span class="num">06</span>
+        <img src="https://img.youtube.com/vi/huRFGYDWvXA/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/huRFGYDWvXA/hqdefault.jpg';"
+             alt="Кадр из Duracell x Messi Reboot: Месси как робот на батарейках AA">
+      </div>
+      <div class="cap"><p class="t">Duracell «Messi Reboot»</p><span class="a">Duracell · Месси-робот на AA</span></div>
+    </div>
+
+    <div class="g-card" data-id="powerade-gal" tabindex="0">
+      <div class="ph"><span class="num">07</span>
+        <img src="https://img.youtube.com/vi/Ecs-f2Nie4I/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/Ecs-f2Nie4I/hqdefault.jpg';"
+             alt="Кадр из Powerade Power Your Fate: игрок, превращённый в бронзовую статую и мурал">
+      </div>
+      <div class="cap"><p class="t">Powerade «Power Your Fate»</p><span class="a">Powerade × WPP Open X · ИИ-крафт</span></div>
+    </div>
+
+    <div class="g-card" data-id="england-kit" tabindex="0">
+      <div class="ph"><span class="num">08</span>
+        <img src="https://cdn.mos.cms.futurecdn.net/LpyzC4352VqQmL8aghTGNo.png"
+             alt="Гостевая форма сборной Англии к ЧМ-2026, тизер которой обвинили в ИИ-слопе">
+      </div>
+      <div class="cap"><p class="t">England Kit · ИИ-тизер</p><span class="a">обвинения в «AI slop» — сигнал риска</span></div>
+    </div>
+
+  </div>
+
+  <!-- ===================== RELEASES COLUMN ===================== -->
+  <div class="sec-head" id="releases">
+    <h2>Релизы недели</h2><span class="ln"></span><span class="count">новые модели и пайплайны</span>
+  </div>
+  <div class="releases">
+    <p class="lead">Главный сюжет недели в генеративных картинках — отказ от «простыни» текстового промпта в пользу структурной раскладки (layout). Сразу две модели вышли в один день, 3 июня, и тянут индустрию в эту сторону.</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Ideogram 4.0</p>
+        <span class="when">3 июня 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Ideogram выложила первую собственную open-weight text-to-image модель на 9,3 млрд параметров: нативное 2K-разрешение, прозрачный фон и точная раскладка элементов через bounding-box. На лидерборде DesignArena это лучшая открытая модель — выше неё только закрытые от OpenAI и Google.</p>
+        <a href="https://ideogram.ai/blog/ideogram-4.0/" target="_blank" rel="noopener">ideogram.ai — технический разбор ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Reve 2.0</p>
+        <span class="when">3 июня 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Стартап Reve представил 4K-генератор (16 Мп), который строит изображение не из прозы, а из структурного layout, где у каждого объекта есть позиция, размер и собственное описание. Вывод размечен на сегменты — можно править отдельную часть картинки, не перегенерируя всё; модель сразу заняла второе место в Text-to-Image Arena.</p>
+        <a href="https://blog.reve.com/posts/the-layout-bet/" target="_blank" rel="noopener">blog.reve.com — «The Layout Bet» ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">DeepSeek V4-Pro</p>
+        <span class="when">конец апреля 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Чуть раньше DeepSeek открыла веса V4-Pro (1,6T параметров, 1M контекста) под лицензией MIT. Модель подбирается к фронтиру в кодинге и рассуждении при цене примерно в тридцать раз ниже — и продолжает давить на ценовой потолок всего рынка.</p>
+        <a href="https://api-docs.deepseek.com/news/news260424" target="_blank" rel="noopener">api-docs.deepseek.com — анонс ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="f-row">
+      <div>FOMO — еженедельный дайджест об ИИ-кейсах в рекламе, бренде и креативе.<br>Выпуск собран 5 июня 2026. Период обзора: 30 мая — 5 июня 2026.</div>
+      <div>Все ссылки ведут на первоисточники.<br>Кликните любую карточку, чтобы открыть разбор.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== MODAL ===================== -->
+<div class="overlay" id="overlay">
+  <button class="m-close" id="mClose" aria-label="Закрыть">×</button>
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+const ITEMS = {
+  adidas:{
+    kicker:"Кейс недели · Реклама",
+    title:"adidas «Backyard Legends»: как ИИ-омоложение перестало быть фокусом",
+    meta:["adidas","YouTube / Creative Bloq","12 мая 2026"],
+    img:"https://img.youtube.com/vi/mJJY53qhJe0/maxresdefault.jpg",
+    imgAlt:"Кадр из ролика adidas Backyard Legends",
+    lead:"Самый обсуждаемый ролик предстоящего ЧМ-2026 собрал на заднем сиденье одной машины Тимоти Шаламе, Тринити Родман, Ламина Ямаля и Джуда Беллингема, а затем добавил Бэд Банни и Месси. Дэвид Бекхэм появляется помолодевшим — с тем самым ирокезом — и это сделано ИИ настолько неброско, что технология не мешает истории.",
+    summary:"adidas сыграл на ностальгии по культовым роликам 90-х (привет извечному сопернику Nike): хороший темп, искренняя игра Шаламе и фокус на самом спорте и дворовом футболе, а не на продукте. ИИ-омоложение Бекхэма здесь — инструмент каста, а не аттракцион: оно не выпирает и работает на эмоцию. На фоне волны «ИИ-слопа» в рекламе ЧМ это редкий пример, где генеративная технология встроена в продакшн-задачу деликатно.",
+    why:"Сигнал для брендов и агентств: ценность ИИ в рекламе всё чаще не в том, что «сделано нейросетью», а в том, что зритель этого не замечает. Когда ИИ позволяет собрать невозможный каст и омолодить легенду без отрыва от нарратива, выигрывает идея, а не демонстрация технологии. Люди просят сделать из ролика сериал — лучший показатель, что AI-execution не разрушил, а усилил историю.",
+    takeaway:"Тестируйте ИИ-омоложение и цифровой каст там, где это решает продюсерскую задачу (логистика звёзд, архивные образы), а не как самоцель. Главный KPI — «незаметность» приёма: если аудитория обсуждает историю, а не ИИ, вы на правильной стороне волны.",
+    url:"https://youtu.be/mJJY53qhJe0",
+    urlLabel:"Смотреть ролик на YouTube"
+  },
+  prada:{
+    kicker:"Сильный кейс · Fashion / Brand",
+    title:"Prada «Satellites II»: Кодзима, Рефн и эстетика ИИ-трэша как приём",
+    meta:["Prada × byNWR","Creative Bloq / WWD","30 мая 2026"],
+    img:"https://cdn.mos.cms.futurecdn.net/4jskbL82ag3tiCpt6QPHRG.jpg",
+    imgAlt:"Кадр кампании Prada Satellites II с Хидео Кодзимой",
+    lead:"К 14-му выпуску культурной серии Prada Mode (Hotel Chelsea, Нью-Йорк, 3–7 июня, параллельно с Tribeca) студия Николаса Виндинга Рефна byNWR выпустила шестиминутный sci-fi-тизер. Хидео Кодзима и Рефн — космические путешественники, чей корабль мягко падает на чужую планету, где их атакует октопус-кайдзю.",
+    summary:"Тизер намеренно балансирует между оммажем и пародией на ретро-эксплуатационное кино (от «Барбареллы» до японских монстр-фильмов). Спорный вопрос — высмеивает ли Кодзима «стилтность» и бессвязность ИИ-видео или, наоборот, уравнивает её с наивными практическими эффектами старого кино. Контекст подогревает интригу: Кодзима годами критиковал алгоритмический контроль в своих играх, и фанаты увидели противоречие. Бренд использует двусмысленность как часть художественного высказывания.",
+    why:"Для люксовых брендов это образец того, как работать с ИИ не извиняясь и не пряча его, а делая саму «искусственность» темой кампании. Когда генеративная эстетика становится осознанным авторским жестом известного режиссёра, спор вокруг ИИ превращается в культурный капитал, а не в репутационный риск.",
+    takeaway:"Если ИИ-визуал выглядит «сыро», у вас два пути: вычищать до незаметности или превращать сырость в стиль. Prada выбирает второе — и это рабочая гипотеза для брендов с сильной авторской оптикой: рамку «это специально» задаёт имя и концепция, а не качество рендера.",
+    url:"https://www.creativebloq.com/design/advertising/ai-hideo-kojima-wears-prada-in-controversial-sci-fi-campaign",
+    urlLabel:"Разбор на Creative Bloq"
+  },
+  colby:{
+    kicker:"Сильный кейс · Продакшн",
+    title:"Colby2: первый полностью ИИ-снятый рекламный фильм за 30 лет карьеры режиссёра",
+    meta:["Colby2 / Стив Колби","PR Newswire","4 июня 2026"],
+    img:"https://mma.prnewswire.com/media/2994656/Colby2_General.jpg",
+    imgAlt:"Визуал к бренд-споту Colby2, созданному полностью средствами ИИ",
+    lead:"Атлантская продакшн-студия Colby2 выпустила кинематографичный бренд-спот: молодая пара въезжает в первый дом, растит детей, стареет и в финале собирает под одной крышей несколько поколений семьи. Весь ролик создан в управляемом ИИ-пайплайне — для режиссёра Стива Колби это первый полностью ИИ-снятый фильм за более чем 30 лет работы.",
+    summary:"Визуал, музыка и закадровый голос — генеративные, но собраны через режиссёрский подход: команда расширяла сцены, доводила эмоциональные моменты и пробовала несколько направлений сторителлинга в реальном времени. Кейс важен не «вау-кадром», а тем, что показывает зрелую модель работы — ИИ как съёмочная площадка под контролем режиссёра, а не как генератор случайностей.",
+    why:"Для студий и продакшнов это сигнал о смене самой единицы производства: не «снять-то, что написано», а итеративно режиссировать генерацию. Гибкость пайплайна (расширять сцены, менять эмоцию на ходу) меняет экономику и сроки эмоциональной рекламы — то, что раньше требовало кастинга, локаций и пересъёмок, теперь укладывается в управляемый цикл.",
+    takeaway:"Стройте ИИ-продакшн вокруг роли режиссёра, а не вокруг промпта: закладывайте циклы доводки сцен и эмоций. Проверьте гипотезу на «жизненных» нарративах (семья, время, взросление) — именно там длинный эмоциональный спот выигрывает от возможности быстро перебирать варианты.",
+    url:"https://www.prnewswire.com/news-releases/production-is-changed-forever--now-what-302791383.html",
+    urlLabel:"Пресс-релиз (PR Newswire)"
+  },
+  jose:{
+    kicker:"Сильный кейс · Контент в масштабе",
+    title:"Coca-Cola «José vs. Mourinho»: ИИ-сериал ежедневных футбольных дебатов",
+    meta:["Coca-Cola × Footballco","coca-colacompany.com","4 июня 2026"],
+    img:"https://i.ytimg.com/vi/cMHycdt9bJk/maxresdefault.jpg",
+    imgAlt:"Хосе Моуринью рядом со своим ИИ-двойником из социального сериала José vs. Mourinho",
+    lead:"Coca-Cola (как presenting-спонсор) и Footballco запустили к ЧМ-2026 социальную серию с ИИ-двойником Жозе Моуринью: две версии тренера ежедневно спорят друг с другом, занимая противоположные стороны футбольных тем. За турнир запланировано 200+ роликов на TikTok, Instagram, YouTube, X и Facebook.",
+    summary:"«Цифровой двойник» Моуринью собран студией GRAiL на технологиях Google Cloud при участии самого тренера. Это не один флагманский ролик, а контент-движок: ИИ позволяет ежедневно выпускать ситуативные клипы под эмоции матчей — формат, недостижимый при классическом продакшне по скорости и стоимости. Бренд превращает месяц турнира в непрерывный поток реактивного контента.",
+    why:"Сигнал для соцмедиа- и бренд-команд: ИИ меняет не столько качество единичного ролика, сколько частоту и реактивность. Возможность каждый день отвечать на повестку дешёвым, но узнаваемым контентом — это новый рычаг для always-on кампаний вокруг живых событий (спорт, шоу, выборы, релизы).",
+    takeaway:"Закладывайте ИИ не в один «большой» ролик, а в конвейер ситуативного контента с фиксированными персонажами и шаблоном. Метрика — скорость отклика на повестку (часы, не недели) и стоимость одного клипа в серии.",
+    url:"https://www.coca-colacompany.com/media-center/jose-vs-mourinho-fifa-world-cup-2026-series",
+    urlLabel:"Анонс Coca-Cola"
+  },
+  tribeca:{
+    kicker:"Сильный кейс · Кино / Культура",
+    title:"Tribeca берёт в программу полностью ИИ-фильм «Dreams of Violets»",
+    meta:["Tribeca Festival / Fountain 0","Variety","премьера 10 июня 2026"],
+    img:"https://variety.com/wp-content/uploads/2026/05/Still-2026-05-19-141021_5.18.1.png?w=1000&h=563&crop=1",
+    imgAlt:"Кадр из полностью ИИ-сгенерированной докудрамы Dreams of Violets",
+    lead:"На 25-м, юбилейном Tribeca Festival (3–14 июня) 10 июня премьеру получит «Dreams of Violets» — 75-минутная докудрама студии Fountain 0, созданная целиком средствами ИИ и посвящённая гражданскому сопротивлению в Тегеране в январе. По данным студии, это первый полнометражный live-action ИИ-фильм, принятый в программу крупного фестиваля.",
+    summary:"Режиссёр Аш Куша, родом из Тегерана, сделал фильм без съёмочной группы, актёров и доступа в страну — целиком из дома в Лондоне примерно за $2000, используя Kling для видео, Claude для работы с языком, Gemini и Nanobanana для ресёрча и изображений. Ключевое здесь не сам факт ИИ-фильма, а институциональное признание: крупный фестиваль ставит генеративную работу в программу не как курьёз, а как высказывание на острую тему — разговор смещается от «можно ли» к «о чём».",
+    why:"Для индустрии это маркер: ворота фестивального и редакционного признания для ИИ-работ приоткрываются, когда есть сильная тема и авторская позиция. Для брендов и студий — намёк, что общественная приемлемость ИИ-контента всё больше зависит не от технологии, а от смысла и контекста использования.",
+    takeaway:"Следите за тем, как площадки (фестивали, премии, медиа) формулируют правила допуска ИИ-работ — это задаёт рамку легитимности на годы вперёд. Рабочая гипотеза: сильная тема и прозрачность метода снимают часть скепсиса к генеративному происхождению.",
+    url:"https://variety.com/2026/film/festivals/tribeca-festival-ai-film-dreams-of-violets-fountain-0-1236759724/",
+    urlLabel:"Материал Variety"
+  },
+  cannes:{
+    kicker:"Контекст недели · Индустрия",
+    title:"Cannes Lions 2026 вводит Creative Brand Lion и обязательное раскрытие ИИ",
+    meta:["Cannes Lions","BestMediaInfo","фестиваль 22–26 июня 2026"],
+    img:"https://img-cdn.publive.online/fit-in/1200x675/bmi/media/media_files/2025/06/18/cannes_lions-9b127652.jpeg",
+    imgAlt:"Сцена фестиваля Cannes Lions, который в 2026 вводит Creative Brand Lion и AI Craft",
+    lead:"К изданию 22–26 июня Cannes Lions перестраивает систему наград: дебютирует Creative Brand Lion, обновляются категории AI и Data, а во многих craft-направлениях появляются подкатегории AI Craft, где человеческое и машинное творчество оцениваются вместе.",
+    summary:"Параллельно вводятся «защитные» меры под напором генеративного и синтетического контента: обязательный кодекс поведения, принудительное раскрытие использования ИИ, инструменты детекции манипуляций и экспертная панель по ИИ и этике. По сути, главная креативная премия мира институционализирует ИИ — и как объект награды, и как объект регулирования.",
+    why:"Для агентств и брендов это новая рамка: ИИ перестаёт быть «серой зоной» в заявках и становится отдельной номинируемой и декларируемой дисциплиной. То, как Cannes определяет AI Craft и требования к раскрытию, задаёт отраслевой стандарт оформления ИИ-кейсов — от внутренних брифов до публичных портфолио.",
+    takeaway:"Уже сейчас приучайте команду документировать ИИ-workflow в кейсах: что, каким инструментом и на каком этапе сделано. Это понадобится и для наград, и для клиентских правил раскрытия. Следите за финальной формулировкой AI Craft — она станет шаблоном описания таких работ.",
+    url:"https://www.storyboard18.com/advertising/cannes-lions-2026-to-debut-creative-brand-lion-updates-ai-and-data-categories-84134.htm",
+    urlLabel:"Подробности (Storyboard18)"
+  },
+  models:{
+    kicker:"Контекст недели · Инструменты",
+    title:"Июнь-2026: волна релизов моделей снова смещает инструментальный слой",
+    meta:["Google · Anthropic · xAI","WaveSpeed (decision map)","июнь 2026"],
+    img:"https://d8r3hf.cachecloud.net/cms/2026-05-28/20260528030425_lvqmgpem.png",
+    imgAlt:"Иллюстрация к обзору волны релизов ИИ-моделей июня 2026",
+    lead:"Июнь сгустил сразу несколько модельных сюжетов в одни четыре недели — но при ближайшем рассмотрении большая часть ещё не в проде. Gemini 3.5 Flash уже вышел в GA (19 мая), Gemini 3.5 Pro анонсирован «на июнь» без точной даты, Claude Mythos доступен только партнёрам по защитной кибербезопасности, а Grok 5 всё ещё обучается.",
+    summary:"Для креативных команд важнее не гонка лидербордов, а трезвая сортировка: что реально доступно, что в закрытом превью, что пока слух. Ключевая деталь — почти вся волна про «слой решений» (текст и рассуждение); генеративный слой (картинка, видео, аудио) живёт на отдельном графе моделей — Seedance, Kling, Wan, Veo — и в июне почти не меняется.",
+    why:"Сжатие релизов с «одного фронтира в квартал» до «нескольких за месяц» меняет не сам инструмент, а требование к процессу: выигрывает тот, кто умеет быстро прогнать новинку через собственный эвал и переключиться без переписывания интеграций.",
+    takeaway:"Держите один held-out эвал на своих типовых задачах и гоняйте через него каждый релиз; переключайтесь, только если прирост на ваших кейсах превышает ~15%, а не из-за заголовков. И не путайте слой решений со слоем генерации — для видео и картинок июньская волна почти ничего не меняет.",
+    url:"https://wavespeed.ai/blog/posts/june-2026-ai-launch-wave/",
+    urlLabel:"Разбор: июньская волна моделей (WaveSpeed)"
+  },
+
+  /* ---- GALLERY ITEMS ---- */
+  pepsi:{
+    kicker:"Visual Gallery · 01",
+    title:"Pepsi «Football Nation»",
+    meta:["Pepsi","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/UWFnOdU33MQ/maxresdefault.jpg",
+    imgAlt:"Кадр из Pepsi Football Nation",
+    depicts:"На кадре — фанатская «нация футбола»: болельщики спорят о правилах, с участием Дэвида Бекхэма и генеративными вставками в фоне и переходах.",
+    lead:"Cola Wars превратились в соревнование, кто аккуратнее применит генеративный ИИ. Ролик Pepsi о футбольном «баттле болельщиков» энергичнее и менее раздражает, чем рождественский кейс Coca-Cola, хотя ИИ местами всё ещё отвлекает.",
+    summary:"Фокус — на бантере и инклюзивной культуре боления; формально это апстейджинг официального спонсора турнира (Coca-Cola). Визуально кейс интересен как пример «среднего» уровня ИИ-интеграции: уже не слоп, но ещё заметно.",
+    why:"Показывает, где сейчас проходит граница приемлемости ИИ-визуала у массового зрителя: динамика и юмор прощают многое, но огрехи генерации всё ещё считываются.",
+    takeaway:"Если ИИ-вставки заметны, компенсируйте темпом, юмором и узнаваемым лицом — внимание уводится от артефактов генерации.",
+    url:"https://youtu.be/UWFnOdU33MQ",
+    urlLabel:"Смотреть на YouTube"
+  },
+  "coke-uncanned":{
+    kicker:"Visual Gallery · 02",
+    title:"Coca-Cola «Uncanned Emotions»",
+    meta:["Coca-Cola × Ogilvy / WPP Open X","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/jNHDWcoNzVA/maxresdefault.jpg",
+    imgAlt:"Кадр из Coca-Cola Uncanned Emotions",
+    depicts:"На кадре — серия ИИ-планов банок Coca-Cola: их открывают, постукивают, бросают и проливают, без футболистов в кадре.",
+    lead:"Второй глобальный ролик Coca-Cola к ЧМ ломает традицию звёздного каста: его «герои» — комментаторы Питер Друри и Луис Омар Тапия, озвучившие английскую и испанскую версии.",
+    summary:"Вместо футбола — поток ИИ-кадров с банками. Идея подсветить роль комментаторов умна, но, сделав героем сам продукт, ролик ощущается плоским и дженериковым. Хороший антипример: технологичность не заменяет драматургию.",
+    why:"Напоминание брендам-спонсорам: ИИ упрощает производство продуктовых планов, но не создаёт эмоцию сам по себе. Когда продукт — единственный герой, ИИ лишь обнажает слабость идеи.",
+    takeaway:"Не отдавайте ИИ роль драматурга. Используйте генеративные продуктовые планы как фактуру вокруг сильной человеческой истории, а не вместо неё.",
+    url:"https://youtu.be/jNHDWcoNzVA",
+    urlLabel:"Смотреть на YouTube"
+  },
+  lays:{
+    kicker:"Visual Gallery · 03",
+    title:"Lay's «Most Epic Watch Party»",
+    meta:["Lay's / Walkers","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/sS_05OLVkxU/maxresdefault.jpg",
+    imgAlt:"Кадр из Lay's Most Epic Watch Party",
+    depicts:"На кадре — вечеринка просмотра матча: Алексия Путельяс, Месси, Бекхэм, Тьерри Анри и Стив Карелл вместе с обычными покупателями.",
+    lead:"Кампания «No Lay's, No Game» идёт четыре года и работает настолько хорошо, что бренду почти не нужно ничего менять.",
+    summary:"К фильму прилагается долгоиграющий фан-движок: WhatsApp-группа с «живыми» реакциями и голосовыми как будто от звёзд кампании набрала более 10 млн подписчиков. Сильная часть кейса — не ролик, а механика вовлечения вокруг него.",
+    why:"Показывает, что устойчивая платформа и фан-механика важнее разовой ИИ-вспышки: ценность создаёт длительность и участие аудитории, а не только продакшн.",
+    takeaway:"Стройте кампанию как платформу с каналом постоянного контакта (мессенджер, комьюнити), а ИИ используйте для подпитки этого канала контентом.",
+    url:"https://youtu.be/sS_05OLVkxU",
+    urlLabel:"Смотреть на YouTube"
+  },
+  budweiser:{
+    kicker:"Visual Gallery · 04",
+    title:"Budweiser «Let It Pour»",
+    meta:["Budweiser","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/w0oRTljtx0o/maxresdefault.jpg",
+    imgAlt:"Кадр из Budweiser Let It Pour",
+    depicts:"На кадре — эпично-сюрреалистичная сцена с Эрлингом Холандом и Юргеном Клоппом и фирменным «разливом».",
+    lead:"Budweiser зовёт Эрлинга Холанда и Юргена Клоппа и наваливает ностальгии с долей сюрреального юмора.",
+    summary:"Настроение подобающе эпичное, хотя посыл балансирует на грани самоиронии. Кейс интересен тоном: бренд осознанно играет с абсурдом вместо прямого продуктового сообщения.",
+    why:"Пример того, что в перегретой звёздами категории ЧМ-роликов тон и юмор становятся главным дифференциатором, а не сам факт знаменитостей.",
+    takeaway:"Когда все используют звёзд, выигрывает интонация. Ищите узнаваемый тон (сюр, ирония), который отстраивает ролик в общем потоке.",
+    url:"https://youtu.be/w0oRTljtx0o",
+    urlLabel:"Смотреть на YouTube"
+  },
+  coooors:{
+    kicker:"Visual Gallery · 05",
+    title:"Coors «The Coooors Call»",
+    meta:["Coors","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/SbmYOQIIEBg/maxresdefault.jpg",
+    imgAlt:"Кадр из The Coooors Call",
+    depicts:"На кадре обыгран легендарный крик аргентинского комментатора Андреса Кантора «GOOOOAL», переосмысленный как название бренда.",
+    lead:"«The Coooors Call» превращает культовый протяжный «GOOOOAL» в собственное имя бренда — коротко, просто и с улыбкой.",
+    summary:"Запоминается и вызывает усмешку, но ощущается скорее как продакт-плейсмент, оседлавший футбол, чем как празднование самого спорта. Хороший пример сильного звукового/вербального инсайта.",
+    why:"Демонстрирует силу аудио-брендинга и культурного мема как точки входа — иногда один звук работает лучше дорогого продакшна.",
+    takeaway:"Ищите вербально-звуковые инсайты, уже живущие в культуре болельщиков. Один мем-звук может стать целым брендовым кодом.",
+    url:"https://youtu.be/SbmYOQIIEBg",
+    urlLabel:"Смотреть на YouTube"
+  },
+  duracell:{
+    kicker:"Visual Gallery · 06",
+    title:"Duracell «Messi Reboot»",
+    meta:["Duracell","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/huRFGYDWvXA/maxresdefault.jpg",
+    imgAlt:"Кадр из Duracell x Messi Reboot",
+    depicts:"На кадре — раскрытие, что Месси «работает» на паре батареек AA: типичная для Duracell визуальная метафора.",
+    lead:"Если вы гадаете, как Месси успевает сниматься в стольких роликах ЧМ и при этом тренироваться, Duracell предлагает шутливый ответ: он робот на батарейках.",
+    summary:"Кампания подаёт фирменное сообщение Duracell, но ощущается чрезмерно коммерческой и уступает лучшим роликам ЧМ в эмоциональной и культурной глубине. Полезный антипример баланса «механика бренда vs эмоция».",
+    why:"Напоминание: даже сильная продуктовая метафора проигрывает, если за ней нет культурного или эмоционального слоя, который отличает лучшие ролики турнира.",
+    takeaway:"Проверяйте каждую продуктовую метафору вопросом: есть ли тут эмоция или культурный код, или это только демонстрация фичи? Второе быстро считывается как «слишком реклама».",
+    url:"https://youtu.be/huRFGYDWvXA",
+    urlLabel:"Смотреть на YouTube"
+  },
+  "powerade-gal":{
+    kicker:"Visual Gallery · 07",
+    title:"Powerade «Power Your Fate»",
+    meta:["Powerade × WPP Open X","YouTube / Creative Bloq","ЧМ-2026"],
+    img:"https://img.youtube.com/vi/Ecs-f2Nie4I/maxresdefault.jpg",
+    imgAlt:"Кадр из Powerade Power Your Fate",
+    depicts:"На кадре игроки превращены в произведения искусства: расписанные муралы, скульптурные статуи и бронзовый фасад стадиона.",
+    lead:"Powerade делает художественный поворот в привычной теме подготовки и характера: с Ламином Ямалем и Родриго спортсмены становятся монументами.",
+    summary:"Визуально один из самых «крафтовых» ИИ-кейсов турнира: генеративная графика подчинена ясной арт-дирекшн-идее «игрок как памятник», а не используется как заполнитель. Сильный пример эстетически осмысленного ИИ-визуала.",
+    why:"Поднимает планку для ИИ-графики в рекламе: вопрос смещается от «сделано ли нейросетью» к «есть ли визуальная идея». Это ориентир для арт-директоров.",
+    takeaway:"Держите визуальную метафору как жёсткое ограничение для модели и делайте ставку на трансформации (материал, масштаб), где ИИ силён.",
+    url:"https://youtu.be/Ecs-f2Nie4I",
+    urlLabel:"Смотреть на YouTube"
+  },
+  "england-kit":{
+    kicker:"Visual Gallery · 08",
+    title:"Тизер формы сборной Англии: обвинения в «AI slop»",
+    meta:["Creative Bloq","creativebloq.com","ЧМ-2026"],
+    img:"https://cdn.mos.cms.futurecdn.net/LpyzC4352VqQmL8aghTGNo.png",
+    imgAlt:"Гостевая форма сборной Англии к ЧМ-2026",
+    depicts:"На изображении — гостевая форма сборной Англии к ЧМ-2026 из тизера, который зрители раскритиковали как сделанный наспех нейросетью.",
+    lead:"Тизер новой формы сборной Англии обвинили в том, что он выглядит как «AI slop» — небрежно сгенерированный визуал.",
+    summary:"Включаем кейс как обязательный контрапункт галереи: он показывает обратную сторону волны. Когда ИИ-визуал воспринимается как халтура, он бьёт по бренду сильнее, чем экономит на продакшне. Реакция аудитории — часть результата кейса.",
+    why:"Прямой сигнал брендам: репутационная цена «слопа» растёт. Аудитория всё лучше распознаёт небрежную генерацию и наказывает за неё вниманием и сарказмом.",
+    takeaway:"Введите внутренний порог качества для ИИ-визуалов и «детектор слопа» перед публикацией. Дешевизна генерации не оправдывает репутационный риск в премиальных тач-пойнтах.",
+    url:"https://www.creativebloq.com/ai/england-teams-world-cup-kit-teaser-accused-of-being-ai-slop",
+    urlLabel:"Разбор на Creative Bloq"
+  }
+};
+
+const overlay=document.getElementById('overlay');
+const modal=document.getElementById('modal');
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function openItem(id){
+  const it=ITEMS[id];
+  if(!it)return;
+  const metaHtml=it.meta.map(m=>esc(m)).join(' <span class="dot"></span> ');
+  let visual='';
+  if(it.img){
+    const fb = it.img.indexOf('img.youtube.com')>-1 ? it.img.replace('maxresdefault','hqdefault') : '';
+    visual='<img class="m-img" src="'+it.img+'" alt="'+esc(it.imgAlt||it.title)+'"'+(fb?' onerror="this.onerror=null;this.src=\''+fb+'\';"':'')+'>';
+  } else if(it.graphic){
+    visual='<div class="m-graphic gmod '+it.graphic+'"><span class="mono" style="font-size:34px">'+esc(it.graphicText||'')+'</span></div>';
+  }
+  let depicts = it.depicts ? '<div class="m-block"><h4>Что на визуале</h4><p>'+esc(it.depicts)+'</p></div>' : '';
+  modal.innerHTML =
+    visual+
+    '<div class="m-body">'+
+      '<div class="m-kicker">'+esc(it.kicker)+'</div>'+
+      '<h2>'+esc(it.title)+'</h2>'+
+      '<div class="m-meta">'+metaHtml+'</div>'+
+      '<p class="m-lead">'+esc(it.lead)+'</p>'+
+      depicts+
+      '<div class="m-block"><h4>Суть</h4><p>'+esc(it.summary)+'</p></div>'+
+      '<div class="m-block"><h4>Почему это важно</h4><p>'+esc(it.why)+'</p></div>'+
+      '<div class="m-block"><h4>Practical takeaway</h4><p>'+esc(it.takeaway)+'</p></div>'+
+      '<a class="m-source" href="'+it.url+'" target="_blank" rel="noopener">'+esc(it.urlLabel||'Первоисточник')+' ↗</a>'+
+    '</div>';
+  modal.scrollTop=0;
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeItem(){
+  overlay.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.querySelectorAll('[data-id]').forEach(el=>{
+  el.addEventListener('click',()=>openItem(el.getAttribute('data-id')));
+  el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openItem(el.getAttribute('data-id'));} });
+});
+document.getElementById('mClose').addEventListener('click',closeItem);
+overlay.addEventListener('click',e=>{ if(e.target===overlay)closeItem(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeItem(); });
+</script>
+
 </body>
 </html>
