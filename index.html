@@ -180,11 +180,24 @@
   .arc-foot .hint{font-family:var(--mono);font-size:12px;color:var(--muted)}
 
   /* ---------- тач ---------- */
-  #touch{position:fixed;inset:auto 0 0 0;height:0;z-index:7}
-  .tbtn{position:fixed;bottom:22px;width:76px;height:76px;border:3px solid var(--ink);background:rgba(253,252,255,.92);
-    box-shadow:4px 4px 0 var(--ink);font-family:var(--display);font-size:30px;display:flex;align-items:center;justify-content:center;
-    touch-action:none}
-  .tbtn.on{background:var(--pop);color:var(--white)}
+  #touch{position:fixed;left:0;right:0;bottom:0;z-index:7;display:flex;justify-content:space-between;align-items:flex-end;
+    pointer-events:none;--b:clamp(56px,17vw,78px);
+    padding:0 max(14px,env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+  #touch.hidden{display:none}
+  .tpad{display:flex;gap:10px;align-items:flex-end;pointer-events:auto}
+  .tcol{display:flex;flex-direction:column;gap:10px}
+  .tbtn{width:var(--b);height:var(--b);padding:0;border:3px solid var(--ink);background:rgba(253,252,255,.94);
+    box-shadow:4px 4px 0 var(--ink);font-family:var(--display);font-size:calc(var(--b)*.4);line-height:1;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;touch-action:none;-webkit-tap-highlight-color:transparent}
+  .tbtn.gas{height:calc(var(--b)*2 + 10px);background:var(--violet);color:var(--white)}
+  .tbtn.nitro{height:calc(var(--b)*.8);background:var(--sun)}
+  .tbtn.on{background:var(--pop);color:var(--white);transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  /* на телефоне и планшете — никакого HUD, только кнопки внизу */
+  body.touch .brandbox, body.touch .counters, body.touch #minimap, body.touch .target, body.touch .speedo,
+  body.touch .topright, body.touch #near{display:none!important}
+  body.touch #toast{top:calc(12px + env(safe-area-inset-top));font-size:15px;padding:8px 12px;max-width:calc(100vw - 32px)}
+  body.touch #bubble{font-size:15px;max-width:200px}
+  body.touch #card.on ~ #touch, body.touch #card.on + #touch{display:none}
 
   @media (max-width:900px){
     .counters{top:auto;bottom:250px;left:16px;transform:none;flex-direction:column;gap:6px}
@@ -258,8 +271,8 @@
   </div>
   <div class="c-scroll" id="cScroll"></div>
   <div class="c-foot">
-    <button class="btn" id="cPrev" title="Предыдущая открытая (A)">‹</button>
-    <button class="btn" id="cNext" title="Следующая открытая (D)">›</button>
+    <button class="btn" id="cPrev" title="Предыдущая открытая (←)">‹</button>
+    <button class="btn" id="cNext" title="Следующая открытая (→)">›</button>
     <button class="btn pop go" id="cGo">Поехали дальше ⏎</button>
   </div>
 </aside>
@@ -277,11 +290,9 @@
 </div>
 
 <div id="touch" class="hidden">
-  <button class="tbtn" data-k="left" style="left:16px">◀</button>
-  <button class="tbtn" data-k="right" style="left:104px">▶</button>
-  <button class="tbtn" data-k="nitro" style="right:192px">⚡</button>
-  <button class="tbtn" data-k="down" style="right:104px">▼</button>
-  <button class="tbtn" data-k="up" style="right:16px">▲</button>
+  <div class="tpad"><button class="tbtn" data-k="left" aria-label="Руль влево">◀</button><button class="tbtn" data-k="right" aria-label="Руль вправо">▶</button></div>
+  <div class="tpad"><div class="tcol"><button class="tbtn nitro" data-k="nitro" aria-label="Нитро">⚡</button><button class="tbtn" data-k="down" aria-label="Тормоз">▼</button></div>
+    <button class="tbtn gas" data-k="up" aria-label="Газ">▲</button></div>
 </div>
 
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
@@ -319,7 +330,7 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
    ================================================================ */
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(pointer:coarse)').matches ? 1.5 : 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -716,7 +727,6 @@ function paintPark(g, X, k){
   txt('ПАРК OKKO', 0, P-11, 9, OKKO_BLUE);
   txt('НА ЛЬДУ', RINK.x, RINK.z+RINK.d/2+4.5, 5, C.blue);
   txt('ПРОЛЕТИ СКВОЗЬ «О»', LOGO.x, LOGO.z+74, 3.6, C.pop);
-  txt('БУБOKKO', BUB.x, BUB.z+14, 4.5, OKKO_BLUE);
 }
 
 /* воксельный меш из списка [x,y,z,цвет] — для фигур с анимацией */
@@ -826,7 +836,8 @@ function checkRing(prevZ){
 }
 
 /* ---------- БубOkko по карте персонажа ---------- */
-const bub={ g:new THREE.Group(), armL:null, armR:null, tail:null, mouth:[], body:null, squash:0, near:false, phrase:0, phraseT:0, open:null };
+const bub={ g:new THREE.Group(), armL:null, armR:null, tail:null, mouth:[], body:null, squash:0, near:false, phrase:0, phraseT:0, open:null,
+             x:BUB.x, z:BUB.z, tx:BUB.x, tz:BUB.z, wt:0, pause:1.5, walk:0, moving:false };
 function buildBub(){
   const s=.72, fur=['#6D5CF3','#7462F6','#6453EC','#7A6AF7'], belly=['#A898FC','#B1A3FD','#A192FA'], band='#5746DA';
   const Y0=2;                                               // ноги
@@ -888,32 +899,64 @@ function setMouth(open){
   bub.body.instanceColor.needsUpdate=true;
 }
 const BUB_PHRASES=['Привет! Я БубOkko','Тарань дома — внутри новости недели!','По окраинам спрятаны три точки. Найдёшь?','Видишь кольцо «о»? Разгонись по розовой рампе!','Избушка опять сбежала из «Волшебного участка»…','На катке скользко — держи руль!','Въедь в меня — подброшу!'];
+// куда БубOkko ходить не стоит: за пределы парка, на рампу и кольцо, на площадь со спавном, на каток, в избушку
+function bubBlocked(x,z){
+  if(Math.abs(x)>PARK-10||Math.abs(z)>PARK-10) return true;
+  if(Math.abs(x-LOGO.x)<17 && z>LOGO.z-8 && z<LOGO.z+36) return true;
+  if(Math.hypot(x,z+4)<32) return true;
+  if(Math.abs(x-RINK.x)<RINK.w/2+8 && Math.abs(z-RINK.z)<RINK.d/2+8) return true;
+  if(Math.hypot(x-izba.x,z-izba.z)<10) return true;
+  return false;
+}
 function updateBub(dt, t){
-  const dx=car.pos.x-BUB.x, dz=car.pos.z-BUB.z, d=Math.hypot(dx,dz);
+  const dx=car.pos.x-bub.x, dz=car.pos.z-bub.z, d=Math.hypot(dx,dz);
   bub.near = d<34 && started && !cardOpen;
-  const face = bub.near ? Math.atan2(dx,dz) : YAW;
+  let face=bub.g.rotation.y; bub.moving=false;
+  if(bub.near || bub.squash>.3) face=Math.atan2(dx,dz);
+  else {
+    // неспешная прогулка по парку: цель → идёт вразвалочку → постоял → новая цель
+    bub.wt-=dt;
+    if(bub.wt<=0 || Math.hypot(bub.tx-bub.x,bub.tz-bub.z)<2){
+      let k=0; do{ bub.tx=R(-PARK+12,PARK-12); bub.tz=R(-PARK+12,PARK-12); }while(bubBlocked(bub.tx,bub.tz) && ++k<40);
+      bub.wt=R(8,14); bub.pause=R(.8,2.5);
+    }
+    if(bub.pause>0) bub.pause-=dt;
+    else {
+      let ax=bub.tx-bub.x, az=bub.tz-bub.z; const l=Math.hypot(ax,az)||1; ax/=l; az/=l;
+      let best=null;
+      for(const a of [0,.5,-.5,1,-1,1.6,-1.6,2.4,-2.4]){
+        const c=Math.cos(a), s2=Math.sin(a), vx=ax*c-az*s2, vz=ax*s2+az*c;
+        if(!bubBlocked(bub.x+vx*7, bub.z+vz*7)){ best=[vx,vz]; break; }
+      }
+      if(best){ bub.x+=best[0]*4.5*dt; bub.z+=best[1]*4.5*dt; face=Math.atan2(best[0],best[1]); bub.moving=true; }
+      else bub.wt=0;
+    }
+  }
   let diff=face-bub.g.rotation.y; diff=Math.atan2(Math.sin(diff),Math.cos(diff));
-  bub.g.rotation.y += diff*Math.min(1,dt*3);
+  bub.g.rotation.y += diff*Math.min(1,dt*(bub.moving?4:3));
+  if(bub.moving) bub.walk+=dt*7;
   bub.squash=Math.max(0,bub.squash-dt*2.2);
   const sq=Math.sin(bub.squash*12)*bub.squash*.25;
   bub.g.scale.set(1+sq, 1-sq+Math.sin(t*2)*.012, 1+sq);
-  bub.g.position.y = bub.near ? Math.abs(Math.sin(t*5))*.5 : 0;
-  bub.armR.rotation.z = bub.near ? 2.5+Math.sin(t*9)*.45 : .32+Math.sin(t*1.5)*.06;
-  bub.armL.rotation.z = -(bub.near ? .55+Math.sin(t*4)*.1 : .32+Math.sin(t*1.5+1)*.06);
+  const hop = bub.near ? Math.abs(Math.sin(t*5))*.5 : (bub.moving ? Math.abs(Math.sin(bub.walk))*.55 : 0);
+  bub.g.position.set(bub.x, hop, bub.z);
+  bub.g.rotation.z = bub.moving ? Math.sin(bub.walk)*.07 : 0;          // переваливается с лапы на лапу
+  bub.armR.rotation.z = bub.near ? 2.5+Math.sin(t*9)*.45 : (bub.moving ? .4+Math.sin(bub.walk)*.28 : .32+Math.sin(t*1.5)*.06);
+  bub.armL.rotation.z = -(bub.near ? .55+Math.sin(t*4)*.1 : (bub.moving ? .4-Math.sin(bub.walk)*.28 : .32+Math.sin(t*1.5+1)*.06));
   bub.tail.rotation.y = Math.sin(t*3)*.25;
   setMouth(bub.near);
   // облачко с репликой
   const el=$('bubble');
   if(bub.near){
     bub.phraseT-=dt; if(bub.phraseT<=0){ bub.phrase=(bub.phrase+1)%BUB_PHRASES.length; bub.phraseT=3.6; el.textContent=BUB_PHRASES[bub.phrase]; }
-    V3.set(BUB.x, 19, BUB.z).project(camera);
+    V3.set(bub.x, 19, bub.z).project(camera);
     el.style.left=((V3.x*.5+.5)*innerWidth)+'px'; el.style.top=((-V3.y*.5+.5)*innerHeight)+'px';
     el.classList.add('on');
   } else el.classList.remove('on');
   // столкновение: пушистый батут
   if(d < BUB.r+2 && car.y<6 && !paused()){
     const nx=dx/(d||1), nz=dz/(d||1), sp=Math.hypot(car.vel.x,car.vel.z);
-    car.pos.x=BUB.x+nx*(BUB.r+2.1); car.pos.z=BUB.z+nz*(BUB.r+2.1);
+    car.pos.x=bub.x+nx*(BUB.r+2.1); car.pos.z=bub.z+nz*(BUB.r+2.1);
     car.vel.set(nx*Math.max(16,sp*.9), 0, nz*Math.max(16,sp*.9));
     if(sp>4){ car.vy=Math.min(16, 8+sp*.25); car.air=true; }
     bub.squash=1; sfxBoing();
@@ -970,7 +1013,7 @@ function buildIzba(){
 }
 function izbaBlocked(x,z){
   if(Math.abs(x)>PARK-6||Math.abs(z)>PARK-6) return true;
-  if(Math.hypot(x-BUB.x,z-BUB.z)<11) return true;
+  if(Math.hypot(x-bub.x,z-bub.z)<11) return true;
   if(Math.abs(x-LOGO.x)<13 && z>LOGO.z-3 && z<LOGO.z+32) return true;
   if(Math.hypot(x,z+9)<13) return true;
   return false;
@@ -1446,8 +1489,8 @@ addEventListener('keydown',e=>{
   if(!$('intro').classList.contains('hidden')){ if(e.code==='Enter'||e.code==='Space'){ e.preventDefault(); if(ready) start(); } return; }
   if(cardOpen){
     if(e.code==='Escape'||e.code==='Enter'){ e.preventDefault(); closeCard(); }
-    else if(e.code==='KeyA'){ e.preventDefault(); flip(-1); }
-    else if(e.code==='KeyD'){ e.preventDefault(); flip(1); }
+    else if(e.code==='ArrowLeft'){ e.preventDefault(); flip(-1); }
+    else if(e.code==='ArrowRight'){ e.preventDefault(); flip(1); }
     return;
   }
   if(!$('archive').classList.contains('hidden')){ if(e.code==='Escape') toggleArchive(false); return; }
@@ -1458,7 +1501,9 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{ const k=KEYMAP[e.code]; if(k) keys[k]=0; });
 addEventListener('blur',()=>{ for(const k in keys) keys[k]=0; });
 
-if(matchMedia('(pointer:coarse)').matches){
+const IS_TOUCH = matchMedia('(pointer:coarse)').matches || ('ontouchstart' in window && innerWidth < 1024);
+if(IS_TOUCH){
+  document.body.classList.add('touch');
   $('touch').classList.remove('hidden');
   document.querySelectorAll('.tbtn').forEach(b=>{
     const k=b.dataset.k;
@@ -1575,7 +1620,7 @@ function collide(){
       const d=Math.sqrt(d2);
       car.pos.x += nx*(r-d+.05); car.pos.z += nz*(r-d+.05);
       const vn=car.vel.x*nx+car.vel.z*nz; if(vn<0){ car.vel.x-=1.5*vn*nx; car.vel.z-=1.5*vn*nz; }
-      if(o.type==='news' && performance.now()-lastBumpHint>2500){ lastBumpHint=performance.now(); toast('Слабовато! Разгонись — или жми пробел для нитро'); sfxBump(); }
+      if(o.type==='news' && performance.now()-lastBumpHint>2500){ lastBumpHint=performance.now(); toast(IS_TOUCH ? 'Слабовато! Разгонись — или жми ⚡ для нитро' : 'Слабовато! Разгонись — или жми пробел для нитро'); sfxBump(); }
     }
   }
 }
@@ -1716,8 +1761,6 @@ function buildMiniBg(){
   g.fillStyle=C.sun; g.beginPath(); g.arc(X(0),X(0),27*k,0,7); g.fill();
   g.fillStyle='#CFE7FF'; g.fillRect(X(RINK.x-RINK.w/2),X(RINK.z-RINK.d/2),RINK.w*k,RINK.d*k);
   g.strokeStyle=C.violet; g.lineWidth=5; g.beginPath(); g.arc(X(LOGO.x),X(LOGO.z),9,0,7); g.stroke();
-  g.fillStyle=OKKO_BLUE; g.beginPath(); g.arc(X(BUB.x),X(BUB.z),8,0,7); g.fill();
-  g.fillStyle=C.white; g.fillRect(X(BUB.x)-5,X(BUB.z)-2,10,3);
   miniBg=cv;
 }
 function drawMini(t){
@@ -1729,6 +1772,8 @@ function drawMini(t){
     g.fillStyle=T.color; g.fillRect(X(o.cx)-5,X(o.cz)-5,10,10);
   }
   for(const d of DOTS){ if(d.got) continue; g.fillStyle=C.ink; g.beginPath(); g.arc(X(d.x),X(d.z),9,0,7); g.fill(); g.fillStyle=d.col; g.beginPath(); g.arc(X(d.x),X(d.z),6,0,7); g.fill(); }
+  g.fillStyle=OKKO_BLUE; g.beginPath(); g.arc(X(bub.x),X(bub.z),8,0,7); g.fill();
+  g.fillStyle=C.white; g.fillRect(X(bub.x)-5,X(bub.z)-2,10,3);
   g.fillStyle='#A8744F'; g.fillRect(X(izba.x)-5,X(izba.z)-5,10,10); g.fillStyle=C.violet; g.fillRect(X(izba.x)-6,X(izba.z)-8,12,4);
   const sx=X(ship.g.position.x), sz=X(ship.g.position.z); g.fillStyle=C.white; g.strokeStyle=C.ink; g.lineWidth=2;
   g.beginPath(); g.moveTo(sx-9,sz); g.lineTo(sx+9,sz); g.lineTo(sx,sz-10); g.closePath(); g.fill(); g.stroke();
@@ -1778,7 +1823,7 @@ function frame(now){
   const tgt=currentTarget();
 
   // камера
-  const lead=.32, zoom=1+Math.min(st.spd,50)*.006;
+  const lead=.32, zoom=(1+Math.min(st.spd,50)*.006)*(window.__camZoom||1)*(camera.aspect<1 ? 1.45 : 1);   // на вертикальном экране камера дальше
   camLook.lerp(V3.set(car.pos.x+car.vel.x*lead, car.y*.5+1, car.pos.z+car.vel.z*lead), 1-Math.exp(-dt*6));
   if(window.__camFocus) camLook.copy(window.__camFocus);   // отладка: смотреть на точку
   camPos.copy(camLook).addScaledVector(CAM_OFF, zoom);
@@ -1823,7 +1868,7 @@ function start(){
   started=true; audioInit(); if(audio.ctx&&audio.ctx.state==='suspended') audio.ctx.resume();
   $('intro').classList.add('hidden'); $('hud').classList.remove('hidden'); canvas.focus();
   renderCounters();
-  toast('W — газ, A и D — руль, пробел — нитро. Начни с логотипа FOMO впереди!', 4200);
+  toast(IS_TOUCH ? '▲ — газ, ◀ ▶ — руль, ⚡ — нитро. Начни с логотипа FOMO впереди!' : 'W — газ, A и D — руль, пробел — нитро. Начни с логотипа FOMO впереди!', 4200);
 }
 $('bStart').onclick=()=>{ if(ready) start(); };
 $('bList').onclick=()=>{ if(!ready) return; start(); toggleArchive(true); };
@@ -1845,7 +1890,7 @@ $('bList').onclick=()=>{ if(!ready) return; start(); toggleArchive(true); };
   outer.rotation.x=-Math.PI/2; outer.position.y=-.05; scene.add(outer);
   buildMiniBg();
   camLook.set(0,1,8); camera.position.copy(camLook).add(CAM_OFF); camera.lookAt(camLook);
-  window.__fomo={car, newsObjs, objects, openCard, reveal, izba, ship, DOTS, found, findSecret, launchFireworks, cheer};
+  window.__fomo={car, newsObjs, objects, openCard, reveal, izba, ship, bub, DOTS, found, findSecret, launchFireworks, cheer};
   ready=true; $('loading').textContent=`город готов · ${SV.s.length.toLocaleString('ru')} вокселей`;
   requestAnimationFrame(frame);
 })();
