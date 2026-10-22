@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMO — дайджест · 22 октября 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=PT+Mono&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================================
+     FOMO ZINE — веб-скин дайджеста. Палитра и типографика один в один с декой
+     (tools/build_deck.py): бумага, чернила, фиолетовый, синий, сиреневый, поп.
+     Фотографии в превью пикселятся канвасом (tools/zine/skin.js), в модалке —
+     оригинал без обработки.
+     ========================================================================= */
+  :root{
+    --paper:#F0EDF8;
+    --white:#FDFCFF;
+    --ink:#1C1232;
+    --violet:#6A28D9;
+    --blue:#2C58FF;
+    --lilac:#BAA6F5;
+    --pop:#FF5294;
+    --muted:#605480;
+    --body-ink:#241738;
+    --maxw:1240px;
+    --display:Impact,Haettenschweiler,"Oswald","Arial Narrow Bold","Arial Narrow",sans-serif;
+    --cond:"DIN Condensed Bold","DIN Condensed","Oswald","Arial Narrow",sans-serif;
+    --mono:"PT Mono","PTMono","JetBrains Mono","Courier New",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --star12:polygon(50.0% 0.0%,60.0% 12.8%,75.0% 6.7%,77.2% 22.8%,93.3% 25.0%,87.2% 40.0%,100.0% 50.0%,87.2% 60.0%,93.3% 75.0%,77.2% 77.2%,75.0% 93.3%,60.0% 87.2%,50.0% 100.0%,40.0% 87.2%,25.0% 93.3%,22.8% 77.2%,6.7% 75.0%,12.8% 60.0%,0.0% 50.0%,12.8% 40.0%,6.7% 25.0%,22.8% 22.8%,25.0% 6.7%,40.0% 12.8%);
+    --star14:polygon(50.0% 0.0%,58.0% 14.9%,71.7% 5.0%,72.4% 21.9%,89.1% 18.8%,82.4% 34.4%,98.7% 38.9%,86.0% 50.0%,98.7% 61.1%,82.4% 65.6%,89.1% 81.2%,72.4% 78.1%,71.7% 95.0%,58.0% 85.1%,50.0% 100.0%,42.0% 85.1%,28.3% 95.0%,27.6% 78.1%,10.9% 81.2%,17.6% 65.6%,1.3% 61.1%,14.0% 50.0%,1.3% 38.9%,17.6% 34.4%,10.9% 18.8%,27.6% 21.9%,28.3% 5.0%,42.0% 14.9%);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--body-ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* зернистость бумаги — как paperbg() в деке */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.18'/></svg>");
+  }
+  body>*{position:relative;z-index:1;}
+  a{color:inherit;}
+  img{display:block;max-width:100%;}
+  /* !important обязателен: .img-wrap img ниже имеет ту же специфичность,
+     и без него исходник рисуется под пиксельным канвасом */
+  img[hidden]{display:none!important;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* полутон-растр — halftone() из деки */
+  .htone{
+    background-image:radial-gradient(var(--blue) 30%,transparent 31%);
+    background-size:16px 16px;
+  }
+
+  /* ---------- MASTHEAD / обложка ---------- */
+  header.masthead{
+    position:relative;overflow:hidden;
+    padding:66px 0 78px;min-height:380px;
+    border-bottom:6px solid var(--ink);
+  }
+  header.masthead .wrap{padding-right:150px;}
+  /* вертикальная фиолетовая полоса справа */
+  header.masthead::before{
+    content:"ЕЖЕНЕДЕЛЬНЫЙ ДАЙДЖЕСТ";
+    position:absolute;top:0;right:0;bottom:0;width:96px;overflow:hidden;
+    background:var(--violet);color:var(--white);
+    font-family:var(--cond);font-size:27px;line-height:96px;letter-spacing:.07em;
+    text-transform:uppercase;white-space:nowrap;text-align:center;
+    writing-mode:vertical-rl;transform:rotate(180deg);padding:30px 0;
+  }
+  /* растр по нижней кромке */
+  header.masthead::after{
+    content:"";position:absolute;left:0;right:96px;bottom:0;height:124px;pointer-events:none;
+    background-image:radial-gradient(var(--blue) 30%,transparent 31%);
+    background-size:16px 16px;
+    -webkit-mask-image:linear-gradient(to bottom,transparent,#000);
+    mask-image:linear-gradient(to bottom,transparent,#000);
+  }
+  .mast-top{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;flex-wrap:wrap;position:relative;z-index:2;}
+  .brand{display:flex;align-items:center;gap:22px;}
+  .mark{
+    width:92px;height:92px;flex:0 0 92px;border-radius:0;box-shadow:none;
+    background:var(--pop);
+    -webkit-clip-path:var(--star12);clip-path:var(--star12);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mark svg{width:46px;height:46px;display:block;}
+  .mark svg circle{stroke:var(--ink);stroke-width:2.6;}
+  .mark svg path{fill:var(--ink);}
+  .brand h1{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(66px,11vw,148px);line-height:.76;margin:0;
+    color:var(--violet);text-shadow:.048em .048em 0 var(--ink);
+    letter-spacing:.01em;
+  }
+  .brand .sub{
+    font-family:var(--cond);font-size:clamp(17px,2.2vw,28px);
+    letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-top:12px;
+  }
+  .issue-tag{
+    font-family:var(--display);font-weight:400;font-size:clamp(20px,2.4vw,30px);
+    letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;
+    color:var(--white);background:var(--violet);
+    border:4px solid var(--ink);border-radius:0;
+    padding:10px 18px 8px;transform:rotate(-4deg);
+  }
+  .daterange{margin-top:44px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;position:relative;z-index:2;}
+  .daterange .big{
+    font-family:var(--cond);font-weight:400;
+    font-size:clamp(22px,3.2vw,44px);line-height:1.1;letter-spacing:.03em;
+    text-transform:uppercase;color:var(--white);
+    background:var(--blue);border:4px solid var(--ink);
+    padding:9px 20px 7px;transform:rotate(2deg);
+    -webkit-background-clip:border-box;background-clip:border-box;
+  }
+  .daterange .yr{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(44px,6vw,88px);line-height:.9;color:transparent;
+    -webkit-text-stroke:3px var(--violet);
+  }
+  /* звезда «N-й выпуск» (вставляется скриптом) */
+  .burst{
+    position:absolute;right:130px;bottom:16px;width:186px;height:186px;z-index:3;
+    background:var(--pop);-webkit-clip-path:var(--star14);clip-path:var(--star14);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--display);color:var(--ink);text-transform:uppercase;line-height:1;
+    transform:rotate(-6deg);
+  }
+  .burst b{font-size:36px;font-weight:400;}
+  .burst span{font-size:26px;margin-top:4px;}
+  /* вырезка-фотография на обложке — как cutout() на слайде 01 */
+  .cover-cut{
+    position:absolute;left:50%;top:40%;width:212px;z-index:2;pointer-events:none;
+    background:var(--white);border:5px solid var(--ink);padding:9px;
+    box-shadow:15px 15px 0 var(--blue);transform:rotate(5deg);
+  }
+  .cover-cut .tape{top:-16px;left:-24px;width:124px;height:34px;transform:rotate(-34deg);}
+  @media(max-width:1180px){.cover-cut{display:none;}}
+  /* искры */
+  .spark{position:absolute;z-index:2;pointer-events:none;}
+  @media(max-width:1080px){.spark{display:none;}}
+
+  /* ---------- TABS ---------- */
+  .tabbar{
+    position:sticky;top:0;z-index:60;
+    background:var(--ink);
+    border-bottom:6px solid var(--ink);
+  }
+  .tabbar .tb-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .tabbar .tb-inner::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    appearance:none;background:none;border:none;border-bottom:none;cursor:pointer;
+    font-family:var(--cond);font-size:19px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;
+    color:var(--lilac);padding:15px 22px 13px;white-space:nowrap;
+    transition:color .15s,background .15s;
+  }
+  .tab-btn:hover{color:var(--white);}
+  .tab-btn.active{color:var(--ink);background:var(--pop);border-bottom-color:transparent;}
+  .tab-btn .em{margin-right:8px;filter:grayscale(1) contrast(1.4);}
+  .tab-btn.active .em{filter:none;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;animation:tabin .28s ease;}
+  @keyframes tabin{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+  /* ---------- ЗАГОЛОВКИ СЕКЦИЙ (слайд-разделитель) ---------- */
+  .sec-head{
+    position:relative;display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+    margin:84px 0 44px;padding:22px 26px 20px;
+    border:5px solid var(--ink);background:var(--violet);
+    box-shadow:13px 13px 0 var(--ink);
+  }
+  .sec-head::before{
+    content:attr(data-num);
+    font-family:var(--display);font-size:clamp(44px,6vw,74px);line-height:.78;
+    color:var(--white);text-shadow:.07em .07em 0 var(--ink);
+  }
+  .sec-head::after{
+    content:"";position:absolute;left:0;right:0;top:0;height:46px;pointer-events:none;
+    background-image:radial-gradient(var(--ink) 30%,transparent 31%);
+    background-size:14px 14px;opacity:.45;
+    -webkit-mask-image:linear-gradient(to top,transparent,#000);
+    mask-image:linear-gradient(to top,transparent,#000);
+  }
+  .sec-head h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(26px,4.2vw,54px);line-height:.92;letter-spacing:.01em;
+    text-transform:uppercase;margin:0;position:relative;z-index:2;
+    color:var(--pop);text-shadow:.07em .07em 0 var(--ink);
+  }
+  .sec-head .ln{display:none;}
+  .sec-head .count{
+    font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--white);background:var(--ink);border:3px solid var(--white);
+    padding:7px 12px;margin-left:auto;transform:rotate(-1.5deg);position:relative;z-index:2;
+  }
+  .sec-head[data-accent="1"]{background:var(--ink);}
+  .sec-head[data-accent="1"]::before{text-shadow:.07em .07em 0 var(--violet);}
+  .sec-head[data-accent="1"] h2{text-shadow:.07em .07em 0 var(--violet);}
+  .sec-head[data-accent="1"]::after{background-image:radial-gradient(var(--violet) 30%,transparent 31%);opacity:.7;}
+  .sec-head[data-accent="1"] .count{background:var(--violet);border-color:var(--white);}
+  .sec-head[data-accent="2"]{background:var(--blue);}
+  .sec-head[data-accent="2"] h2{color:var(--white);}
+  .sec-head[data-accent="3"]{background:var(--pop);}
+  .sec-head[data-accent="3"] h2{color:var(--violet);text-shadow:.07em .07em 0 var(--ink);}
+
+  /* ---------- ОБЩЕЕ ДЛЯ КАРТИНОК ---------- */
+  .pix{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;
+       filter:saturate(1.3) contrast(1.06);border:3px solid var(--ink);background:var(--lilac);}
+  .img-wrap img,.g-card .ph img{width:100%;height:auto;display:block;border:3px solid var(--ink);}
+  .cover-cut img{width:100%;height:auto;border:3px solid var(--ink);}
+  .noimg{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;text-align:center;
+    background:var(--lilac);border:3px solid var(--ink);color:var(--white);
+    padding:22px;min-height:180px;
+  }
+  .noimg b{font-family:var(--display);font-weight:400;font-size:52px;line-height:.8;
+           letter-spacing:.03em;text-shadow:.07em .07em 0 var(--violet);}
+  .noimg span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+              text-transform:uppercase;color:var(--ink);}
+  .hero .noimg{aspect-ratio:4/3;min-height:0;}
+  .card .noimg{aspect-ratio:16/9;min-height:0;}
+  .g-card .noimg{aspect-ratio:1/1;min-height:0;}
+  .g-card.feat .noimg{aspect-ratio:16/9;}
+  /* номерная звезда на фото — cutout(num=…) в деке */
+  .starnum{
+    position:absolute;top:-24px;left:-24px;z-index:5;
+    width:76px;height:76px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:27px;color:var(--white);
+  }
+  .starnum::before{
+    content:"";position:absolute;inset:0;background:var(--pop);
+    -webkit-clip-path:var(--star12);clip-path:var(--star12);
+  }
+  .starnum::after{
+    content:"";position:absolute;left:12px;top:12px;right:12px;bottom:12px;
+    background:var(--ink);border-radius:50%;
+  }
+  .starnum i{position:relative;z-index:2;font-style:normal;}
+  /* скотч */
+  .tape{position:absolute;z-index:4;width:150px;height:38px;background:rgba(186,166,245,.72);pointer-events:none;}
+
+  /* ---------- ГЛАВНЫЙ МАТЕРИАЛ ---------- */
+  .hero{
+    display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:52px;
+    align-items:start;cursor:pointer;background:none;border:none;border-radius:0;
+    padding:16px 4px 40px;
+  }
+  .hero .img-wrap{
+    position:relative;min-height:0;background:var(--white);
+    border:5px solid var(--ink);padding:12px;border-radius:0;overflow:visible;
+    box-shadow:20px 20px 0 var(--violet);transform:rotate(-1.6deg);
+    transition:transform .2s,box-shadow .2s;
+  }
+  .hero .img-wrap::after{content:none;}
+  .hero:hover .img-wrap{transform:rotate(-1.6deg) translate(-4px,-4px);box-shadow:26px 26px 0 var(--violet);}
+  .hero .img-wrap .tape.t1{top:-18px;right:34px;transform:rotate(34deg);}
+  .hero .img-wrap .tape.t2{bottom:-14px;left:-30px;transform:rotate(-32deg);}
+  .hero .body{padding:6px 0 0;display:block;}
+  .badge{
+    display:inline-block;align-self:flex-start;
+    font-family:var(--cond);font-size:20px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);background:var(--pop);
+    border:4px solid var(--ink);border-radius:0;
+    padding:6px 14px 4px;margin-bottom:22px;transform:rotate(-1.4deg);
+  }
+  .hero h3{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(30px,3.7vw,52px);line-height:.94;letter-spacing:.005em;
+    margin:0 0 20px;color:var(--ink);text-shadow:.085em .085em 0 var(--pop);
+  }
+  .hero .deck{
+    font-family:var(--sans);font-size:17px;line-height:1.55;color:var(--body-ink);
+    margin:0 0 22px;max-width:52ch;
+  }
+  .meta{
+    font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--muted);
+    letter-spacing:.01em;display:flex;gap:9px;flex-wrap:wrap;align-items:center;
+  }
+  .meta .dot{width:5px;height:5px;border-radius:0;background:var(--lilac);display:inline-block;}
+  .readmore{
+    display:inline-block;margin-top:26px;
+    font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);background:var(--white);border:4px solid var(--ink);
+    padding:11px 16px;font-weight:400;
+  }
+  .hero:hover .readmore{background:var(--pop);}
+
+  /* ---------- СЕТКА КАРТОЧЕК ---------- */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:34px 30px;padding:4px 4px 10px;}
+  .card{
+    background:var(--white);border:5px solid var(--ink);border-radius:0;overflow:visible;
+    box-shadow:13px 13px 0 var(--blue);
+    cursor:pointer;display:flex;flex-direction:column;
+    transition:transform .18s,box-shadow .18s;
+  }
+  .grid-2 .card:nth-child(even){box-shadow:13px 13px 0 var(--violet);}
+  .card:hover{transform:translate(-4px,-4px);box-shadow:19px 19px 0 var(--blue);}
+  .grid-2 .card:nth-child(even):hover{box-shadow:19px 19px 0 var(--violet);}
+  .card .img-wrap{position:relative;aspect-ratio:auto;background:none;padding:14px 14px 0;overflow:visible;}
+  .card .body{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1;}
+  .card h3{
+    font-family:var(--display);font-weight:400;
+    font-size:25px;line-height:1.0;margin:0 0 12px;letter-spacing:.005em;
+    color:var(--ink);text-shadow:.085em .085em 0 var(--pop);
+  }
+  .card .deck{font-family:var(--sans);font-size:15px;line-height:1.5;color:var(--body-ink);margin:0 0 18px;}
+  .card .meta{margin-top:auto;font-size:11.5px;}
+  .chip{
+    display:inline-block;font-family:var(--cond);font-size:15px;letter-spacing:.08em;
+    text-transform:uppercase;font-weight:400;
+    color:var(--ink);background:var(--pop);border:3px solid var(--ink);border-radius:0;
+    padding:4px 10px 2px;margin-bottom:10px;align-self:flex-start;
+  }
+  .card .img-wrap .chip{position:absolute;top:-10px;left:26px;z-index:6;margin:0;background:var(--pop);transform:rotate(-2deg);}
+  .card .starnum{top:-20px;right:-20px;left:auto;width:62px;height:62px;font-size:22px;}
+
+  /* ---------- VISUAL GALLERY ---------- */
+  .gallery-intro{
+    font-family:var(--sans);font-size:16px;line-height:1.55;color:var(--body-ink);
+    max-width:76ch;margin:0 0 34px;
+    border-left:6px solid var(--pop);padding-left:18px;
+  }
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:46px 26px;padding:4px 6px 10px;}
+  .g-card{
+    position:relative;border-radius:0;overflow:visible;cursor:pointer;
+    background:none;border:none;aspect-ratio:auto;
+    transition:transform .2s;
+  }
+  .g-card .ph{
+    position:relative;inset:auto;overflow:visible;
+    background:var(--white);border:5px solid var(--ink);padding:9px;
+    box-shadow:9px 9px 0 var(--violet);
+    transition:transform .2s,box-shadow .2s;
+  }
+  .g-card:nth-child(4n+1) .ph{transform:rotate(-2.4deg);}
+  .g-card:nth-child(4n+2) .ph{transform:rotate(1.8deg);}
+  .g-card:nth-child(4n+3) .ph{transform:rotate(-1.4deg);}
+  .g-card:nth-child(4n+4) .ph{transform:rotate(2.6deg);}
+  .g-card:nth-child(even) .ph{box-shadow:9px 9px 0 var(--blue);}
+  .g-card:hover{transform:translateY(-4px);}
+  .g-card .ph img{transition:none;}
+  .g-card:hover .ph img{transform:none;}
+  .g-card .ph::after{content:none;}
+  .g-card .num{
+    position:absolute;left:-6px;bottom:-26px;top:auto;z-index:6;
+    width:62px;height:42px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:400;font-size:23px;line-height:1;
+    color:var(--ink);background:var(--pop);border:4px solid var(--ink);
+    text-shadow:none;
+  }
+  .g-card:nth-child(even) .num{background:var(--violet);color:var(--white);}
+  .g-card .cap{position:static;left:auto;right:auto;bottom:auto;padding:34px 2px 0;}
+  .g-card .cap .t{
+    font-family:var(--cond);font-size:19px;line-height:1.08;margin:0 0 7px;
+    letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-shadow:none;
+  }
+  .g-card .cap .a{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em;text-shadow:none;}
+  .g-card:hover .cap .t{color:var(--violet);}
+  .gallery .g-card.feat{grid-column:span 2;aspect-ratio:auto;}
+  .gallery .g-card.feat .cap .t{font-size:24px;}
+
+  /* ---------- РЕЛИЗЫ ---------- */
+  .releases{
+    border:5px solid var(--ink);border-radius:0;background:var(--white);
+    box-shadow:16px 16px 0 var(--violet);padding:34px 38px 34px;margin:0 4px;
+  }
+  .releases .lead{
+    font-family:var(--sans);font-size:15.5px;line-height:1.6;color:var(--body-ink);
+    max-width:76ch;margin:0 0 26px;
+  }
+  .rel-item{display:grid;grid-template-columns:210px 1fr;gap:26px;padding:26px 0;border-top:4px dashed var(--lilac);}
+  .rel-item:first-of-type{border-top:none;padding-top:4px;}
+  .rel-head .name{
+    font-family:var(--cond);font-size:22px;line-height:1.06;margin:0 0 10px;
+    letter-spacing:.02em;text-transform:uppercase;color:var(--ink);
+  }
+  .rel-head .when{
+    display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--white);background:var(--ink);
+    border:3px solid var(--ink);padding:5px 9px;
+  }
+  .rel-body p{font-family:var(--sans);margin:0 0 14px;font-size:15px;color:var(--body-ink);line-height:1.6;}
+  .rel-body a{
+    display:inline-block;font-family:var(--mono);font-size:12.5px;color:var(--ink);
+    text-decoration:none;background:var(--white);border:3px solid var(--ink);
+    padding:8px 12px;letter-spacing:.02em;
+  }
+  .rel-body a:hover{background:var(--pop);border-color:var(--ink);}
+  .radar .rel-head .name{color:var(--ink);}
+  .radar .who{
+    display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;font-weight:400;
+    color:var(--ink);background:var(--lilac);border:3px solid var(--ink);border-radius:0;
+    padding:5px 9px;margin-bottom:9px;
+  }
+  @media(max-width:620px){.rel-item{grid-template-columns:1fr;gap:10px;}}
+
+  /* ---------- МОДАЛКА (фото без пикселей) ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(28,18,50,.9);backdrop-filter:blur(3px);
+    display:none;align-items:flex-start;justify-content:center;z-index:100;
+    padding:46px 18px 60px;overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--white);border:6px solid var(--ink);border-radius:0;
+    box-shadow:24px 24px 0 var(--violet);
+    max-width:840px;width:100%;overflow:visible;animation:rise .25s ease;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .m-shot{position:relative;padding:14px 14px 0;}
+  .m-shot .m-img{width:100%;max-height:440px;object-fit:cover;background:var(--lilac);display:block;border:4px solid var(--ink);}
+  .m-shot .m-orig{
+    position:absolute;right:26px;bottom:12px;z-index:3;
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:var(--white);border:3px solid var(--ink);padding:5px 9px;
+    transform:rotate(-1.5deg);
+  }
+  .modal .m-body{padding:28px 38px 40px;}
+  .modal .m-kicker{
+    display:inline-block;font-family:var(--cond);font-size:17px;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--white);background:var(--violet);
+    border:4px solid var(--ink);padding:5px 12px 3px;margin-bottom:20px;transform:rotate(-1.2deg);
+  }
+  .modal h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(28px,4vw,44px);line-height:.96;margin:0 0 18px;letter-spacing:.005em;
+    color:var(--ink);text-shadow:.085em .085em 0 var(--pop);
+  }
+  .modal .m-meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:26px;display:flex;gap:9px;flex-wrap:wrap;align-items:center;line-height:1.6;}
+  .modal .m-lead{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--ink);margin:0 0 28px;line-height:1.5;}
+  .m-block{margin:0 0 26px;}
+  .m-block h4{
+    display:inline-block;font-family:var(--display);font-weight:400;
+    font-size:22px;letter-spacing:.03em;text-transform:uppercase;
+    color:var(--ink);background:var(--pop);border:4px solid var(--ink);
+    padding:4px 12px 2px;margin:0 0 14px;transform:rotate(-1deg);
+  }
+  .m-block p{font-family:var(--sans);margin:0;font-size:16px;color:var(--body-ink);line-height:1.65;}
+  .m-source{
+    display:inline-flex;align-items:center;gap:8px;margin-top:6px;
+    font-family:var(--mono);font-size:13px;letter-spacing:.04em;
+    color:var(--ink);text-decoration:none;background:var(--white);
+    border:4px solid var(--ink);border-radius:0;padding:12px 16px;
+  }
+  .m-source:hover{background:var(--pop);}
+  .m-close{
+    position:fixed;top:22px;right:24px;z-index:120;width:52px;height:52px;border-radius:0;
+    border:5px solid var(--ink);background:var(--pop);color:var(--ink);
+    font-family:var(--display);font-size:28px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .m-close:hover{background:var(--white);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:6px solid var(--ink);margin-top:84px;padding:36px 0 62px;
+    background:var(--ink);color:var(--lilac);
+    font-family:var(--mono);font-size:12.5px;line-height:1.7;letter-spacing:.02em;
+  }
+  footer .f-row{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;}
+  footer a{color:var(--white);}
+
+  /* ---------- АДАПТИВ ---------- */
+  @media(max-width:1080px){
+    .burst{width:150px;height:150px;right:116px;}
+    .burst b{font-size:29px;}.burst span{font-size:21px;}
+  }
+  @media(max-width:920px){
+    header.masthead .wrap{padding-right:28px;}
+    header.masthead::before{display:none;}
+    header.masthead::after{right:0;}
+    .burst{display:none;}
+    .hero{grid-template-columns:1fr;gap:34px;}
+    .grid-2{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .gallery .g-card.feat{grid-column:span 2;}
+    .sec-head{box-shadow:9px 9px 0 var(--ink);}
+  }
+  @media(max-width:560px){
+    .wrap{padding:0 18px;}
+    header.masthead{min-height:0;padding:46px 0 56px;}
+    header.masthead::after{height:96px;}
+    .tabbar .tb-inner{padding:0 14px;}
+    .tab-btn{font-size:15px;letter-spacing:.09em;padding:13px 14px 11px;}
+    .tab-btn .em{display:none;}
+    .sec-head{padding:18px 18px 16px;gap:14px;}
+    .sec-head .count{margin-left:0;}
+    .gallery{grid-template-columns:1fr;}
+    .gallery .g-card.feat{grid-column:span 1;}
+    .modal .m-body{padding:24px 20px 32px;}
+    .releases{padding:24px 20px;box-shadow:10px 10px 0 var(--violet);}
+    .hero .img-wrap{box-shadow:12px 12px 0 var(--violet);}
+    .card{box-shadow:9px 9px 0 var(--blue);}
+    .grid-2 .card:nth-child(even){box-shadow:9px 9px 0 var(--violet);}
+  
+    .starnum{width:58px;height:58px;font-size:20px;top:-18px;left:-18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13" stroke="#fff" stroke-width="2"/>
+            <path d="M16 7l2.6 2 .9 3.1-3.5 2.4-3.5-2.4.9-3.1L16 7z" fill="#fff"/>
+            <path d="M16 16l3.5 2.4-1.3 4.1h-4.4l-1.3-4.1L16 16z" fill="#fff" opacity="0.55"/>
+          </svg>
+        </span>
+        <div>
+          <h1>FOMO</h1>
+          <div class="sub">AI · Кино · Сериалы</div>
+        </div>
+      </div>
+      <div class="issue-tag">Выпуск № 45 · еженедельно</div>
+    </div>
+    <div class="daterange">
+      <span class="big" id="dr-big">15 — 22 октября</span>
+      <span class="yr">2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== TABS ===================== -->
+<nav class="tabbar" aria-label="Разделы дайджеста">
+  <div class="tb-inner">
+    <button class="tab-btn active" data-tab="ai"><span class="em">⚡</span>Нейросети</button>
+    <button class="tab-btn" data-tab="film"><span class="em">🎬</span>Кино</button>
+    <button class="tab-btn" data-tab="series"><span class="em">📺</span>Сериалы</button>
+  </div>
+</nav>
+
+<main class="tab-panel active" id="tab-ai" data-range="15 — 22 октября">
+<div class="wrap">
+
+  <div class="sec-head">
+    <h2>Событие недели</h2><span class="ln"></span><span class="count">главный релиз</span>
+  </div>
+  <article class="hero" data-id="ai_kling_4_launch" tabindex="0">
+    <div class="img-wrap">
+      <img src="https://pbs.twimg.com/amplify_video_thumb/2113186098310750208/img/8QblQIFAYBt9VtUa.jpg"
+           alt="Кадр из ролика Magnific, сделанного на Kling 4.0: девушка в красных очках на бордовом фоне среди предметов">
+    </div>
+    <div class="body">
+      <span class="badge">● Событие недели · Китай</span>
+      <h3>Kling 4.0 снимает дубль на 30 секунд: Kuaishou выпустила модель для «ключевых кадров» — с 15 референсами, HDR и стерео</h3>
+      <p class="deck">Новый Kling держит длинный план, сложную камеру и героя по 15 референсам. За неделю модель встроили Runway, Higgsfield, Magnific и Adobe Firefly.</p>
+      <div class="meta">
+        <span>Kling AI / Kuaishou</span><span class="dot"></span><span>Kuaishou IR · The Decoder</span><span class="dot"></span><span>15–16 октября 2026</span>
+      </div>
+      <div class="readmore">Открыть разбор →</div>
+    </div>
+  </article>
+
+  <div class="sec-head">
+    <h2>Кейс недели</h2><span class="ln"></span><span class="count">главный материал</span>
+  </div>
+  <article class="hero" data-id="ai_synthesia_marvin_clones" tabindex="0">
+    <div class="img-wrap">
+      <img src="https://d3q27bh1u24u2o.cloudfront.net/resized/960/news/2026-10/stink.3FK86nNJ.png"
+           alt="Кадр из фильма Synthesia: шеренги одинаковых лысых клонов в чёрной форме кричат в унисон">
+    </div>
+    <div class="body">
+      <span class="badge">● Кейс недели · Великобритания</span>
+      <h3>Synthesia дала слову «клон» второй шанс: злодей Марвин принимает парад своих двойников, а потом хохочет над собственным ИИ-аватаром в офисе</h3>
+      <p class="deck">Первая глобальная кампания платформы ИИ-аватаров: Stink и режиссёр BLOK снимают инопланетную антиутопию на зелёном фоне, а мир вокруг актёров генерируют. Плюс большой наружный запуск в Нью-Йорке.</p>
+      <div class="meta">
+        <span>Synthesia · Stink Studios · BLOK</span><span class="dot"></span><span>LBB · shots</span><span class="dot"></span><span>21 октября 2026</span>
+      </div>
+      <div class="readmore">Открыть разбор →</div>
+    </div>
+  </article>
+
+  <div class="sec-head">
+    <h2>Сильные кейсы</h2><span class="ln"></span><span class="count">кампании · авторы · продакшн</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="ai_axe_spec_brooksbank" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://i.vimeocdn.com/video/2212408685-9bd5592f5f9b067fa59178f12467e46abacbdf4c6ca0268306d3fbb410f6eecc-d_1280x720"
+             alt="Кадр из спек-ролика AXE: парень в раздутом оранжевом пуховике в вагоне метро">
+      </div>
+      <div class="body">
+        <h3>Пуховик, который потеет за тебя: режиссёр достала из стола похороненный питч AXE и сняла его с ИИ</h3>
+        <p class="deck">В 2021-м ролик для AXE зарубили из-за бюджета. Через пять лет Кассандра Бруксбэнк собрала его на Seedance 2.5 по всем правилам живого продакшна: тритмент, кастинг, раскадровка.</p>
+        <div class="meta"><span>Кассандра Бруксбэнк · Absurd</span><span class="dot"></span><span>No Film School · LBB · The Generated</span><span class="dot"></span><span>19–21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_elcine_flying_traffic" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://pbs.twimg.com/amplify_video_thumb/2112574846165188608/img/xeyWdXW-_dsKz1ef.jpg"
+             alt="Кадр ИИ-ролика el.cine: вид с капота машины на манхэттенскую пробку рядом с городским автобусом">
+      </div>
+      <div class="body">
+        <h3>Пробка будущего: через пять дней после летающего Tesla Roadster ИИ-автор el.cine поднял машину над Манхэттеном — и упёрся в пробку в небе</h3>
+        <p class="deck">22-секундный скетч стал «Видео дня» в The Generated, а промпт автор раздаёт бесплатно: подставь свою машину и героиню по одной фотографии.</p>
+        <div class="meta"><span>el.cine (@EHuanglu)</span><span class="dot"></span><span>X · The Generated</span><span class="dot"></span><span>20–22 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_malfoid_trend" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Мир</span>
+        <img src="https://cdn.mos.cms.futurecdn.net/Z7fRxcsk56cDERLgNCpPeF-1600-80.jpg"
+             alt="Кадр ИИ-сериала: Гарри и светловолосая Дракония Малфой в мантиях Хогвартса под дождём">
+      </div>
+      <div class="body">
+        <h3>Драко Малфой стал девушкой, и интернет требует продолжения: ИИ-фанфик Malfoid вырос в сериал с сотнями тысяч просмотров</h3>
+        <p class="deck">Gender-swap Драко давно жил в фан-арте, а теперь превратился в анимационные мини-сериалы с диалогами, монтажом и пауэр-балладой. Creative Bloq разбирает, почему это работает.</p>
+        <div class="meta"><span>Foyege · schmede_AI и другие авторы</span><span class="dot"></span><span>Creative Bloq · YouTube · X</span><span class="dot"></span><span>17–21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_tilly_norwood_ana" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://static-www.adweek.com/wp-content/uploads/2026/10/RevaStudioPhotography-12.jpg"
+             alt="Сцена конференции ANA: на большом экране ИИ-актриса Тилли Норвуд, рядом модератор и креативный директор Particle6">
+      </div>
+      <div class="body">
+        <h3>ИИ-актриса дала интервью вживую на сцене ANA: Тилли Норвуд спорит с модератором, шутит по-британски и отвечает быстрее человека</h3>
+        <p class="deck">Сгенерированная звезда Particle6, которую Голливуд освистал при дебюте, вышла к маркетологам в Орландо в реальном времени. Adweek опубликовал расшифровку.</p>
+        <div class="meta"><span>Particle6 · Adweek</span><span class="dot"></span><span>Adweek — On Background</span><span class="dot"></span><span>20–21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_bochkarev_ovechkin_ovi" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия</span>
+        <img src="https://leonardo.osnova.io/25e6c256-6c51-5259-9827-8d3d7c9023f8/"
+             alt="ИИ-версия кадра: Александр Овечкин в костюме кружки с логотипом OVI рядом с супругой в образе баварской официантки">
+      </div>
+      <div class="body">
+        <h3>Кружка правильная, пиво — нет: «Бочкарёв» с помощью ИИ переодел Овечкина в банку его собственного OVI</h3>
+        <p class="deck">Овечкин пришёл на хеллоуинскую вечеринку «Вашингтона» в костюме пивной кружки. Пивоварня за два дня ответила ИИ-версией, и её опубликовал сам хоккеист.</p>
+        <div class="meta"><span>«Пивоварни Бочкарёв» · Александр Овечкин</span><span class="dot"></span><span>vc.ru · РИА Новости</span><span class="dot"></span><span>18–20 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_sber_nereditsa" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия</span>
+        <img src="https://adpass.ru/wp-content/uploads/2026/10/image-186714ff-868d-4b81-a207-22da44d65cc4-1176x784.jpg"
+             alt="Премьера проекционного шоу в церкви Спаса на Нередице: восстановленные росписи на стенах и сводах, зрители в храме">
+      </div>
+      <div class="body">
+        <h3>ГигаЧат и Kandinsky вернули Нередице фрески: Сбер оживил утраченные росписи XII века в проекционном шоу прямо под сводами храма</h3>
+        <p class="deck">Нейросети оцифровали архивные акварели, восполнили утраты и анимировали композиции. Семиминутный спектакль идёт в церкви Спаса на Нередице постоянно.</p>
+        <div class="meta"><span>Центр иммерсивных решений Сбера · СберМаркетинг</span><span class="dot"></span><span>AdPass</span><span class="dot"></span><span>22 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head">
+    <h2>Фестивали и премии</h2><span class="ln"></span><span class="count">победители · номинации</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="ai_fest_kaica_roy" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Корея</span>
+        <img src="https://i.ytimg.com/vi/2WHrWUVQyA8/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/2WHrWUVQyA8/hqdefault.jpg';"
+             alt="Кадр из трейлера ИИ-фильма «Roy on the Road»: заплаканная девочка в чёрном среди взрослых">
+      </div>
+      <div class="body">
+        <h3>Сувон: Korea AI Content Awards впервые наградила ИИ-кино длиной до часа — победил робот, который хочет стать человеком</h3>
+        <p class="deck">1528 работ из 87 стран, 20 финалистов, в среднем по 3,9 ИИ-инструмента на фильм. Новую номинацию среднего метра выиграл «Roy on the Road» Чан Гвон Хо.</p>
+        <div class="meta"><span>Korea AI Content Awards (KAICA)</span><span class="dot"></span><span>Etnews · Newsis · Gyeonggi</span><span class="dot"></span><span>15–20 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_fest_baiff_amal" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Италия</span>
+        <img src="https://i.ytimg.com/vi/GJiDnUVayko/maxres1.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/GJiDnUVayko/hqdefault.jpg';"
+             alt="Кадр из ИИ-фильма «Amal»: мальчик на фоне разделительной стены смотрит вдаль">
+      </div>
+      <div class="body">
+        <h3>Венеция: Burano AI Film Festival назвал лучшим ИИ-фильмом «Amal» — историю палестинского мальчика по книге военного журналиста</h3>
+        <p class="deck">Четвёртый BAIFF прошёл под патронатом итальянской комиссии ЮНЕСКО и закрылся публикацией этического кодекса для ИИ-кино.</p>
+        <div class="meta"><span>Burano AI Film Festival (BAIFF)</span><span class="dot"></span><span>Osservatorio Mashrek · Scrolletta</span><span class="dot"></span><span>17–20 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_fest_arf_ogilvy_realtor" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://images-r2.thebrag.com/mw/uploads/2026/10/ai-made-ad-wins-david-ogilvy-awards.jpg"
+             alt="Кадр из ИИ-ролика realtor.com: женщина на кухне читает буклет о продаже дома">
+      </div>
+      <div class="body">
+        <h3>Нью-Йорк: впервые полностью сгенерированный ролик взял ARF David Ogilvy — «Seat at the Table» для realtor.com</h3>
+        <p class="deck">Премию, где судят по исследованиям и эффекту, получила австралийская ИИ-платформа BrandComms.AI: 47 материалов за несколько недель, 88% связи с брендом на тесте.</p>
+        <div class="meta"><span>ARF David Ogilvy Awards · BrandComms.AI × realtor.com</span><span class="dot"></span><span>Mediaweek · The ARF</span><span class="dot"></span><span>14–15 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="ai_fest_last_one_montreal" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Канада</span>
+        <img src="https://i.ytimg.com/vi/9BVtTRId-n4/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/9BVtTRId-n4/hqdefault.jpg';"
+             alt="Кадр из ИИ-фильма «Last One»: героиня Лолли с леденцом в неоновой ночной уличной компании">
+      </div>
+      <div class="body">
+        <h3>Монреаль: трёхминутный «Last One» за неделю взял Гран-при AI Independent и «технический» приз Ai &amp; Robots — и это работа одного человека</h3>
+        <p class="deck">Девушка, которая щелчком останавливает время, идёт ночью за конфетами и спасает всех, включая того, кто над ней смеялся. 0 кадров живой съёмки, 29 утверждённых референсов.</p>
+        <div class="meta"><span>Gabriel Brien · Crimson Spark</span><span class="dot"></span><span>AI Independent Montreal · Ai &amp; Robots Film Festival</span><span class="dot"></span><span>16–19 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head" id="ai-festivals">
+    <h2>Календарь ИИ-фестивалей</h2><span class="ln"></span><span class="count">ближайшие 3 недели</span>
+  </div>
+  <div class="releases">
+    <p class="lead">Прошлая неделя была фестивальной: Сувон, Венеция, Монреаль и Остин, где 17 октября Austin AI Film Festival из 700 заявок наградил 11 работ (полный метр — «MindPods» Jeff Synthesized, короткий — «The Morisca» Сейфа Абдаллы). Дальше — церемонии в Мельбурне, на Бали и в Оттаве и два больших дедлайна: на миллион долларов в Дубае и новый сезон Chroma.</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">VIC AI Awards — объявление победителей</p>
+        <span class="when">30 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Мельбурн, Quarterhouse в Докленде, в рамках VIC AI Boom. Восемь категорий, включая AI Campaign/Commercial, AI Short Films и AI Influencer, плюс спецпризы «Лучшее в Австралии», «Лучшее в мире» и «Восходящая звезда». Приз — хрустальный трофей, денег нет. Приём закрылся 20 октября.</p>
+        <a href="https://filmfreeway.com/VICAIAwards" target="_blank" rel="noopener">FilmFreeway — VIC AI Awards ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">AI Film Awards Bali — однодневный фестиваль и церемония</p>
+        <span class="when">7 ноября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Swiss-Belresort Pecatu на Бали: с утра воркшопы и демо, вечером церемония. Шесть категорий, среди них AI Ads &amp; Commercial и AI Long Film до 90 минут. Это балийская остановка сети AI Film &amp; Ads Awards, у которой есть этапы в Дубае, Каннах и Венеции.</p>
+        <a href="https://www.filmawards.ai/" target="_blank" rel="noopener">AI Film &amp; Ads Awards — официальный сайт ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">AI Cinema Festival Canada — Оттава</p>
+        <span class="when">13–15 ноября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Двуязычный фестиваль гибридного и полностью ИИ-кино: Grand Prix Canada и ещё четыре награды, в том числе за режиссуру в связке человек + ИИ, ИИ-операторскую работу и «ответственное ИИ-кино». Приём закрылся 18 октября, через месяц станут известны победители.</p>
+        <a href="https://aifilmcontests.com/contests/ai-cinema-festival-canada-ottawa-2026" target="_blank" rel="noopener">AI Film Contests — карточка фестиваля ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">AI Film Award 2027 — дедлайн, $1 000 000</p>
+        <span class="when">20 ноября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Самый крупный приз ИИ-кино от 1 Billion Followers Summit: фильм на 5–7 минут, не меньше 70% сгенерировано в Dreamina Seedance, тема — одна из пяти «гуманистических». Пять финалистов покажут на саммите в Дубае 8–10 января 2027 года, победитель получит миллион долларов.</p>
+        <a href="https://www.1billionsummit.com/ai-award-2027" target="_blank" rel="noopener">1 Billion Followers Summit — AI Film Award 2027 ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Chroma Awards, сезон 2 — приём открыт</p>
+        <span class="when">с 19 октября 2026 до 1 января 2027</span>
+      </div>
+      <div class="rel-body">
+        <p>Конкурс ElevenLabs вернулся с пятью дивизионами (Film, Music Videos, Advertising, Games, Behind-The-Scenes), призами больше $450 000 и студенческой номинацией со стажировками. В первом сезоне было 6600 работ из 122 стран. Победителей объявят 11 февраля 2027 года.</p>
+        <a href="https://elevenlabs.io/blog/chroma-awards-season-two-announcement" target="_blank" rel="noopener">ElevenLabs — анонс Chroma Awards S2 ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec-head" id="visual-gallery">
+    <h2>Visual Gallery</h2><span class="ln"></span><span class="count">8 визуальных кейсов</span>
+  </div>
+  <p class="gallery-intro">Хеллоуин в самом разгаре: скелет в шляпе из трёх неудачных генераций и вампир, который продаёт сигнализацию. Рядом подиум с другой планеты, болид Формулы-1, нарисованный от руки, пустыня как игровой уровень, голограмма «я — человек» и редактор, который меняет мир вокруг продукта за восемь секунд.</p>
+
+  <div class="gallery">
+
+    <div class="g-card feat" data-id="ai_g_dead_sun_teaser" tabindex="0">
+      <div class="ph"><span class="num">01</span>
+        <img src="https://media.thegenerated.com/ec71c6db-15de-4162-ac69-5e0d782c6e8a.jpg"
+             alt="Кадр ИИ-тизера: персонаж с черепом вместо лица в широкополой шляпе">
+      </div>
+      <div class="cap"><p class="t">Скелет в шляпе к Хеллоуину</p><span class="a">The Generated · 22 октября</span></div>
+    </div>
+
+    <div class="g-card feat" data-id="ai_g_kelly_boesch_japan" tabindex="0">
+      <div class="ph"><span class="num">02</span>
+        <img src="https://media.thegenerated.com/c587f97f-6c36-4105-8df4-78ef04d1b610.jpg"
+             alt="Кадр клипа Келли Беш: фигура в пёстром костюме и белом гриме с раскинутыми руками">
+      </div>
+      <div class="cap"><p class="t">Подиум с другой планеты</p><span class="a">The Generated · 22 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_standard_chartered_f1" tabindex="0">
+      <div class="ph"><span class="num">03</span>
+        <img src="https://i.ytimg.com/vi/_msE7gAxiVs/maxres2.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/_msE7gAxiVs/hqdefault.jpg';"
+             alt="Чёрно-белый кадр фильма Standard Chartered: механики команды склонились над болидом в боксах">
+      </div>
+      <div class="cap"><p class="t">Болид, нарисованный от руки</p><span class="a">The Drum · 15 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_verisure_vampire" tabindex="0">
+      <div class="ph"><span class="num">04</span>
+        <img src="https://revistalivemarketing.com.br/wp-content/uploads/2026/10/Verisure-e-agencia-Mila-usam-figura-do-vampiro-em-campanha-de-Halloween-produzida-com-inteligencia-artificial.png"
+             alt="Кадр кампании Verisure: смеющийся вампир с клыками у микрофона на тёмном фоне">
+      </div>
+      <div class="cap"><p class="t">Вампир против сигнализации</p><span class="a">Revista Live Marketing · 21 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_oakley_spec_levels" tabindex="0">
+      <div class="ph"><span class="num">05</span>
+        <img src="https://customer-deekqgzhniwhph3u.cloudflarestream.com/a56c324ec31a88749907309895f59edb/thumbnails/thumbnail.jpg?time=2s"
+             alt="Кадр спек-ролика Oakley: крошечная фигура спортсмена на гребне бесконечных песчаных дюн под ночным небом">
+      </div>
+      <div class="cap"><p class="t">Пустыня как игровой уровень</p><span class="a">FOOH · 19 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_twinnin_verified_human" tabindex="0">
+      <div class="ph"><span class="num">06</span>
+        <img src="https://media.creativeboom.com/3eaa4193-2b21-44ab-86bc-b1e8e49cb4e2/conversions/4cb56a1d353ed2ac6a05c5a8f611ea7c5f7b0b4c-medium.webp"
+             alt="Переливающаяся голографическая наклейка с надписью Verified Human на чёрном фоне">
+      </div>
+      <div class="cap"><p class="t">Голограмма «я — человек»</p><span class="a">Creative Boom · 20 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_captain_hahaa_mv" tabindex="0">
+      <div class="ph"><span class="num">07</span>
+        <img src="https://pbs.twimg.com/amplify_video_thumb/2111810912675864576/img/-ybbmCP7-myze24j.jpg"
+             alt="Кадр ИИ-клипа: инопланетное существо в мантии идёт по улице ретро-города среди прохожих">
+      </div>
+      <div class="cap"><p class="t">Клип на Seedance и Suno</p><span class="a">X · 18 октября</span></div>
+    </div>
+
+    <div class="g-card" data-id="ai_g_krea3_windcoat" tabindex="0">
+      <div class="ph"><span class="num">08</span>
+        <img src="https://s.krea.ai/k3-landing-final/hero-windcoat-base.webp"
+             alt="Изображение из анонса Krea 3: модель с белыми волосами в чёрном пальто и тёмных очках на градиентном фоне">
+      </div>
+      <div class="cap"><p class="t">Правка за 8 секунд</p><span class="a">Krea · 15 октября</span></div>
+    </div>
+
+  </div>
+
+  <div class="sec-head" id="releases">
+    <h2>Релизы недели</h2><span class="ln"></span><span class="count">что реально вышло</span>
+  </div>
+  <div class="releases">
+    <p class="lead">Главный релиз недели — Kling 4.0 (см. «Событие недели»): 30-секундные дубли, 15 референсов, HDR, к 21 октября открыт API. Вокруг него вышли быстрые редакторы картинок (Krea 3 и открытый FLUX 3 Klein), «кампания из карточки товара» от Higgsfield и звук в одном проходе у HeyGen. Чего ждали, но не дождались: Claude Fable 5.5 (по данным TestingCatalog, у партнёров, релиз «на следующей неделе»), удешевлённую GPT-6.1 Terra и новую картиночную модель OpenAI — «Aurora» пока только мелькает в тестах на Arena.</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Krea 3</p>
+        <span class="when">15 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Модель для редактирования изображений: большинство правок меньше 8 секунд в нативном 2K, $0,06 за картинку, до 6 референсов. Держит продукт, этикетку и лицо, когда меняет сцену. Доступна на krea.ai и через fal, Replicate, OpenRouter.</p>
+        <a href="https://www.krea.ai/blog/introducing-krea-3" target="_blank" rel="noopener">Krea — анонс ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">FLUX 3 Image Klein (открытые веса)</p>
+        <span class="when">15 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Black Forest Labs выложила 5,6-миллиардную открытую версию FLUX 3: генерация и правка в 4K, до 10 референсов, рамки (bounding boxes), чтобы задать, где окажется объект. В BF16 весит 11,2 ГБ, в FP8 — 5,6 ГБ, то есть идёт на игровых видеокартах. Лицензия FLUX Kommunity.</p>
+        <a href="https://bfl.ai/blog/flux-3-image-klein" target="_blank" rel="noopener">Black Forest Labs — блог ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Higgsfield Marketing Studio и Supercomputer</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Вставляешь ссылку на карточку товара и получаешь кампанию: ролики, UGC, продуктовые кадры, постеры, моушн и материалы для маркетплейсов, всё по автоматически собранному брендбуку. Шаблонов больше 1500, а агент Supercomputer планирует и ведёт многошаговую работу с картинкой, видео и звуком.</p>
+        <a href="https://www.prnewswire.com/news-releases/higgsfield-turns-any-product-page-into-a-finished-ad-campaign-302911758.html" target="_blank" rel="noopener">PR Newswire — Higgsfield ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Mistral Voxtral 3</p>
+        <span class="when">20 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Новые модели распознавания и синтеза речи на 50+ языках с эмоциональной подачей и SDK для голосовых агентов: слушать, думать, вызывать инструменты и говорить в одном потоке в реальном времени. API в ЕС или своя инфраструктура.</p>
+        <a href="https://mistral.ai/news/voxtral-3/" target="_blank" rel="noopener">Mistral — Voxtral 3 ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">HeyGen Video</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Первая универсальная видеомодель HeyGen, уже не аватарная. Из одного промпта собирает всю сцену вместе со звуком (диалог, атмосфера, шумы) за один проход, без отдельного липсинка. Клипы на 5–15 секунд до 2K, из текста, картинки или референсов. Доступна через API и в Creative Studio.</p>
+        <a href="https://www.heygen.com/blog/introducing-heygen-video" target="_blank" rel="noopener">HeyGen — анонс ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Claude Duet (research preview)</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Anthropic открыла превью проактивного агента на Claude Opus 5.5. Утром он присылает бриф по подключённым приложениям, днём следит за ними и пишет только по делу, а важные действия согласует. Отдельное приложение для iOS и Android и вкладка на claude.ai, входит в Pro и Max, доступ через лист ожидания.</p>
+        <a href="https://claude.com/resources/articles/claude-duet" target="_blank" rel="noopener">Claude — Introducing Claude Duet ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<main class="tab-panel" id="tab-film" data-range="15 — 22 октября">
+<div class="wrap">
+
+  <div class="sec-head">
+    <h2>Событие недели</h2><span class="ln"></span><span class="count">главный материал</span>
+  </div>
+  <article class="hero" data-id="f_you_can_see_everything" tabindex="0">
+    <div class="img-wrap">
+      <img src="https://i.ytimg.com/vi/HvW_N5p1q44/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/HvW_N5p1q44/hqdefault.jpg';"
+           alt="Кадр из официального трейлера фильма «Увидеть всё» (You Can See Everything)">
+    </div>
+    <div class="body">
+      <span class="badge">● Событие недели · США</span>
+      <h3>«Увидеть всё» Натана Филдера взорвал прокат: 15 млн долларов с 855 экранов и лучший старт документалки за 20 лет</h3>
+      <p class="deck">Фильм A24 об Элизабет Холмс снимали тайно три года за 7 млн долларов. Он занял второе место уикенда, уступив только «Уличному бойцу», а во второй уикенд может выйти на первое.</p>
+      <div class="meta">
+        <span>A24 · Натан Филдер и Лэнс Оппенгейм</span><span class="dot"></span><span>Variety / Кинометро / Deadline</span><span class="dot"></span><span>18–21 октября 2026</span>
+      </div>
+      <div class="readmore">Открыть разбор →</div>
+    </div>
+  </article>
+
+  <div class="sec-head">
+    <h2>Главные новости · мир</h2><span class="ln"></span><span class="count">США · Европа · Азия</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="f_tom_cruise_afi_life_achievement" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://variety.com/wp-content/uploads/2026/09/P105JBB5.jpg?w=1000"
+             alt="Том Круз на презентации Warner Bros. на CinemaCon">
+      </div>
+      <div class="body">
+        <h3>Том Круз получит высшую карьерную награду Американского института киноискусства</h3>
+        <p class="deck">AFI вручит Крузу 52-ю премию за жизненные достижения 24 апреля 2027 года в Dolby Theatre. Год назад её получил Эдди Мёрфи.</p>
+        <div class="meta"><span>American Film Institute · Том Круз</span><span class="dot"></span><span>Variety / IndieWire / Deadline</span><span class="dot"></span><span>21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="f_legendary_lionsgate_bid" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://variety.com/wp-content/uploads/2026/04/001-mkt-001-cin-v0037-cnpt-1002.jpg?w=1000"
+             alt="Кадр из фильма Lionsgate «Майкл» с Джаафаром Джексоном">
+      </div>
+      <div class="body">
+        <h3>Legendary снова хочет купить Lionsgate: акции студии подскочили на 15%</h3>
+        <p class="deck">Продюсеры «Дюны» и «Майнкрафта» отправили мини-мейджору официальное предложение о покупке. Капитализация Lionsgate выросла до 3,6 млрд долларов.</p>
+        <div class="meta"><span>Legendary Entertainment · Lionsgate</span><span class="dot"></span><span>Variety / Bloomberg / Кинометро</span><span class="dot"></span><span>20–21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="f_london_imperium_loznitsa" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Европа</span>
+        <img src="https://variety.com/wp-content/uploads/2026/09/116196-IMPERIUM_-_Official_Still__Credits_Essential_Filmproduktion__Kino_Produzioni__Soci__t___Parisienne_de_Production__Studio_Uljana_Kim_-_footage_courtesy_of_AAMOD___6_.jpg?w=1000"
+             alt="Архивный кадр из фильма Сергея Лозницы «Империум»">
+      </div>
+      <div class="body">
+        <h3>«Империум» Сергея Лозницы победил на 70-м Лондонском кинофестивале</h3>
+        <p class="deck">Архивный фильм о Советском Союзе начала 1970-х, снятый итальянскими операторами, получил главный приз. Жюри возглавлял документалист Сэм Поллард.</p>
+        <div class="meta"><span>BFI London Film Festival · Сергей Лозница</span><span class="dot"></span><span>Variety / Cineuropa</span><span class="dot"></span><span>18 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="f_ramayana_jiohotstar_ppv" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Азия</span>
+        <img src="https://variety.com/wp-content/uploads/2026/10/Ramayana.jpg?w=1000"
+             alt="Ранбир Капур в роли Рамы в фильме «Рамаяна. Часть первая»">
+      </div>
+      <div class="body">
+        <h3>Самый дорогой индийский эпос после кинотеатров будут продавать поштучно: «Рамаяна» идёт на JioHotstar по модели pay-per-view</h3>
+        <p class="deck">Фильм Нитеша Тивари с Ранбиром Капуром и Яшем выходит 5 ноября, а после проката станет первым тайтлом JioHotstar, который покупают отдельно от подписки.</p>
+        <div class="meta"><span>Prime Focus Studios · DNEG · JioStar</span><span class="dot"></span><span>Variety</span><span class="dot"></span><span>22 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head">
+    <h2>Россия</h2><span class="ln"></span><span class="count">прокат · производство · фестивали</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="rf_okko_gagarin_posle_kosmosa" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия · Окко</span>
+        <img src="https://www.kinometro.ru/res/pic/data/production/1547.jpg"
+             alt="Актёр в роли Юрия Гагарина в фильме «Гагарин. После космоса»">
+      </div>
+      <div class="body">
+        <h3>Okko закончил съёмки полнометражной документалки «Гагарин. После космоса»</h3>
+        <p class="deck">Фильм Михаила Райхельгауза начинается с приземления и рассказывает о семи годах жизни Гагарина после полёта. В нём есть игровые реконструкции и редкая хроника.</p>
+        <div class="meta"><span>Okko · Михаил Райхельгауз</span><span class="dot"></span><span>Кинометро / Okko Кино</span><span class="dot"></span><span>21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rf_minkult_47bn_2027_2029" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия</span>
+        <img src="https://www.kinometro.ru/res/pic/data/news/15330.jpg"
+             alt="Министр культуры Ольга Любимова">
+      </div>
+      <div class="body">
+        <h3>На кино в 2027–2029 годах государство выделит 47,8 млрд рублей</h3>
+        <p class="deck">Ольга Любимова назвала финансирование кинопроизводства одним из приоритетов трёхлетнего бюджета Минкультуры. Цель — 56% российских фильмов в прокате.</p>
+        <div class="meta"><span>Министерство культуры РФ · Ольга Любимова</span><span class="dot"></span><span>Кинометро</span><span class="dot"></span><span>19 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rf_golden_eagle_longlist" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия</span>
+        <img src="https://www.kinometro.ru/res/pic/data/news/15333.jpg"
+             alt="Лауреаты на сцене церемонии «Золотой орёл»">
+      </div>
+      <div class="body">
+        <h3>Лонг-лист «Золотого орла»: впереди «Рождение империи», за ним «Ангелы Ладоги» и «Буратино»</h3>
+        <p class="deck">В категорию «Лучший игровой фильм» попали 35 картин. Больше всех упоминаний у ещё не вышедшей исторической драмы Андрея Кравчука, она стартует в прокате 29 октября.</p>
+        <div class="meta"><span>Национальная академия кинематографических искусств и наук</span><span class="dot"></span><span>Кинометро / КиноРепортёр</span><span class="dot"></span><span>20–21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rf_komanda_bezrukov_filming" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Россия</span>
+        <img src="https://www.kinometro.ru/res/pic/data/production/1548.jpg"
+             alt="Сергей Безруков и Артём Быстров с кубком на съёмках фильма «Команда»">
+      </div>
+      <div class="body">
+        <h3>Безруков собирает футбольную «Команду» из воспитанников детдома: стартовали съёмки</h3>
+        <p class="deck">Антон Богданов снимает спортивную драму о красноярском «Тотеме», который дважды выиграл чемпионат мира по мини-футболу среди сирот. Съёмки идут в России и Китае.</p>
+        <div class="meta"><span>«Проспект Мира» · РФС · Фонд кино</span><span class="dot"></span><span>Кинометро</span><span class="dot"></span><span>22 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head" id="film-releases">
+    <h2>Прокат и премьеры</h2><span class="ln"></span><span class="count">цифры уикенда · что дальше</span>
+  </div>
+  <div class="releases">
+    <p class="lead">В Северной Америке уикенд 16–18 октября выиграл «Уличный боец» Paramount и Legendary: 31 млн долларов в 3575 залах и 51,1 млн в мире. Главной сенсацией стала документалка A24 «Увидеть всё» с 15 млн всего с 855 экранов. Весь рынок собрал около 107 млн, на 58% больше, чем год назад. В Китае первое место удержала «Обитель зла» (62,5 млн юаней, около 9,3 млн долларов), но весь уикенд дал лишь 26,7 млн, а с начала года рынок отстаёт от 2025-го на 29,2%. В России за 15–18 октября «Битва моторов» потеряла всего 28% и заработала 204,5 млн рублей (всего 567 млн), а «Руки Вверх! 2» стартовали с 81,4 млн, на 64% хуже первой части. Топ-20 собрал 629 млн рублей.</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">США: «Уличный боец» первый, «Увидеть всё» вторым с 855 экранов</p>
+        <span class="when">18–19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Экранизация файтинга Capcom открылась с 31 млн долларов при бюджете 82 млн. Это на 19% слабее «Мортал Комбата 2», оценка CinemaScore B-, 58% сборов дали IMAX и другие премиальные форматы. На втором месте документалка об Элизабет Холмс (15 млн, 17,5 тыс. на зал). «Чужая мама» во второй уикенд потеряла около 70% и заработала 8,4 млн, всего 44,9 млн. Триллер Disney «Кит: во тьме глубин» стартовал только с 8 млн при бюджете 60 млн. Ремейк «Разума и чувств» от Focus получил 7,2 млн.</p>
+        <a href="https://www.kinometro.ru/worldbox/show/name/american_bo_19102026" target="_blank" rel="noopener">Кинометро — американская касса 16–18 октября ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Мир: «Тюремщик 2» Раджникантха второй после «Уличного бойца»</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>«Уличный боец» возглавил мировой уикенд с 51,1 млн долларов. На втором месте неожиданно оказался тамильский экшен «Тюремщик 2» с Раджникантхом: 31,2 млн за уикенд, а четырёхдневный старт в Индии принёс 224 крор рупий (23,5 млн). Это третий результат в истории тамильского кино. В Северной Америке фильм дебютировал девятым с 3,2 млн. Дальше идут «Обитель зла» Sony (22,6 млн), «Чужая мама» (17,9 млн) и «Верити» (17,6 млн).</p>
+        <a href="https://variety.com/2026/film/box-office/rajinikanth-jailer-2-no-2-global-box-office-1236916220/" target="_blank" rel="noopener">Variety — мировая касса уикенда ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Китай: тихий уикенд после праздников, «Обитель зла» снова первая</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>По данным Artisan Gateway, хоррор Constantin и Sony во второй полный уикенд собрал 62,5 млн юаней (9,3 млн долларов), всего у него 55,8 млн. Детектив Чэнь Сычэна «Следы правосудия» остался вторым (6,8 млн, всего 84,6 млн), комедия «Мистер и миссис Пардон» третьей (4,1 млн, всего 50,9 млн). Летний хит «Однажды на Ближнем Востоке» с Шэнь Тэном добрался до 354,3 млн. Весь уикенд дал 26,7 млн долларов, годовая касса — 4,67 млрд.</p>
+        <a href="https://variety.com/2026/film/box-office/china-box-office-resident-evil-quiet-post-holiday-frame-1236916180/" target="_blank" rel="noopener">Variety — касса Китая за 16–18 октября ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Россия, 15–18 октября: «Руки Вверх!» не справились с «Битвой моторов»</p>
+        <span class="when">20 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>«Битва моторов» второй уикенд подряд первая: 204,5 млн рублей, всего 567 млн и больше миллиона зрителей. По динамике она опережает летние «Последнего богатыря. Колобка» и «Холопа 3». «Руки Вверх! 2» стартовали с 81,4 млн против 226 млн у первой части. «Приключения мамонтёнка» добавили 47 млн (всего 258,5 млн), «Девятая планета» перешла рубеж в 434 млн. Из прочих новинок «До последнего грамма» с Хоуком и Кроу собрал 6,9 млн, «Любовь моя» с Бардемом — 4,8 млн. Нелегальные показы, по оценке Кинометро, дали ещё около 84 млн.</p>
+        <a href="https://www.proficinema.com/questions-problems/analyses/detail.php?ID=462654" target="_blank" rel="noopener">ПрофиСинема — итоги уикенда 15–18 октября ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Россия, 22–25 октября: каникулярная битва трёх сказок</p>
+        <span class="when">20–21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>С началом школьных каникул выходят сразу три семейных фильма. Кинометро прогнозирует, что «Сказка о потерянном времени» с Иваном Охлобыстиным стартует со 140 млн рублей, «Чудо-юдо» с Викторией Исаковой и Сергеем Безруковым — со 110 млн, новый «Морозко» с Елизаветой Боярской и Кириллом Зайцевым — с 90 млн. «Битва моторов» должна собрать ещё 120 млн. Кроме того, выходят британский хоррор «Цикл зверя», аниме «Дитя воды», китайский мультфильм с Берлинале «История огня» и триллер «Пранкер» с Максимом Матвеевым. Весь топ-10 ждут на уровне 610 млн рублей.</p>
+        <a href="https://www.kinometro.ru/analytics/show/name/weekend_releases_20102026" target="_blank" rel="noopener">Кинометро — новинки уикенда 22–25 октября ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">США, 23–25 октября: «Глиноликий» против «Увидеть всё»</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>R-рейтинговый боди-хоррор DC «Глиноликий» Джеймса Уоткинса с бюджетом 44 млн долларов выходит в 3400 залах, ему прогнозируют 22–35 млн. «Увидеть всё» расширяется до 2600 экранов и может собрать 20–25 млн, то есть вырасти во второй уикенд. Это редкость, и у фильма есть шанс выйти на первое место. Также выходят «Плетёный» с Оливией Колман и Александром Скарсгардом (6–8 млн), «Дикий лес» студии Laika (6–8 млн при бюджете 100 млн), «Али Джи: Кто есть я?» Саши Барона Коэна и «Клара и Солнце» с Дженной Ортегой (около 2 млн).</p>
+        <a href="https://variety.com/2026/film/box-office/you-can-see-everything-could-beat-clayface-box-office-1236917465/" target="_blank" rel="noopener">Variety — прогноз уикенда 23–25 октября ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<main class="tab-panel" id="tab-series" data-range="15 — 22 октября">
+<div class="wrap">
+
+  <div class="sec-head">
+    <h2>Событие недели</h2><span class="ln"></span><span class="count">главный материал</span>
+  </div>
+  <article class="hero" data-id="s_netflix_rice" tabindex="0">
+    <div class="img-wrap">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/101_Albright_Way.jpg/1280px-101_Albright_Way.jpg"
+           alt="Здание Netflix на Олбрайт-уэй в Лос-Гатосе, Калифорния">
+    </div>
+    <div class="body">
+      <span class="badge">● Событие недели · США</span>
+      <h3>Netflix меняет контент-шефа: Бела Баджария уходит, Питер Райс приходит, акции на двухлетнем дне</h3>
+      <p class="deck">За неделю Netflix сменил директора по контенту, лишился главы кино, перестроил сериальный отдел США и отчитался за квартал. Выручка в норме, но рост самый медленный за три года, а рекламный план на год провален.</p>
+      <div class="meta">
+        <span>Netflix · Тед Сарандос · Питер Райс</span><span class="dot"></span><span>Deadline / Variety</span><span class="dot"></span><span>15–21 октября 2026</span>
+      </div>
+      <div class="readmore">Открыть разбор →</div>
+    </div>
+  </article>
+
+  <div class="sec-head">
+    <h2>Главные новости · мир</h2><span class="ln"></span><span class="count">США · Европа · Азия</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="s_glee_revival" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">США</span>
+        <img src="https://deadline.com/wp-content/uploads/2026/10/TCDGLE2_EC005.jpg?w=1024"
+             alt="Актёры сериала «Хор» на сцене">
+      </div>
+      <div class="body">
+        <h3>«Хор» возвращается: Disney+ и Hulu заказали перезапуск Райана Мёрфи</h3>
+        <p class="deck">Через 11 лет после финала мюзикл-сериал о школьном хоре из Огайо получил заказ на новый сезон. Лиа Мишель ведёт переговоры о возвращении к роли Рэйчел Берри.</p>
+        <div class="meta"><span>Disney+ · Hulu · 20th Television · Райан Мёрфи</span><span class="dot"></span><span>Deadline / THR</span><span class="dot"></span><span>21 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="s_bbc_three_close" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Европа</span>
+        <img src="https://deadline.com/wp-content/uploads/2026/10/p050dvyn-e1792403164545.jpg?w=1024"
+             alt="Логотип BBC Three">
+      </div>
+      <div class="body">
+        <h3>BBC второй раз выключает BBC Three: эфирные каналы закрываются ради экономии 500 млн фунтов</h3>
+        <p class="deck">Весной 2027-го с линейного эфира уйдут BBC Three, BBC Scotland и Radio 4 Extra. Их программы останутся в iPlayer, а отдел контента объединит ТВ- и аудиокомиссию и сократит около 100 ставок.</p>
+        <div class="meta"><span>BBC · Мэтт Бриттин · Кейт Филлипс</span><span class="dot"></span><span>Deadline / Variety</span><span class="dot"></span><span>20–22 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="s_edgerunners2" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Азия</span>
+        <img src="https://www.cdprojekt.com/en/wp-content/uploads-en/2026/10/cp-edgerunners2-launch-kv-16x9-rgb-1024x576.png"
+             alt="Ключевой арт аниме «Киберпанк: Бегущие по краю 2»">
+      </div>
+      <div class="body">
+        <h3>«Киберпанк: Бегущие по краю 2»: Trigger и CD Projekt Red выпустили все десять серий сразу</h3>
+        <p class="deck">Четыре года спустя Найт-Сити снова в аниме. Второй сезон вышел на Netflix целиком, с новыми героями, а для игры Cyberpunk 2077 в тот же день анонсировали обновление по мотивам.</p>
+        <div class="meta"><span>Netflix · Trigger · CD Projekt Red</span><span class="dot"></span><span>CD Projekt Red / ANN</span><span class="dot"></span><span>20 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="s_justwatch_tv" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Индустрия</span>
+        <img src="https://deadline.com/wp-content/uploads/2026/10/JustWatch-devices.png?w=1024"
+             alt="Интерфейс JustWatch TV на телевизоре, планшете и смартфоне">
+      </div>
+      <div class="body">
+        <h3>JustWatch из гида по стримингам стал стримингом: запущен JustWatch TV</h3>
+        <p class="deck">Берлинский сервис, который подсказывает 50 млн пользователей, где что смотреть, запустил собственную платформу: бесплатный просмотр с рекламой, покупка тайтлов и тариф без рекламы за 3,99 доллара.</p>
+        <div class="meta"><span>JustWatch · Давид Кройе</span><span class="dot"></span><span>Deadline</span><span class="dot"></span><span>20 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head" id="series-short">
+    <h2>Коротко · мир</h2><span class="ln"></span><span class="count">анонсы · даты · цифры</span>
+  </div>
+  <div class="releases">
+    <p class="lead">Неделя продлений и заказов. Netflix взял сразу два сезона драмы с Гвинет Пэлтроу и продлил корейский «Код травмы», FX вернул «Американскую историю ужасов», Prime Video назвал даты третьего сезона «Колец власти». В Японии Disney+ собрал хоррор-антологию у Киёси Куросавы, а в Индии Netflix договорился с бенгальским Hoichoi. В «Настоящего детектива» к Николасу Кейджу присоединился Антонио Бандерас.</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Netflix заказал сразу два сезона «Извинения» с Гвинет Пэлтроу</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Это первая главная роль Пэлтроу в сериале. Она играет Эвелин Амспокер, чей сын был убит 18 лет назад. Когда незнакомец признаётся в убийстве, справедливость кажется близкой, пока родители не узнают, что ему могут смягчить срок. Сериал придумал и пишет Джо Мёртаф («Женщина в стене»), режиссёр — Томас Винтерберг («Ещё по одной»), студия — A24.</p>
+        <a href="https://variety.com/2026/tv/news/gwyneth-paltrow-a24-the-apology-first-lead-tv-role-1236916711/" target="_blank" rel="noopener">Variety — «Извинение» с Пэлтроу ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">«Код травмы» продлён сразу на второй и третий сезоны</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Netflix подтвердил, что Чу Джи Хун и Чу Ён У возвращаются в медицинскую драму по вебтуну «Травма-центр: золотой час». Оба сезона уже в производстве, их снимают Studio N и Mays Entertainment. Вернутся Юн Гён Хо и Чон Джэ Гван. Даты премьер не объявили.</p>
+        <a href="https://variety.com/2026/tv/news/ju-ji-hoon-choo-young-woo-trauma-code-seasons-2-3-netflix-1236916275/" target="_blank" rel="noopener">Variety — «Код травмы» продлён ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">«Американская история ужасов» получила 14-й сезон</p>
+        <span class="when">20 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>FX продлил антологию Райана Мёрфи и Брэда Фэлчака за неделю до финала 13-го сезона, который выйдет 29 октября. Это первое продление за почти семь лет: в 2020-м сериал взяли сразу на сезоны с 11-го по 13-й. Премьера 13-го сезона, кроссовера с героями всей франшизы, стала для Мёрфи лучшим стартом на Hulu и Disney+.</p>
+        <a href="https://deadline.com/2026/10/american-horror-story-renewed-season-14-fx-1237168879/" target="_blank" rel="noopener">Deadline — продление «Американской истории ужасов» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">«Кольца власти»: трейлер третьего сезона и даты</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Prime Video показал трейлер с драконами, Балрогом и кольценосцами. Первые четыре серии выйдут 11 ноября, ещё две — 18-го, финальные две — 25 ноября. В составе новички Джейми Кэмпбелл Бауэр и Эдди Марсан, а Балрога озвучивает Саймон Пегг. Шоураннеры прежние: Джей Ди Пэйн и Патрик Маккей.</p>
+        <a href="https://variety.com/2026/tv/news/rings-of-power-season-3-trailer-balrog-ringwraiths-1236918110/" target="_blank" rel="noopener">Variety — трейлер «Колец власти» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Киёси Куросава и Такаси Симидзу снимут японский хоррор для Disney+</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>«Клуб ночных историй» — антология из шести серий по рассказам Ити Савамуры. Её премьера на Disney+ и Hulu назначена на январь 2027-го. Главный герой, бизнесмен Ходзё в исполнении Такаюки Ямады, платит 20 млн иен золотом за доказанную встречу со сверхъестественным. Каждую историю снимает свой режиссёр: кроме Куросавы и автора «Проклятия» Симидзу, это Синдзо Катаяма, Юкико Содэ, Юитиро Сакасита и Ёсукэ Накамура.</p>
+        <a href="https://variety.com/2026/tv/news/kurosawa-shimizu-disney-japanese-horror-night-tales-club-1236918137/" target="_blank" rel="noopener">Variety — «Клуб ночных историй» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <p class="name">Netflix будет показывать бенгальские сериалы Hoichoi на хинди, тамильском и телугу</p>
+        <span class="when">22 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Все новинки Hoichoi за ближайшие два года выйдут на Netflix в трёх языковых версиях одновременно с бенгальской премьерой. Первой станет фольклорный хоррор «Проклятый храм Каурибури», премьера 6 ноября. Netflix также получает 14 готовых сериалов Hoichoi, а компании будут вместе делать новые оригиналы. Это третья крупная лицензионная сделка Netflix после французского TF1 и бразильского Globo.</p>
+        <a href="https://variety.com/2026/tv/news/netflix-hoichoi-partner-bengali-series-hindi-tamil-telugu-1236919476/" target="_blank" rel="noopener">Variety — Netflix и Hoichoi ↗ ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec-head">
+    <h2>Россия · премьеры недели</h2><span class="ln"></span><span class="count">что вышло и что анонсировали</span>
+  </div>
+  <div class="grid-2">
+
+    <article class="card" data-id="rs_lisa2" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Окко</span>
+        <img src="https://www.rabotnikitv.com/wp-content/uploads/2026/10/kak-priruchit-lisu-2.jpg"
+             alt="Тизерный постер второго сезона «Как приручить лису»: лиса за решёткой">
+      </div>
+      <div class="body">
+        <h3>«Как приручить лису 2»: Okko показал тизер нового сезона, Дина — главная подозреваемая</h3>
+        <p class="deck">Продолжение одного из самых популярных оригиналов Okko 2025 года. Через полгода после исчезновения Дины в загородном особняке находят убитую семью, и на месте преступления — её следы.</p>
+        <div class="meta"><span>Okko · «Место силы» · реж. Юлиана Закревская</span><span class="dot"></span><span>Okko / Работники ТВ</span><span class="dot"></span><span>19 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rs_volshebny3" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">Окко</span>
+        <img src="https://www.rabotnikitv.com/wp-content/uploads/2026/10/volshebnyj-uchastok-1-1024x682.webp"
+             alt="Кадр из сериала «Волшебный участок»">
+      </div>
+      <div class="body">
+        <h3>«Волшебный участок» уходит в 1997-й: Okko начал снимать третий сезон</h3>
+        <p class="deck">Сказочная полиция ОБСП после Москвы и Петербурга отправляется в девяностые. Главный злодей — Чудо-Юдо, который строит машину времени из Песков времени.</p>
+        <div class="meta"><span>Okko · «Место силы» · Originals Production</span><span class="dot"></span><span>Okko / Работники ТВ</span><span class="dot"></span><span>20 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rs_kapitanskaya" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">КИОН</span>
+        <img src="https://blog.kion.ru/api/corpsite/v1/news/images/public/8904d725-3355-423f-9a62-c592ffa98e61"
+             alt="Кадр из сериала «Капитанская дочка»: герои за праздничным столом при свечах">
+      </div>
+      <div class="body">
+        <h3>«Капитанская дочка»: КИОН показал первую встречу Гринёва и Маши Мироновой</h3>
+        <p class="deck">В годовщину окончания повести Пушкина КИОН выпустил тизер-сцену и постер экранизации. Гринёва играет Олег Савостюк, Машу — Евгения Леонова, в ролях также Безруков, Лапенко и Ткачук.</p>
+        <div class="meta"><span>КИОН · реж. Дима Литвиненко · Олег Савостюк</span><span class="dot"></span><span>КИОН / Блог КИОН</span><span class="dot"></span><span>19 октября 2026</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-id="rs_16let" tabindex="0">
+      <div class="img-wrap">
+        <span class="chip">PREMIER</span>
+        <img src="https://www.intermedia.ru/img/news_x350/407581.jpg?t=1792581783"
+             alt="Дарья Матвеева и Олег Савостюк на постере сериала «16 лет и 9 месяцев»">
+      </div>
+      <div class="body">
+        <h3>«16 лет и 9 месяцев»: PREMIER выпустил драмеди о школьнице, которая узнала о беременности</h3>
+        <p class="deck">Отличница Тоня мечтает о Лондонской академии дизайна, но после вечеринки ради школьного красавца узнаёт, что беременна. В главных ролях Дарья Матвеева и Олег Савостюк.</p>
+        <div class="meta"><span>PREMIER · ТВ-3 · реж. Анна Курбатова</span><span class="dot"></span><span>PREMIER / ИнтерМедиа</span><span class="dot"></span><span>21 октября 2026</span></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="sec-head" id="series-radar">
+    <h2>Радар конкурентов</h2><span class="ln"></span><span class="count">что делают платформы</span>
+  </div>
+  <div class="releases radar">
+    <p class="lead">Главный общий релиз недели — шестой сезон «Папиных дочек. Новых», который 19 октября одновременно запустили START, PREMIER и Wink. PREMIER и START вместе закончили съёмки «Подслушано в Выборге», КИОН собрал девять номинантов в лонг-листе «Золотого орла», Иви готовит третий сезон «Истории его служанки», Амедиатека назвала дату финала «Шершней».</p>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">START · PREMIER · Wink</span>
+        <p class="name">Шестой сезон «Папиных дочек. Новых» вышел сразу на трёх платформах</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>START объявил «эксклюзивную премьеру» в 17:40 мск. PREMIER показывает сезон в совместной подписке PREMIER x START, а Wink выкладывает серии сразу после эфира СТС. В сезоне появляются Никита Кологривый и Люся Чеботина: Арина снимает сказку с олигархом Федотовым и ищет принцесс и рыцарей. Тайтл не эксклюзивен ни для одного из сервисов.</p>
+        <a href="https://t.me/start_shows/16697" target="_blank" rel="noopener">START — премьера 6 сезона «Папиных дочек» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">KION</span>
+        <p class="name">Девять проектов в лонг-листе «Золотого орла», «Марик» — самый смотримый оригинал</p>
+        <span class="when">20 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>КИОН сообщил, что в лонг-лист премии «Золотой орёл» попали девять его фильмов и сериалов: «Коммерсант», «Отец», «Марик», «Отпечатки», «Полдень», «Приговор», «Резервация», «Тоннель» и «Дети наши». «Полдень» сделан совместно с Okko и идёт на обеих платформах. В тот же день КИОН объявил, что драма «Марик» с Василием Копейкиным и Анной Панкратовой вышла на первое место по просмотрам среди оригинальных проектов сервиса.</p>
+        <a href="https://t.me/kionru/14537" target="_blank" rel="noopener">КИОН — 9 проектов в лонг-листе «Золотого орла» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">PREMIER · START</span>
+        <p class="name">Закончены съёмки нового сезона «Подслушано в Выборге»</p>
+        <span class="when">15 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>PREMIER и START одновременно объявили о завершении съёмок иронического детектива с Любовью Аксёновой, Адамом Нехаем, Юлией Хлыниной, Артёмом Быстровым и Михаилом Кремером. Почтальон Виталик становится свидетелем преступления и случайно связывается с профессиональной киллершей Викой, а на кону миллиард. Режиссёр — снова Пётр Тодоровский, предыдущий сезон получил три ТЭФИ. Обе платформы обещают премьеру в 2027 году. В тот же день PREMIER выпустил финал сезона ромкома «Мэтч».</p>
+        <a href="https://t.me/premieronline/14868" target="_blank" rel="noopener">PREMIER — кадры «Подслушано в Выборге» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">Иви</span>
+        <p class="name">Победительница народного кастинга сыграет в третьем сезоне «Истории его служанки»</p>
+        <span class="when">19 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Иви представил Евгению Шемелину, победительницу кастинга среди зрителей, который платформа провела ещё до премьеры сериала. Она уже снялась в третьем сезоне: её героиня Вера мечтает о медицине, когда женщинам это запрещено, и берёт тайные уроки у Миши Смирнова. Второй сезон сейчас выходит на Иви и START.</p>
+        <a href="https://t.me/official_iviru/20719" target="_blank" rel="noopener">Иви — новое лицо «Истории его служанки» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">Amediateka</span>
+        <p class="name">Премьера «Хрустального озера» и дата финала «Шершней»</p>
+        <span class="when">16–21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>16 октября Амедиатека начала показ «Хрустального озера», хоррор-приквела «Пятницы, 13-е» с Линдой Карделлини в роли Памелы Вурхиз. 19-го сообщила, что в каталоге уже все серии. 21 октября сервис объявил, что четвёртый и финальный сезон «Шершней» выйдет 21 ноября.</p>
+        <a href="https://t.me/amediatekatv/15099" target="_blank" rel="noopener">Амедиатека — финальный сезон «Шершней» ↗ ↗</a>
+      </div>
+    </div>
+
+    <div class="rel-item">
+      <div class="rel-head">
+        <span class="who">Prime Video</span>
+        <p class="name">Prime Video добавил индийский Sony LIV для диаспоры</p>
+        <span class="when">21 октября 2026</span>
+      </div>
+      <div class="rel-body">
+        <p>Сервис Sony LIV стал доступен внутри Prime Video за 399 рупий (4,22 доллара) в месяц или 1499 рупий в год. В каталоге больше 450 фильмов и 300 шоу, включая франшизу «Афера» и сериал «Копилка», а также спорт: матчи сборной Индии по крикету, Лигу чемпионов УЕФА, «Ролан Гаррос» и UFC.</p>
+        <a href="https://deadline.com/2026/10/prime-video-adds-sony-liv-india-1237169498/" target="_blank" rel="noopener">Deadline — Sony LIV в Prime Video ↗ ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="f-row">
+      <div>FOMO — еженедельный дайджест: ИИ-кейсы в креативе + новости мира кино и сериалов.<br>Выпуск собран 22 октября 2026. Окна: Нейросети — 15 — 22 октября, Кино — 15 — 22 октября, Сериалы — 15 — 22 октября.</div>
+      <div>Все ссылки ведут на первоисточники.<br>Кликните любую карточку, чтобы открыть разбор.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== MODAL ===================== -->
+<div class="overlay" id="overlay">
+  <button class="m-close" id="mClose" aria-label="Закрыть">×</button>
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+const ITEMS = {
+  "ai_kling_4_launch": {
+    "kicker": "Нейросети · Событие недели · Китай",
+    "title": "Kling 4.0 снимает дубль на 30 секунд: Kuaishou выпустила модель для «ключевых кадров» — с 15 референсами, HDR и стерео",
+    "meta": [
+      "Kling AI / Kuaishou",
+      "Kuaishou IR · The Decoder",
+      "15–16 октября 2026"
+    ],
+    "img": "https://pbs.twimg.com/amplify_video_thumb/2113186098310750208/img/8QblQIFAYBt9VtUa.jpg",
+    "imgAlt": "Кадр из ролика Magnific, сделанного на Kling 4.0: девушка в красных очках на бордовом фоне среди предметов",
+    "lead": "Kuaishou выпустила Kling 4.0 — видеомодель, которую сами авторы описывают как инструмент для ключевых кадров, а не для случайных удачных генераций.",
+    "summary": "Kling 4.0 вышел 15 октября, пресс-релиз Kuaishou — 16-го. Главное: до 30 секунд за один проход (вдвое больше Kling 3), так что длинный план, смена сцены и нарастание эмоции укладываются в один дубль. Omni Reference принимает до 15 референсов и до 10 ключевых кадров: героя, продукт и локацию можно зафиксировать заранее, а не надеяться на удачу. Разработчики отдельно подтянули крупную динамику и сложную камеру: проезды, облёты, трекинг на скорости не разваливаются. На выходе 10-битный HDR с запасом под цветокоррекцию, 4K, 1080p и широкий формат 21:9. По данным The Decoder и Artlist, в модели есть стереозвук с многоязычным липсинком и облегчённая версия Flash для быстрых черновиков. API открыли 21 октября, и за неделю модель появилась у Runway (в безлимитном тарифе), Higgsfield, Magnific, Adobe Firefly, WaveSpeed и OiiOii. Magnific уже показывает, как вставить в готовую сцену новые предметы по референсам, не трогая ни героиню, ни её движение.",
+    "url": "https://ir.kuaishou.com/news-releases/news-release-details/kling-ai-officially-launches-next-generation-kling-40-raising/",
+    "urlLabel": "Kuaishou — пресс-релиз о запуске Kling 4.0"
+  },
+  "ai_synthesia_marvin_clones": {
+    "kicker": "Нейросети · Кейс недели · Великобритания",
+    "title": "Synthesia дала слову «клон» второй шанс: злодей Марвин принимает парад своих двойников, а потом хохочет над собственным ИИ-аватаром в офисе",
+    "meta": [
+      "Synthesia · Stink Studios · BLOK",
+      "LBB · shots",
+      "21 октября 2026"
+    ],
+    "img": "https://d3q27bh1u24u2o.cloudfront.net/resized/960/news/2026-10/stink.3FK86nNJ.png",
+    "imgAlt": "Кадр из фильма Synthesia: шеренги одинаковых лысых клонов в чёрной форме кричат в унисон",
+    "lead": "Синтетическое видео рекламирует само себя через жанровую шутку: в кино клоны всегда к беде, а в офисе — к меньшему количеству тренингов.",
+    "summary": "Synthesia, на которой компании делают интерактивных видеоаватаров своих сотрудников для онбординга и обучения, запустила первую глобальную кампанию. Идея от Stink Studios — вернуть слову «клонирование» доброе имя. 60-секундный фильм режиссёра BLOK открывается на чужой планете: тиран Марвин инспектирует армию собственных клонов. Потом монтаж переносит его в обычный офис, где тот же Марвин смеётся вместе со своим ИИ-аватаром, а коллеги начинают понимать, зачем он нужен. Инопланетный мир сделан с ИИ: актёров снимали на зелёном фоне, ротоскопировали и сажали в сгенерированные окружения, а не строили всё в классической CG. ИИ встроили в обычный VFX-пайплайн, который вёл постоянный пост-партнёр Stink. Креативная команда настаивает: технология усиливает живую игру, а не заменяет её. Фильм идёт с медиаподдержкой в Великобритании и США, параллельно в Нью-Йорке висит наружка из пар: слева киношный клон, справа рабочий сценарий для аватара. В титрах отдельной строкой стоит AI Creative — Захид Анвар.",
+    "url": "https://lbbonline.com/news/synthesia-ai-sci-fi-stink",
+    "urlLabel": "LBB — Synthesia, Stink и BLOK о кампании про клонов"
+  },
+  "ai_axe_spec_brooksbank": {
+    "kicker": "Нейросети · Сильные кейсы · США",
+    "title": "Пуховик, который потеет за тебя: режиссёр достала из стола похороненный питч AXE и сняла его с ИИ",
+    "meta": [
+      "Кассандра Бруксбэнк · Absurd",
+      "No Film School · LBB · The Generated",
+      "19–21 октября 2026"
+    ],
+    "img": "https://i.vimeocdn.com/video/2212408685-9bd5592f5f9b067fa59178f12467e46abacbdf4c6ca0268306d3fbb410f6eecc-d_1280x720",
+    "imgAlt": "Кадр из спек-ролика AXE: парень в раздутом оранжевом пуховике в вагоне метро",
+    "lead": "Минута абсурда в нью-йоркском метро — и честный разбор того, как ИИ-ролик собирают по законам обычного коммерческого продакшна.",
+    "summary": "Парень в огромном оранжевом пуховике втискивается в битком набитый вагон: рядом монахиня, человек в медицинской маске, мама с младенцем и дама с белой собачкой. Минуту куртка раздувается от его пота, давит младенцу на лицо, лопается по швам и заливает вагон. Последний кадр перед пэкшотом — промокшая монахиня. Этот ролик Бруксбэнк написала в The Martin Agency в 2021 году, но его закрыли из-за бюджета. Теперь она сняла его сама как неофициальный спек «For Days That Run Hot» и подробно описала процесс на No Film School. Сначала тритмент и раскадровка: доски, на которые раньше уходила неделя в Photoshop, заняли меньше дня. Потом кастинг: героя дал GPT Image 2.5, референс-пак — Uni 1.1, куртку на него надели в Ideogram. Ещё около 20 пассажиров получили биографии и гардероб, для куртки сделали отдельные стадии раздувания, а в вагоне зафиксировали рассадку, потому что у ИИ «ужасное чувство географии». Видео делали на Seedance 2.5 сериями по 3–5 планов, перед чистовиком гоняли две дешёвые черновые версии, грейдил Эндрю Флетчер. Нюанс: Бруксбэнк теперь руководит коммерческим направлением Absurd, на платформе которого собран ролик. Бюджет не раскрыт, AXE никак не комментирует.",
+    "url": "https://vimeo.com/1236016280",
+    "urlLabel": "Vimeo — AXE «For Days That Run Hot» (спек)"
+  },
+  "ai_elcine_flying_traffic": {
+    "kicker": "Нейросети · Сильные кейсы · США",
+    "title": "Пробка будущего: через пять дней после летающего Tesla Roadster ИИ-автор el.cine поднял машину над Манхэттеном — и упёрся в пробку в небе",
+    "meta": [
+      "el.cine (@EHuanglu)",
+      "X · The Generated",
+      "20–22 октября 2026"
+    ],
+    "img": "https://pbs.twimg.com/amplify_video_thumb/2112574846165188608/img/xeyWdXW-_dsKz1ef.jpg",
+    "imgAlt": "Кадр ИИ-ролика el.cine: вид с капота машины на манхэттенскую пробку рядом с городским автобусом",
+    "lead": "Свежий мем отыгран за пару дней: ИИ-авторы подхватили презентацию Tesla с реактивным Roadster, и самая смешная версия уместилась в 22 секунды.",
+    "summary": "Водительница стоит в пробке на Манхэттене рядом с автобусом, жмёт светящуюся кнопку, и машина на четырёх реактивных соплах поднимается над улицей. Потом героиня смотрит вверх: небо над Крайслер-билдинг уже забито такими же летающими машинами. el.cine (Эрик Хуанглу, режиссёр и ИИ-консультант из Сан-Франциско, 147 тыс. подписчиков в X) выложил ролик 20 октября с подписью «the future of traffic jam», через пять дней после того, как Tesla показала новый Roadster с ракетными соплами, перепрыгивающий грузовик. The Generated сделал клип «Видео дня» и отдельно похвалил актёрскую игру (руки на руле, усталый жест в конце), свет, звук и то, что машина остаётся той же самой с любого ракурса. Слабое место одно: сам взлёт не похож на демонстрацию Tesla. Промпт автор выложил бесплатно в виде шаблона, где машину и героиню можно заменить своими по фото. На 22 октября у поста около 20 тыс. просмотров. Сам Roadster за неделю стал любимой темой ИИ-скетчей: тайская игровая пресса пишет о клипе, где машина перелетает полицейский кордон как в GTA.",
+    "url": "https://x.com/EHuanglu/status/2112574910182949227",
+    "urlLabel": "X — ролик el.cine «the future of traffic jam»"
+  },
+  "ai_malfoid_trend": {
+    "kicker": "Нейросети · Сильные кейсы · Мир",
+    "title": "Драко Малфой стал девушкой, и интернет требует продолжения: ИИ-фанфик Malfoid вырос в сериал с сотнями тысяч просмотров",
+    "meta": [
+      "Foyege · schmede_AI и другие авторы",
+      "Creative Bloq · YouTube · X",
+      "17–21 октября 2026"
+    ],
+    "img": "https://cdn.mos.cms.futurecdn.net/Z7fRxcsk56cDERLgNCpPeF-1600-80.jpg",
+    "imgAlt": "Кадр ИИ-сериала: Гарри и светловолосая Дракония Малфой в мантиях Хогвартса под дождём",
+    "lead": "Фанфик, который раньше писали и рисовали, теперь можно посмотреть с озвучкой и камерой, и аудитория ведёт себя как зрители сериала.",
+    "summary": "Malfoid, или Дракония Малфой, — это слизеринский задира из «Гарри Поттера», переписанный в девушку. Сюжет строится как enemies-to-lovers роман с Гарри. Фан-художники рисуют её давно, а осенью 2026-го идея ушла в ИИ-анимацию. Серия «In Another Universe» автора Foyege (её 21 октября разобрал Creative Bloq) собрана как сцены из параллельного фильма: узнаваемый Хогвартс, движение камеры, ловкий монтаж, драматичные клиффхэнгеры и пауэр-баллада в духе K-pop. Масштаб тренда видно по цифрам. Аниме-короткометражка «Malfoid — Draconia Malfoy» канала schmede_AI собрала 350 тыс. просмотров на YouTube, неофициальный клип RedForgedAI — 19 тыс., ещё 30 тыс. у ролика «What If Draco Malfoy Was a GIRL?!». Пост индонезийского пользователя о сериале набрал в X 186 тыс. просмотров и 4,5 тыс. лайков, а на r/aivideo 17 октября в топ попал эпизод «When Female Malfoy is a Tsundere Girl». Creative Bloq формулирует так: ИИ добавляет фанфику performance, то есть тайминг и мимику. Предыстория никому не нужна: платиновые волосы и зелёно-серебряный галстук всё объясняют сами.",
+    "url": "https://www.creativebloq.com/news/someone-turned-draco-malfoy-into-a-girl-with-ai-and-now-i-need-to-know-what-happens-next",
+    "urlLabel": "Creative Bloq — ИИ-сериал о Драконии Малфой"
+  },
+  "ai_tilly_norwood_ana": {
+    "kicker": "Нейросети · Сильные кейсы · США",
+    "title": "ИИ-актриса дала интервью вживую на сцене ANA: Тилли Норвуд спорит с модератором, шутит по-британски и отвечает быстрее человека",
+    "meta": [
+      "Particle6 · Adweek",
+      "Adweek — On Background",
+      "20–21 октября 2026"
+    ],
+    "img": "https://static-www.adweek.com/wp-content/uploads/2026/10/RevaStudioPhotography-12.jpg",
+    "imgAlt": "Сцена конференции ANA: на большом экране ИИ-актриса Тилли Норвуд, рядом модератор и креативный директор Particle6",
+    "lead": "Синтетическая актриса из повода для скандала превращается в спикера отраслевой конференции, и это пока лучший тест того, что умеет живой ИИ-персонаж.",
+    "summary": "Во вторник, 20 октября, на конференции ANA в Орландо медиаобозреватель Adweek Марк Стенберг модерировал панель с необычной гостьей — Тилли Норвуд, ИИ-актрисой студии Particle6. Год назад её дебют вызвал волну возмущения в Голливуде. Норвуд отвечала вживую через отдельный ноутбук, развёрнутый к модератору: говорить с несколькими людьми сразу она пока не умеет, поэтому обращалась к Стенбергу, а её экран транслировали за его спиной. Рядом сидела исполнительный креативный директор Particle6 Сарина Да Коста Гомес. По словам Стенберга, Тилли оказалась смешнее, чем он ожидал. Она редко отвечает всерьёз, охотно спорит и шутит сухо, по-британски, то есть ведёт себя ровно наоборот поддакивающим чат-ботам. Ответы короче 15 секунд и звучат будто на двойной скорости. Пауз и «телесных» сигналов, по которым человек понимает, что собеседник договорил, нет, и модератору приходилось импровизировать. Стенберг вспоминает, что два года назад ИИ путался в количестве пальцев, а теперь в реальном времени обсуждает на сцене экономику рекламы. Расшифровка панели вышла в рассылке On Background 21 октября.",
+    "url": "https://www.adweek.com/media/tilly-norwood-tells-all/",
+    "urlLabel": "Adweek — интервью с Тилли Норвуд на ANA"
+  },
+  "ai_bochkarev_ovechkin_ovi": {
+    "kicker": "Нейросети · Сильные кейсы · Россия",
+    "title": "Кружка правильная, пиво — нет: «Бочкарёв» с помощью ИИ переодел Овечкина в банку его собственного OVI",
+    "meta": [
+      "«Пивоварни Бочкарёв» · Александр Овечкин",
+      "vc.ru · РИА Новости",
+      "18–20 октября 2026"
+    ],
+    "img": "https://leonardo.osnova.io/25e6c256-6c51-5259-9827-8d3d7c9023f8/",
+    "imgAlt": "ИИ-версия кадра: Александр Овечкин в костюме кружки с логотипом OVI рядом с супругой в образе баварской официантки",
+    "lead": "Ситуативка в формате «поправим звезду»: ИИ здесь не делает ролик, а за пару часов перешивает вирусный кадр под запуск продукта.",
+    "summary": "18 октября Александр Овечкин пришёл на хеллоуинскую вечеринку «Вашингтон Кэпиталз» в костюме пивной кружки, а Анастасия Шубская — в образе баварской официантки. Фото быстро разошлось по соцсетям. «Пивоварни Бочкарёв», которые выпускают пивной бренд хоккеиста OVI, решили, что обычная кружка — это слишком просто, и с помощью нейросети «переодели» его в кружку OVI. ИИ-версию опубликовал официальный Telegram-канал Овечкина. Объяснение маркетологов пивоварни: «Кружка правильная, пиво — нет. Банок OVI на полках ещё нет, поэтому мы просто помогли ему примерить своё пиво чуть раньше». OVI устроен не как рекламный контракт со звездой: Овечкин сам участвует в концепции и продукте, по модели виски Конора Макгрегора и текилы Дуэйна Джонсона. В линейке классический лагер, лёгкий лагер и безалкогольное пиво, продажи стартуют до конца 2026 года. Параллельно вокруг товарного знака OVI идёт спор с «Объединёнными пивоварнями». 18+. Чрезмерное употребление алкоголя вредит вашему здоровью.",
+    "url": "https://vc.ru/id215901/3206268-ovechkin-v-kostyume-pivnoy-kruzhki-ovi-ot-bochkaev",
+    "urlLabel": "vc.ru — «Бочкарёв» и ИИ-Овечкин в кружке OVI"
+  },
+  "ai_sber_nereditsa": {
+    "kicker": "Нейросети · Сильные кейсы · Россия",
+    "title": "ГигаЧат и Kandinsky вернули Нередице фрески: Сбер оживил утраченные росписи XII века в проекционном шоу прямо под сводами храма",
+    "meta": [
+      "Центр иммерсивных решений Сбера · СберМаркетинг",
+      "AdPass",
+      "22 октября 2026"
+    ],
+    "img": "https://adpass.ru/wp-content/uploads/2026/10/image-186714ff-868d-4b81-a207-22da44d65cc4-1176x784.jpg",
+    "imgAlt": "Премьера проекционного шоу в церкви Спаса на Нередице: восстановленные росписи на стенах и сводах, зрители в храме",
+    "lead": "ИИ в роли цифрового реставратора: росписи, уничтоженные в войну, на семь минут возвращаются на стены, а подлинные фрагменты остаются главными.",
+    "summary": "Церковь Спаса Преображения на Нередице — памятник 1198 года из списка Всемирного наследия ЮНЕСКО, его росписи были почти полностью уничтожены в годы Великой Отечественной войны. Центр иммерсивных решений Сбера и отдел иммерсивных решений СберМаркетинга представили в Новгородском музее-заповеднике проект «Нередица. Возвращение света». Это семиминутное проекционное шоу о храме: от закладки князем Ярославом Владимировичем до разрушения и нынешней реставрации. Сценарий написал и озвучил директор музея Сергей Брюн. Опорой стали акварельные копии утраченных фресок, сделанные до войны. Нейросети Сбера, ГигаЧат и Kandinsky, оцифровали эти архивные акварели, повысили детализацию, восполнили утраченные фрагменты, подготовили статичные кадры и анимировали композиции. Команда Центра собрала из этого драматургию, визуальные образы и сценарные эффекты. Подлинные фрагменты фресок на стенах остаются в визуальном приоритете, а свет работает как инструмент рассказа, не перекрывая оригинал. Экспозиция открыта для посетителей на постоянной основе.",
+    "url": "https://adpass.ru/gigachat-i-nereditsa-kak-tehnologii-sbera-vernuli-hramu-ego-utrachennyj-oblik/",
+    "urlLabel": "AdPass — «Нередица. Возвращение света»"
+  },
+  "ai_fest_kaica_roy": {
+    "kicker": "Нейросети · Фестивали и премии · Корея, Сувон",
+    "title": "Сувон: Korea AI Content Awards впервые наградила ИИ-кино длиной до часа — победил робот, который хочет стать человеком",
+    "meta": [
+      "Korea AI Content Awards (KAICA)",
+      "Etnews · Newsis · Gyeonggi",
+      "15–20 октября 2026"
+    ],
+    "img": "https://i.ytimg.com/vi/2WHrWUVQyA8/maxresdefault.jpg",
+    "imgAlt": "Кадр из трейлера ИИ-фильма «Roy on the Road»: заплаканная девочка в чёрном среди взрослых",
+    "lead": "Третья KAICA показала, что ИИ-кино выходит из коротких клипов: впервые появилась номинация для фильмов на 30–60 минут.",
+    "summary": "Korea AI Content Awards прошла 15–16 октября в Lotte Cinema Suwon. Организаторы — провинция Кёнгидо и Gyeonggi Content Agency, тема года — «ART-i-fi-cial, See What's Between». На третью премию прислали 1528 работ из 87 стран и регионов, в финал прошли 20. Подсчитали и технику: в среднем на один фильм уходило больше 3,9 ИИ-инструментов, то есть фильм почти всегда собирают из нескольких моделей. Главная новинка — номинация для среднеметражных фильмов от 30 до 60 минут. Первое место в ней занял «Roy on the Road» режиссёра Чан Гвон Хо, история робота, который хочет стать человеком, и через неё — вопрос о том, что такое любовь. В речи на церемонии автор назвал соавтором ChatGPT, и зал засмеялся; Newsis вынесла в заголовок реплику «Режиссёр, бросайте пить». В конкурсе были и полнометражные авторские эксперименты: Ох Иль Сок экранизировал свой рассказ, а Ох Ги Хён собрал фильм «Without Echo» из собственных картин и рассказал, как трудно держать в них целостность сцен.",
+    "url": "https://www.etnews.com/20261020000160",
+    "urlLabel": "Etnews — «Roy on the Road» побеждает на KAICA 2026"
+  },
+  "ai_fest_baiff_amal": {
+    "kicker": "Нейросети · Фестивали и премии · Италия, Венеция",
+    "title": "Венеция: Burano AI Film Festival назвал лучшим ИИ-фильмом «Amal» — историю палестинского мальчика по книге военного журналиста",
+    "meta": [
+      "Burano AI Film Festival (BAIFF)",
+      "Osservatorio Mashrek · Scrolletta",
+      "17–20 октября 2026"
+    ],
+    "img": "https://i.ytimg.com/vi/GJiDnUVayko/maxres1.jpg",
+    "imgAlt": "Кадр из ИИ-фильма «Amal»: мальчик на фоне разделительной стены смотрит вдаль",
+    "lead": "Жюри наградило не технологию, а способность фильма тронуть зал: «Amal» говорит о конфликте через одного ребёнка и его улыбку в финале.",
+    "summary": "Четвёртый Burano Artificial Intelligence Film Festival закрылся 17 октября в венецианском фонде Querini Stampalia. Фестиваль проходит под патронатом итальянской национальной комиссии ЮНЕСКО и Министерства предпринимательства. Best AI Film 2026 получил «Amal» Роберты Коломбо. Сценарий она написала вместе с журналистом Нино Орто по одному из персонажей его книги «Израиль — Палестина: голоса спорной земли», за которой стоят 15 лет репортажей по обе стороны стены. Продюсер — студия Next Video Trailer. Вместо привычной картинки разрушений фильм держится на одном мальчике, его уязвимости и улыбке в последнем кадре. Коломбо в речи сказала, что для режиссёра, работающего с генеративным ИИ, важнее всего признание человеческого ремесла за клипами: исследования, монтажа, выбора и долгой ручной работы, почти как в обычном кино. Фильм входит в трансмедийный проект «The Other Side of the Wall» с книгой, серией короткометражек и выставкой. Вместе с наградами фестиваль опубликовал этический кодекс для ИИ-кинематографа. Официальный трейлер есть на YouTube.",
+    "url": "https://www.youtube.com/watch?v=GJiDnUVayko",
+    "urlLabel": "YouTube — официальный трейлер «Amal»"
+  },
+  "ai_fest_arf_ogilvy_realtor": {
+    "kicker": "Нейросети · Фестивали и премии · США, Нью-Йорк",
+    "title": "Нью-Йорк: впервые полностью сгенерированный ролик взял ARF David Ogilvy — «Seat at the Table» для realtor.com",
+    "meta": [
+      "ARF David Ogilvy Awards · BrandComms.AI × realtor.com",
+      "Mediaweek · The ARF",
+      "14–15 октября 2026"
+    ],
+    "img": "https://images-r2.thebrag.com/mw/uploads/2026/10/ai-made-ad-wins-david-ogilvy-awards.jpg",
+    "imgAlt": "Кадр из ИИ-ролика realtor.com: женщина на кухне читает буклет о продаже дома",
+    "lead": "Ogilvy Awards судят не красоту, а доказанный эффект, поэтому победа целиком сгенерированного ролика здесь весомее любого «ИИ-Гран-при».",
+    "summary": "ARF David Ogilvy Awards вручает Advertising Research Foundation, и награды там дают за кампании, где исследования доказали результат. На церемонии в Нью-Йорке 14 октября (в Австралии и в публикации Mediaweek уже 15-е) «Seat at the Table» платформы BrandComms.AI для realtor.com взяла серебро в Best Use of Emerging Technology и бронзу в Electronics & Technology. Mediaweek называет её первым полностью ИИ-роликом, который выиграл Ogilvy. Соседи по категории — Microsoft 365 Copilot (золото) и Uber Eats с Мэттью Макконахи, а Grand Ogilvy получила кампания Core Power от Fairlife и Doner. Инсайт нашли люди: стратеги realtor.com выяснили, что продавцы жилья панически боятся «облажаться» с продажей и выбором агента. Дальше в платформу загрузили исследования, расшифровки интервью и старые креативы, она собрала модель аудитории, концепции и черновик, команда его утвердила. По данным BrandComms.AI, все 47 материалов для стриминга, соцсетей, радио, диджитала и печати сделаны за недели, а тест на 800 продавцах показал 88% связи с брендом и +14% к First Choice. BrandComms.AI основана в Австралии в 2024 году и вышла в США в марте.",
+    "url": "https://www.mediaweek.com.au/ai-made-ad-wins-two-arf-david-ogilvy-awards",
+    "urlLabel": "Mediaweek — ИИ-ролик выигрывает ARF David Ogilvy"
+  },
+  "ai_fest_last_one_montreal": {
+    "kicker": "Нейросети · Фестивали и премии · Канада, Монреаль",
+    "title": "Монреаль: трёхминутный «Last One» за неделю взял Гран-при AI Independent и «технический» приз Ai & Robots — и это работа одного человека",
+    "meta": [
+      "Gabriel Brien · Crimson Spark",
+      "AI Independent Montreal · Ai & Robots Film Festival",
+      "16–19 октября 2026"
+    ],
+    "img": "https://i.ytimg.com/vi/9BVtTRId-n4/maxresdefault.jpg",
+    "imgAlt": "Кадр из ИИ-фильма «Last One»: героиня Лолли с леденцом в неоновой ночной уличной компании",
+    "lead": "Технический приз для сгенерированного фильма вручают уже не за эффектный кадр, а за контроль: одно лицо, одна куртка и одна улица на все три минуты.",
+    "summary": "16 октября AI Independent Montreal вручил свой Гран-при, The Independent Vision Award за лучший фильм, трёхминутному «Last One» Габриэля Бриена из студии Crimson Spark. 17 октября фильм показали на Ai & Robots Film Festival, а 19-го он получил там Best Technical AI. Сюжет: дождливая ночь, у Лолли кончились конфеты, она умеет останавливать время щелчком пальцев, идёт в магазин на углу и по дороге спасает всех встречных, включая парня, который над ней посмеялся. Над фильмом с сентября по октябрь работал один человек, от сценария до финального сведения. Семь сцен по 15 или 30 секунд, на каждую один мастер-промпт, написанный как бриф оператору. 29 утверждённых референсов: лица и гардероб с трёх ракурсов, реквизит в разных состояниях, локации с четырёх точек. Текстовые описания переписывали уже по готовым картинкам. Диалоги генерировали вместе с изображением, чтобы держался липсинк, потом голоса выравнивали под каждого персонажа. Монтаж, звук, цвет и титры доделаны вручную покадрово. Показ победителей в Монреале 24 октября отменён, но фильм открыт на YouTube.",
+    "url": "https://www.youtube.com/watch?v=9BVtTRId-n4",
+    "urlLabel": "YouTube — «Last One», фильм целиком"
+  },
+  "ai_g_dead_sun_teaser": {
+    "kicker": "Нейросети · Visual Gallery · США",
+    "title": "Dead Sun склеил хоррор-тизер из трёх «ужасных» попыток Seedance",
+    "meta": [
+      "Dead Sun (@deadsun_0)",
+      "The Generated",
+      "20–22 октября 2026"
+    ],
+    "img": "https://media.thegenerated.com/ec71c6db-15de-4162-ac69-5e0d782c6e8a.jpg",
+    "imgAlt": "Кадр ИИ-тизера: персонаж с черепом вместо лица в широкополой шляпе",
+    "lead": "Честный антипример с хорошим результатом: ни одна из трёх генераций не сложилась целиком, а смонтированный из лучших планов тизер работает.",
+    "summary": "У автора Dead Sun оставались бесплатные кредиты, и он трижды попытался сделать в Seedance 2.5 30-секундный хеллоуинский тизер. Каждую попытку он сам назвал ужасной: правка промпта чинила одно и ломала другое, а титр в одной версии вышел нечитаемым. Тогда он собрал из лучших планов 18-секундную нарезку и выложил её 20 октября. По настроению это что-то между «Криком» и «Призрачным гонщиком»: женщина одна у кухонной раковины поздно ночью, по осенней пригородной улице идёт фигура с черепом вместо лица, в широкополой шляпе и с огнём в каждой ладони, и вот она уже стоит у героини за спиной. Лучшее в ролике — звук: голос дразнит названием, и только потом на экран выходит титр «The Dead Sun Rises». The Generated отмечает дизайн персонажа и честность автора: полноценная 30-секундная генерация, по его словам, кредитов не стоила.",
+    "url": "https://thegenerated.com/notes/dead-sun-s-creepy-seedance-halloween-teaser-cut-20261022",
+    "urlLabel": "The Generated — тизер Dead Sun"
+  },
+  "ai_g_kelly_boesch_japan": {
+    "kicker": "Нейросети · Visual Gallery · США",
+    "title": "Келли Беш вернулась из Японии и сняла трёхминутный клип-показ мод",
+    "meta": [
+      "Kelly Boesch",
+      "The Generated — Video of the Day · YouTube",
+      "22 октября 2026"
+    ],
+    "img": "https://media.thegenerated.com/c587f97f-6c36-4105-8df4-78ef04d1b610.jpg",
+    "imgAlt": "Кадр клипа Келли Беш: фигура в пёстром костюме и белом гриме с раскинутыми руками",
+    "lead": "Видео дня The Generated 22 октября — пример того, как далеко одна художница может довести песню и визуальный язык без съёмочной группы.",
+    "summary": "«Somewhere Along the Way» — трёхминутный клип Келли Беш, который она сделала после поездки в Японию. Изображения собраны в Midjourney, анимированы в Veo, слова написала сама Беш, музыку — Suno. The Generated выбрал его видео дня 22 октября и описывает как гибрид арт-фильма модного дома и сюрреалистического клипа. Костюмы дикие и разные, но держатся одной темы, а слегка преувеличенные конечности и необычные ракурсы превращают танцоров в моделей с подиума другой планеты, будто гравитация их ещё не догнала. Японское влияние читается в каждом кадре, а цвет, свет и движение, по оценке редакции, исключительные на всём протяжении. Клип выложен на YouTube в 4K.",
+    "url": "https://www.youtube.com/watch?v=0syB0AT1F9w",
+    "urlLabel": "YouTube — Kelly Boesch «Somewhere Along The Way»"
+  },
+  "ai_g_standard_chartered_f1": {
+    "kicker": "Нейросети · Visual Gallery · Сингапур",
+    "title": "Standard Chartered снял фильм про Формулу-1 без единой настоящей машины",
+    "meta": [
+      "Standard Chartered · Leo Singapore · Misideal · Stink",
+      "shots · The Drum",
+      "12–15 октября 2026"
+    ],
+    "img": "https://i.ytimg.com/vi/_msE7gAxiVs/maxres2.jpg",
+    "imgAlt": "Чёрно-белый кадр фильма Standard Chartered: механики команды склонились над болидом в боксах",
+    "lead": "Герой-фильм глобальной кампании «Move Ahead» полностью сгенерирован, и его сделали ИИ не из экономии, а потому, что снимать было нечего.",
+    "summary": "Standard Chartered — официальный партнёр Формулы-1, но попасть к болидам, пилотам и трассам в разгар сезона почти невозможно, а машины 2026 года в природе ещё не было. Поэтому герой-фильм кампании «Move Ahead» агентства Leo Singapore сделан полностью ИИ. Режиссёры — Марселло Коста из лондонской ИИ-студии Misideal и Тино (Stink), продакшн — Misideal вместе со Stink Shanghai. Коста рассказал The Drum (интервью вышло 15 октября), что принципиально не загружал в модели фото реальных машин. Он нарисовал болид от руки, превратил эскиз в 3D через ИИ и дальше переходил между Photoshop и ИИ-инструментами, в основном Magnific. Шанс, что модель сделает ровно то, что нужно, он оценивает как «пятьдесят на пятьдесят». Главных актёров кастинговали вживую, сняли в студии и сделали по фото цифровых двойников. Над фильмом работали команды в Лондоне, Шанхае, Сингапуре и Бразилии, с правками на каждом этапе. Коста сомневается, что полностью ИИ-фильм автоматически дешевле.",
+    "url": "https://www.youtube.com/watch?v=_msE7gAxiVs",
+    "urlLabel": "YouTube — Standard Chartered «Move Ahead»"
+  },
+  "ai_g_verisure_vampire": {
+    "kicker": "Нейросети · Visual Gallery · Бразилия",
+    "title": "Verisure и агентство Milà запустили хеллоуинскую кампанию с ИИ-вампиром",
+    "meta": [
+      "Verisure · Milà",
+      "Revista Live Marketing",
+      "21 октября 2026"
+    ],
+    "img": "https://revistalivemarketing.com.br/wp-content/uploads/2026/10/Verisure-e-agencia-Mila-usam-figura-do-vampiro-em-campanha-de-Halloween-produzida-com-inteligencia-artificial.png",
+    "imgAlt": "Кадр кампании Verisure: смеющийся вампир с клыками у микрофона на тёмном фоне",
+    "lead": "Сезонная механика с точным продуктовым ходом: вампир — идеальный персонаж для бренда, который отвечает за то, кто войдёт в дом.",
+    "summary": "Verisure, компания мониторинговых охранных сигнализаций, выпустила в Бразилии хеллоуинскую кампанию, созданную вместе с агентством Milà и произведённую с помощью генеративного ИИ. Сквозной герой — вампир, классический хоррор-персонаж, которого бренд подаёт с юмором: смеющийся аристократ с клыками в стилистике старого кино. Миф о вампире, которому нужно приглашение, чтобы переступить порог, рифмуется с продуктом: Verisure продаёт контроль над тем, кто войдёт в дом. Для бренда охранных систем кампания необычна тем, что строится на смехе, а не на страхе. Запуск пришёлся на 21 октября, за десять дней до Хеллоуина. Издание Revista Live Marketing подчёркивает, что ролик сделан с ИИ.",
+    "url": "https://revistalivemarketing.com.br/verisure-e-agencia-mila-usam-figura-do-vampiro-em-campanha-de-halloween-produzida-com-inteligencia-artificial/",
+    "urlLabel": "Revista Live Marketing — Verisure и Milà"
+  },
+  "ai_g_oakley_spec_levels": {
+    "kicker": "Нейросети · Visual Gallery · Спек",
+    "title": "Спек для Oakley превращает экстремальные места в уровни видеоигры",
+    "meta": [
+      "dyrdee Media",
+      "FOOH",
+      "19 октября 2026"
+    ],
+    "img": "https://customer-deekqgzhniwhph3u.cloudflarestream.com/a56c324ec31a88749907309895f59edb/thumbnails/thumbnail.jpg?time=2s",
+    "imgAlt": "Кадр спек-ролика Oakley: крошечная фигура спортсмена на гребне бесконечных песчаных дюн под ночным небом",
+    "lead": "Спек-реклама как портфолио гибридного пайплайна: каждую технику используют там, где она лучше служит идее.",
+    "summary": "«One level ahead» — неофициальный спек для Oakley от студии dyrdee Media, опубликованный в библиотеке FOOH 19 октября. Идея в том, чтобы показать экстремальные среды как уровни игры. От пустыни до гор каждый этап толкает спортсмена и продукт дальше, а визуальный язык смешивает игровую механику со спортивным сторителлингом. Ролик сделан гибридно: ИИ-изображения, 3D-аниматики, CG и ручной композитинг, и каждую технику, по словам авторов, ставили только туда, где она лучше работает на идею. Финальная строка — «Always one level ahead». На FOOH сейчас идёт голосование шорт-листа одноимённой премии, и спеки вроде этого — основной жанр площадки.",
+    "url": "https://fooh.com/library/one-level-ahead-5b391e6c",
+    "urlLabel": "FOOH — спек Oakley «One level ahead»"
+  },
+  "ai_g_twinnin_verified_human": {
+    "kicker": "Нейросети · Visual Gallery · Великобритания",
+    "title": "UnitedUs сделал для Twinnin знак «Verified Human» в виде защитной голограммы",
+    "meta": [
+      "Twinnin · UnitedUs (Брайтон)",
+      "Creative Boom",
+      "20 октября 2026"
+    ],
+    "img": "https://media.creativeboom.com/3eaa4193-2b21-44ab-86bc-b1e8e49cb4e2/conversions/4cb56a1d353ed2ac6a05c5a8f611ea7c5f7b0b4c-medium.webp",
+    "imgAlt": "Переливающаяся голографическая наклейка с надписью Verified Human на чёрном фоне",
+    "lead": "Дизайн-ответ на дипфейки: если лицо и голос можно подделать за секунды, согласию человека нужна визуальная печать.",
+    "summary": "Брайтонская студия UnitedUs провела ребрендинг Twinnin — платформы, через которую люди управляют тем, как ИИ использует их внешность и голос, и дают или отзывают согласие. Центр айдентики — знак «Verified Human», нарочно сделанный похожим на защитную голограмму с документов и упаковки: по нему сразу видно, что реальный человек дал разрешение. Редактор Creative Boom Кэти Кауэн начинает разбор с личной истории. Её муж взял шесть секунд её голоса из подкаста Creative Boom и прогнал через ИИ-инструмент, и подделка могла бы обмануть её маму в мошенническом звонке. Отсюда тон всей статьи: странно дожить до момента, когда людям нужна верификация, но знак, похожий на банкнотную защиту, читается мгновенно.",
+    "url": "https://www.creativeboom.com/news/can-a-trust-mark-keep-your-face-out-of-ai-unitedus-thinks-so-with-its-rebrand-for-twinnin/",
+    "urlLabel": "Creative Boom — ребрендинг Twinnin"
+  },
+  "ai_g_captain_hahaa_mv": {
+    "kicker": "Нейросети · Visual Gallery · Музыка",
+    "title": "Captain HaHaa выпустил клип «I don't feel like myself», полностью собранный на ИИ",
+    "meta": [
+      "Captain HaHaa",
+      "X · What People Made",
+      "18 октября 2026"
+    ],
+    "img": "https://pbs.twimg.com/amplify_video_thumb/2111810912675864576/img/-ybbmCP7-myze24j.jpg",
+    "imgAlt": "Кадр ИИ-клипа: инопланетное существо в мантии идёт по улице ретро-города среди прохожих",
+    "lead": "Самодельный клип музыканта-одиночки: песня из Suno, картинка из Seedance 2.5, и всё это выглядит как сцена из ретро-фантастики.",
+    "summary": "Музыкант и автор Captain HaHaa 18 октября выложил в X клип на свою песню «I don't feel like myself». Видео сделано в invideo на Seedance 2.5 и GPT Image 2.0, музыка — в Suno. Визуальная идея буквально переводит название песни в картинку: странное существо в мантии с капюшоном идёт по залитой солнцем улице города середины века среди обычных прохожих, которые его не замечают. По данным агрегатора What People Made, у поста около 6,3 тыс. просмотров, 268 лайков и 42 сохранения. Охват небольшой, зато пример показательный: один автор без команды делает трек, клип и дистрибуцию. Связка Seedance 2.5 + Suno за осень стала стандартным набором ИИ-музыканта: на ней же сделана и короткометражка «Stitching Hearts», получившая награду в Седоне.",
+    "url": "https://www.whatpeoplemade.com/i/music-video-for-i-don-t-feel-like-myself-made-with-seeda-014394.html",
+    "urlLabel": "What People Made — клип Captain HaHaa"
+  },
+  "ai_g_krea3_windcoat": {
+    "kicker": "Нейросети · Visual Gallery · Инструменты",
+    "title": "Krea 3: редактор изображений, который меняет сцену, но не трогает продукт",
+    "meta": [
+      "Krea",
+      "Krea — блог",
+      "15 октября 2026"
+    ],
+    "img": "https://s.krea.ai/k3-landing-final/hero-windcoat-base.webp",
+    "imgAlt": "Изображение из анонса Krea 3: модель с белыми волосами в чёрном пальто и тёмных очках на градиентном фоне",
+    "lead": "Модель для конвейера каталога и кампании: быстро, дёшево и без «дрейфа» продукта.",
+    "summary": "Krea выпустила Krea 3, модель для редактирования изображений, рассчитанную на объём, а не на одну эффектную картинку. Большинство правок возвращается меньше чем за 8 секунд в нативном 2K и стоит $0,06 за изображение. Для сравнения Krea приводит медианы на своей платформе с 24 сентября по 1 октября: Nano Banana Pro — 33 секунды и $0,135, GPT Image 2 — 90 секунд и $0,22. Главное обещание — не трогать то, о чём не просили. Меняешь сцену вокруг продукта, а этикетка и логотип остаются чёткими. Даёшь лицо и наряд, и в следующем кадре это тот же человек. На одну правку можно дать до шести референсов. Модель доступна 30 млн пользователей Krea, а также через fal, Hedra, Together AI, OpenRouter и Replicate. Кадры на лендинге, по словам Krea, целиком отредактированы в Krea 3.",
+    "url": "https://www.krea.ai/blog/introducing-krea-3",
+    "urlLabel": "Krea — Introducing Krea 3"
+  },
+  "f_you_can_see_everything": {
+    "kicker": "Кино · Событие недели · США",
+    "title": "«Увидеть всё» Натана Филдера взорвал прокат: 15 млн долларов с 855 экранов и лучший старт документалки за 20 лет",
+    "meta": [
+      "A24 · Натан Филдер и Лэнс Оппенгейм",
+      "Variety / Кинометро / Deadline",
+      "18–21 октября 2026"
+    ],
+    "img": "https://i.ytimg.com/vi/HvW_N5p1q44/maxresdefault.jpg",
+    "imgAlt": "Кадр из официального трейлера фильма «Увидеть всё» (You Can See Everything)",
+    "lead": "Почти трёхчасовая документалка о создательнице Theranos открылась с 15,6 млн долларов в 855 кинотеатрах. Это самый сильный старт неигрового фильма о немузыкальной истории со времён «Фаренгейта 9/11» и лучший дебют релиза меньше чем на тысяче экранов со времён «Бората».",
+    "summary": "«Увидеть всё» (You Can See Everything) Натана Филдера («Репетиция») и Лэнса Оппенгейма никто не ждал ещё два месяца назад: A24 снимала его втайне три года и потратила около 7 млн долларов, а мировую премьеру устроила сюрпризом в Теллурайде. Фильм рассказывает об Элизабет Холмс перед тем, как она начала отбывать 11-летний срок за мошенничество с инвесторами. Перед уикендом 16–18 октября прогнозы давали 7–8 млн долларов, а вышло 15,6 млн при средней выручке 17,5 тыс. на зал. Аншлаговых сеансов было больше двух тысяч, около 70% зрителей моложе 35 лет, 90% «точно порекомендуют» фильм. Средний широкий документальный релиз, по оценке аналитика Дэвида Гросса, собирает за первые три дня около 3 млн. Официальный трейлер на канале A24 набрал 18,8 млн просмотров. Вокруг фильма уже раскручивается сезон наград: A24 заявила его в категориях «Лучший фильм», режиссура, монтаж, операторская работа и музыка. Sony выкупила права на прокат «Увидеть всё» и «Праймтайма» Оппенгейма в ряде зарубежных стран. Во второй уикенд фильм расширяется до 2600 залов, Variety прогнозирует 20–25 млн, и он может обойти «Глиноликого» DC. В России релиз запланирован на 19 ноября, прокатчик — «Вольга».",
+    "url": "https://variety.com/2026/film/box-office/you-can-see-everything-box-office-nathan-fielder-elizabeth-holmes-huge-start-1236915640/",
+    "urlLabel": "Variety: «Увидеть всё» и 15 млн долларов на старте"
+  },
+  "f_tom_cruise_afi_life_achievement": {
+    "kicker": "Кино · Главные новости · США",
+    "title": "Том Круз получит высшую карьерную награду Американского института киноискусства",
+    "meta": [
+      "American Film Institute · Том Круз",
+      "Variety / IndieWire / Deadline",
+      "21 октября 2026"
+    ],
+    "img": "https://variety.com/wp-content/uploads/2026/09/P105JBB5.jpg?w=1000",
+    "imgAlt": "Том Круз на презентации Warner Bros. на CinemaCon",
+    "lead": "Совет попечителей AFI выбрал Тома Круза 52-м лауреатом AFI Life Achievement Award. Эту премию вручают одному человеку в год, и в Голливуде её считают главной наградой за карьеру в кино.",
+    "summary": "Премию Американского института киноискусства за жизненные достижения вручают с 1973 года. Лауреат должен продвигать киноискусство, долго работать в профессии и пользоваться признанием историков кино, критиков, коллег и зрителей. Гала-вечер в честь Круза пройдёт 24 апреля 2027 года в голливудском Dolby Theatre. Председатель совета попечителей AFI Кэтлин Кеннеди назвала его «глобальной иконой» и «выдающимся послом американского кино во всём мире» и отдельно отметила его веру в то, что кино объединяет людей. За пять десятилетий фильмы Круза собрали в мировом прокате почти 13 млрд долларов, от «Рискованного бизнеса» и «Лучшего стрелка» до «Особого мнения» и «Миссия невыполнима». Его трижды номинировали на актёрский «Оскар» («Рождённый четвёртого июля», «Джерри Магуайер», «Магнолия»), а в четвёртый раз как продюсера «Топ Гана: Мэверик». Сейчас в прокате идёт его «Диггер», а в 2028 году выйдет продолжение «Дней грома» с Энн Хэтэуэй. До Круза премию в последние годы получали Эдди Мёрфи, Фрэнсис Форд Коппола, Стив Мартин, Джон Уильямс, Дайан Китон, Джордж Клуни, Дензел Вашингтон, Джули Эндрюс и Николь Кидман.",
+    "url": "https://variety.com/2026/film/news/tom-cruise-afi-life-achievement-award-2027-1236919013/",
+    "urlLabel": "Variety: Том Круз получит премию AFI за жизненные достижения"
+  },
+  "f_legendary_lionsgate_bid": {
+    "kicker": "Кино · Главные новости · США",
+    "title": "Legendary снова хочет купить Lionsgate: акции студии подскочили на 15%",
+    "meta": [
+      "Legendary Entertainment · Lionsgate",
+      "Variety / Bloomberg / Кинометро",
+      "20–21 октября 2026"
+    ],
+    "img": "https://variety.com/wp-content/uploads/2026/04/001-mkt-001-cin-v0037-cnpt-1002.jpg?w=1000",
+    "imgAlt": "Кадр из фильма Lionsgate «Майкл» с Джаафаром Джексоном",
+    "lead": "По данным Bloomberg, Legendary вернулась к идее купить Lionsgate и подала формальную заявку. Условия сделки не раскрываются.",
+    "summary": "Слухи о продаже Lionsgate ходят давно, но 20 октября впервые прозвучало, что заявка подана официально. Источники Bloomberg сообщили, что Legendary Entertainment, которая стоит за франшизой «Дюна» и «Майнкрафтом в кино», отправила предложение о покупке. В тот же день акции Lionsgate выросли больше чем на 15%, рыночная стоимость компании достигла 3,6 млрд долларов. Представители обеих сторон от комментариев отказались. Для Legendary это способ получить собственную дистрибуцию: сейчас она прокатывает фильмы через партнёров, и «Уличный боец» в итоге ушёл от Sony к Paramount. Lionsgate владеет франшизами «Джон Уик», «Голодные игры» и «Пила» и библиотекой из 20 с лишним тысяч тайтлов. Отдельной публичной компанией она стала в мае 2025 года, когда от неё отделился Starz. Legendary приценивалась к ней ещё тогда. Интерес к студии проявляли Banijay и Mediawan, но формальных предложений они не подавали. В квартале, закончившемся в июне, выручка Lionsgate выросла на 48%, а кинобизнес принёс 105 млн долларов прибыли.",
+    "url": "https://variety.com/2026/film/news/lionsgate-stock-legendary-entertainment-acquisition-offer-1236917824/",
+    "urlLabel": "Variety: Legendary и новая заявка на Lionsgate"
+  },
+  "f_london_imperium_loznitsa": {
+    "kicker": "Кино · Главные новости · Европа",
+    "title": "«Империум» Сергея Лозницы победил на 70-м Лондонском кинофестивале",
+    "meta": [
+      "BFI London Film Festival · Сергей Лозница",
+      "Variety / Cineuropa",
+      "18 октября 2026"
+    ],
+    "img": "https://variety.com/wp-content/uploads/2026/09/116196-IMPERIUM_-_Official_Still__Credits_Essential_Filmproduktion__Kino_Produzioni__Soci__t___Parisienne_de_Production__Studio_Uljana_Kim_-_footage_courtesy_of_AAMOD___6_.jpg?w=1000",
+    "imgAlt": "Архивный кадр из фильма Сергея Лозницы «Империум»",
+    "lead": "Лучшим фильмом юбилейного BFI London Film Festival назвали «Империум» Лозницы. Призы объявили 18 октября, в день закрытия.",
+    "summary": "Сергей Лозница собрал «Империум» из хроники, которую в СССР начала 1970-х снимали итальянские операторы (материалы архива AAMOD). Жюри основного конкурса во главе с Сэмом Поллардом («MLK/FBI») и с аргентинцем Мариано Льинасом написало, что фильм даёт «визуально захватывающий взгляд на жизнь до того, как Советский Союз распался». Премию Сазерленда за лучший дебют получил «9 храмов до небес» Сомпота Чидгасорнпонга, тайская заявка на «Оскар». Документальную премию Грирсона взяла «Бетонная земля» Асмахан Бкерат о семье в Иордании, которая сопротивляется выселению. Приз за короткий метр достался «Аману» Рахула Роя. Фестиваль закрылся музыкальной комедией Джесси Айзенберга «Дебют». Почти одновременно, 19 октября, свои призы раздала Варшава: там победил «Что принадлежит другим» Гжегожа Дембовского.",
+    "url": "https://variety.com/2026/film/festivals/sergei-loznitsa-imperium-best-film-london-film-festival-1236915621/",
+    "urlLabel": "Variety: победители Лондонского кинофестиваля"
+  },
+  "f_ramayana_jiohotstar_ppv": {
+    "kicker": "Кино · Главные новости · Азия",
+    "title": "Самый дорогой индийский эпос после кинотеатров будут продавать поштучно: «Рамаяна» идёт на JioHotstar по модели pay-per-view",
+    "meta": [
+      "Prime Focus Studios · DNEG · JioStar",
+      "Variety",
+      "22 октября 2026"
+    ],
+    "img": "https://variety.com/wp-content/uploads/2026/10/Ramayana.jpg?w=1000",
+    "imgAlt": "Ранбир Капур в роли Рамы в фильме «Рамаяна. Часть первая»",
+    "lead": "JioHotstar и Prime Focus Studios договорились продавать «Рамаяну. Часть первую» как отдельную покупку на платформе. Для крупнейшего индийского стримера это первый такой релиз.",
+    "summary": "«Рамаяна. Часть первая» выходит в мировой прокат 5 ноября, к Дивали, на хинди, тамильском, телугу, каннада, малаялам и английском, в том числе в формате IMAX 3D. Мировой прокат ведёт Sony Pictures, индийский — Dharma Productions Карана Джохара. Ранбир Капур играет Раму, Яш — Равану, Саи Паллави — Ситу, Санни Деол — Ханумана. Продюсирует Prime Focus Studios вместе с VFX-компанией DNEG, у которой восемь «Оскаров», и студией Яша Monster Mind Creations. Музыку написали Ханс Циммер и А. Р. Рахман, экшен ставили Терри Нотари и Гай Норрис. После проката фильм не войдёт в подписку JioHotstar: его будут продавать отдельно. Основатель DNEG Намит Малхотра объяснил, что кинотеатральная сеть Индии физически не может охватить всех, для кого «Рамаяна» важна. Председатель JioStar Нита Амбани назвала эпос «одним из величайших цивилизационных сокровищ Индии». Вторая часть дилогии выйдет позже.",
+    "url": "https://variety.com/2026/film/news/ranbir-kapoor-yash-ramayana-jiohotstar-pay-per-view-release-1236919377/",
+    "urlLabel": "Variety: «Рамаяна» на JioHotstar по модели pay-per-view"
+  },
+  "rf_okko_gagarin_posle_kosmosa": {
+    "kicker": "Кино · Россия · Окко",
+    "title": "Okko закончил съёмки полнометражной документалки «Гагарин. После космоса»",
+    "meta": [
+      "Okko · Михаил Райхельгауз",
+      "Кинометро / Okko Кино",
+      "21 октября 2026"
+    ],
+    "img": "https://www.kinometro.ru/res/pic/data/production/1547.jpg",
+    "imgAlt": "Актёр в роли Юрия Гагарина в фильме «Гагарин. После космоса»",
+    "lead": "Okko объявил о завершении съёмок документального байопика о том, как сложилась жизнь первого космонавта после триумфа 12 апреля 1961 года.",
+    "summary": "«Гагарин. После космоса» продолжает историю там, где обычно заканчиваются фильмы о Гагарине. Он возвращается на Землю живым символом прогресса, и впереди у него семь лет жизни, к которой его никто не готовил: приёмы, поездки, сотни выступлений, мечта снова полететь, может быть, на Луну. Жене Валентине приходится делить мужа со всем миром. Основа фильма — воспоминания близких, личные письма и дневники. Авторы использовали архивные материалы, кинохронику и игровые реконструкции ключевых эпизодов, в которых сыграли Владислав Волков, Руфина Ротман и Геннадий Семёнов. Режиссёр — Михаил Райхельгауз, автор документальных проектов «Непокорённые» и «Давка-82. Тайная трагедия СССР». Продюсеры — Дарина Евтушенко, Гавриил Гордеев, Сергей Шишкин, Владимир Тодоров и Максим Никольский. Дату премьеры пока не назвали.",
+    "url": "https://www.kinometro.ru/production/show/name/gagarin_finished_21102026",
+    "urlLabel": "Кинометро: Okko завершил съёмки фильма о Гагарине"
+  },
+  "rf_minkult_47bn_2027_2029": {
+    "kicker": "Кино · Россия · Производство",
+    "title": "На кино в 2027–2029 годах государство выделит 47,8 млрд рублей",
+    "meta": [
+      "Министерство культуры РФ · Ольга Любимова",
+      "Кинометро",
+      "19 октября 2026"
+    ],
+    "img": "https://www.kinometro.ru/res/pic/data/news/15330.jpg",
+    "imgAlt": "Министр культуры Ольга Любимова",
+    "lead": "Министр культуры рассказала комитету Госдумы по бюджету, что на поддержку российского кино в 2027–2029 годах направят 47,8 млрд рублей.",
+    "summary": "Цифру Ольга Любимова назвала 19 октября на заседании комитета Госдумы по бюджету и налогам, где обсуждали трёхлетний бюджет ведомства. Всего Минкультуры получит на 2027–2029 годы 709,3 млрд рублей, кинопроизводство названо одним из приоритетных направлений. По словам министра, 47,8 млрд позволят в полном объёме выполнить показатели госпрограммы. Главная цель — увеличить долю российских фильмов в отечественном прокате до 56%. Минкульт только что провёл осеннюю сессию: 12–13 октября он выслушал больше ста дебютов и авторских проектов. Решение совпало с хорошим для российского кино отрезком в прокате: «Битва моторов» за два уикенда собрала 567 млн рублей, «Девятая планета» перешла рубеж в 430 млн.",
+    "url": "https://www.kinometro.ru/news/show/name/minkultury_new_rules_19102026",
+    "urlLabel": "Кинометро: 47,8 млрд рублей на кино в 2027–2029 годах"
+  },
+  "rf_golden_eagle_longlist": {
+    "kicker": "Кино · Россия · Премии",
+    "title": "Лонг-лист «Золотого орла»: впереди «Рождение империи», за ним «Ангелы Ладоги» и «Буратино»",
+    "meta": [
+      "Национальная академия кинематографических искусств и наук",
+      "Кинометро / КиноРепортёр",
+      "20–21 октября 2026"
+    ],
+    "img": "https://www.kinometro.ru/res/pic/data/news/15333.jpg",
+    "imgAlt": "Лауреаты на сцене церемонии «Золотой орёл»",
+    "lead": "Академия опубликовала лонг-лист премии «Золотой орёл» за 2026 год. Церемония пройдёт 29 января 2027 года в павильоне «Мосфильма».",
+    "summary": "В лонг-лист «Лучшего игрового фильма» вошли 35 картин, среди них «Битва моторов» Ильи Маланина, «Ветер» Сергея Члиянца (лауреат «Ники»), «Волчок» Константина Смирнова, «Буратино» Игоря Волошина, «Девятая планета» Николая Рыбникова, «Цинга» Владимира Головнева, «Картины дружеских связей» Сони Райзман и «Твоё сердце будет разбито» Михаила Вайнберга. По подсчёту КиноРепортёра, лидирует «Рождение империи» Андрея Кравчука: 15 упоминаний в 14 категориях. У «Ангелов Ладоги» и «Буратино» по 14, у «Битвы моторов» 13. Среди актёров чаще всех упомянут Александр Петров: «Коммерсант», «Комментируй это», «Буратино» и сериал «Камбэк». В категории «Лучший телесериал» 12 претендентов, в «Лучшем проекте онлайн-платформы» 24. Шорт-лист определят по итогам первого тура голосования. Премьера «Рождения империи» прошла в «Октябре» 21 октября, в прокат фильм выходит 29 октября.",
+    "url": "https://kinoreporter.ru/zolotoi-orel-long-list-2026/",
+    "urlLabel": "КиноРепортёр: лонг-лист «Золотого орла»"
+  },
+  "rf_komanda_bezrukov_filming": {
+    "kicker": "Кино · Россия · Производство",
+    "title": "Безруков собирает футбольную «Команду» из воспитанников детдома: стартовали съёмки",
+    "meta": [
+      "«Проспект Мира» · РФС · Фонд кино",
+      "Кинометро",
+      "22 октября 2026"
+    ],
+    "img": "https://www.kinometro.ru/res/pic/data/production/1548.jpg",
+    "imgAlt": "Сергей Безруков и Артём Быстров с кубком на съёмках фильма «Команда»",
+    "lead": "«Проспект Мира» вместе с Российским футбольным союзом и при поддержке Фонда кино начал снимать «Команду». В прокат фильм выпустит «Атмосфера кино» осенью 2027 года.",
+    "summary": "В основе сюжета реальная история команды «Тотем» из воспитанников красноярского детского дома № 1, которая в 2014 и 2016 годах выигрывала чемпионат мира по мини-футболу. В фильме бизнесмен Сергей Горбатов (Сергей Безруков) давно живёт по инерции. Всё меняется, когда к нему переезжает 15-летняя дочь, которая считает отца равнодушным эгоистом. Чтобы вернуть её уважение, он собирает из детдомовцев настоящую команду. Также в фильме играют Артём Быстров, Леон Кемстач и Дарья Пишук. Режиссёр Антон Богданов («Нормальный только я», «Иван Семёнов») рассказал, что юных актёров искали год на пробах и игровых матчах, чтобы они были похожи на реальных героев. По его словам, «Команда» не столько про футбол, сколько про взросление и дружбу. Снимают в Москве, Красноярске и Китае. Продюсеры — Антон Богданов, Михаил Шулятьев, Илья Шувалов, Анна Цепелева и Карина Жестовская.",
+    "url": "https://www.kinometro.ru/production/show/name/komanda_filming_22102026",
+    "urlLabel": "Кинометро: старт съёмок «Команды»"
+  },
+  "s_netflix_rice": {
+    "kicker": "Сериалы · Событие недели · США",
+    "title": "Netflix меняет контент-шефа: Бела Баджария уходит, Питер Райс приходит, акции на двухлетнем дне",
+    "meta": [
+      "Netflix · Тед Сарандос · Питер Райс",
+      "Deadline / Variety",
+      "15–21 октября 2026"
+    ],
+    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/101_Albright_Way.jpg/1280px-101_Albright_Way.jpg",
+    "imgAlt": "Здание Netflix на Олбрайт-уэй в Лос-Гатосе, Калифорния",
+    "lead": "Через сутки после увольнения тысячи сотрудников Netflix убрал Белу Баджарию, а через пять дней показал инвесторам квартал, который рынок встретил падением акций.",
+    "summary": "Вечером 15 октября Тед Сарандос разослал сотрудникам письмо: Бела Баджария, в Netflix с 2016 года и директор по контенту с января 2023-го, покидает компанию. Через девять минут преемником назвали Питера Райса, бывшего председателя Walt Disney General Entertainment и руководителя Fox Searchlight. С 26 октября он отвечает за всё: сериалы, неигровые шоу, кино и прямые эфиры. 19-го ушёл глава кинонаправления Дэн Лин, а 20-го Джинни Хоу, которая руководит сериалами для США и Канады, разбила свою команду на жанровые группы. В тот же день вышел отчёт за третий квартал: выручка 12,87 млрд долларов (+11,8% против +17% годом ранее), чистая прибыль 3,66 млрд, операционная маржа 34,6%. Прогноз на четвёртый квартал, 13,4 млрд, оказался ниже ожиданий рынка, а рекламную выручку за 2026 год снизили с 3 до 2,7 млрд. На звонке с аналитиками Сарандос признал, что компания могла бы работать лучше: международный слейт работает, чинить нужно американский. 21 октября акции упали до двухлетнего минимума, меньше 64 долларов. По оценке Jefferies, среднее время просмотра на подписчика в месяц сократилось с 66 часов в первом полугодии 2023-го до 49 часов в первом полугодии 2026-го.",
+    "url": "https://deadline.com/2026/10/netflixs-chief-content-officer-bela-bajaria-leaving-1237158727/",
+    "urlLabel": "Deadline: Бела Баджария уходит из Netflix"
+  },
+  "s_glee_revival": {
+    "kicker": "Сериалы · Главные новости · США",
+    "title": "«Хор» возвращается: Disney+ и Hulu заказали перезапуск Райана Мёрфи",
+    "meta": [
+      "Disney+ · Hulu · 20th Television · Райан Мёрфи",
+      "Deadline / THR",
+      "21 октября 2026"
+    ],
+    "img": "https://deadline.com/wp-content/uploads/2026/10/TCDGLE2_EC005.jpg?w=1024",
+    "imgAlt": "Актёры сериала «Хор» на сцене",
+    "lead": "Райан Мёрфи написал сценарий ещё в сентябре, теперь у проекта официальный заказ от Disney+ и Hulu.",
+    "summary": "21 октября Disney+ и Hulu объявили о заказе перезапуска «Хора», который в 2009–2015 годах шёл шесть сезонов на Fox. Производит 20th Television, студия оригинала. Райан Мёрфи, создавший сериал вместе с Яном Бреннаном и Брэдом Фэлчаком, ещё летом говорил, что «Хор» заново открыла молодая аудитория, а в сентябре закончил сценарий. По его словам, он уже связался примерно с десятью актёрами первого состава. Каст при заказе не объявили, но в тот же день стало известно, что Лиа Мишель ведёт переговоры о возвращении к роли Рэйчел Берри. Крис Колфер в начале октября признался, что без Наи Риверы возвращаться будет тяжело, но фанаты не простят ему отказа. Двое звёзд оригинала, Кори Монтейт и Ная Ривера, умерли. Сериал о хоре школы Уильяма Мак-Кинли в городе Лайма получил шесть «Эмми», включая награду Мёрфи за режиссуру пилота. Сейчас он стримится на Hulu, а в Spotify, по данным Disney, его песни слушают около 4 млн человек в месяц.",
+    "url": "https://deadline.com/2026/10/glee-reboot-series-order-disney-hulu-1237169231/",
+    "urlLabel": "Deadline: перезапуск «Хора» получил заказ"
+  },
+  "s_bbc_three_close": {
+    "kicker": "Сериалы · Главные новости · Европа",
+    "title": "BBC второй раз выключает BBC Three: эфирные каналы закрываются ради экономии 500 млн фунтов",
+    "meta": [
+      "BBC · Мэтт Бриттин · Кейт Филлипс",
+      "Deadline / Variety",
+      "20–22 октября 2026"
+    ],
+    "img": "https://deadline.com/wp-content/uploads/2026/10/p050dvyn-e1792403164545.jpg?w=1024",
+    "imgAlt": "Логотип BBC Three",
+    "lead": "Молодёжный канал BBC, который уже закрывали в 2016 году и вернули в эфир в 2022-м, снова станет только цифровым.",
+    "summary": "20 октября BBC подтвердила список линейных сервисов, которые закроет в 2027 году в рамках плана сэкономить 500 млн фунтов к 2028-му. Весной с эфира уйдут BBC Three, BBC Scotland и радиостанция Radio 4 Extra. Их контент останется в iPlayer, BBC Sounds и на YouTube, а BBC Scotland продолжит работать отдельным каналом внутри iPlayer. Гендиректор Мэтт Бриттин назвал решение трудным выбором: каждый фунт должен работать на зрителя. Для BBC Three это второе закрытие: в 2016-м канал уже уходил в онлайн, а в 2022-м вернулся в эфир. Гильдия Directors UK потребовала гарантий, что объём заказов для этих аудиторий не сократится: для молодых режиссёров BBC Three и BBC Scotland служили первой ступенью. Ассоциация продюсеров Pact призвала правительство срочно определиться с моделью финансирования BBC. 22 октября Deadline сообщил, что глава контента Кейт Филлипс объединяет команды ТВ- и аудиокомиссии в комедии и других жанрах и сокращает около 100 ставок. 20 октября о сокращении 100 рабочих мест объявила и BBC News.",
+    "url": "https://deadline.com/2026/10/bbc-tv-network-closures-bbc-three-1237167379/",
+    "urlLabel": "Deadline: BBC закрывает BBC Three и другие каналы"
+  },
+  "s_edgerunners2": {
+    "kicker": "Сериалы · Главные новости · Азия",
+    "title": "«Киберпанк: Бегущие по краю 2»: Trigger и CD Projekt Red выпустили все десять серий сразу",
+    "meta": [
+      "Netflix · Trigger · CD Projekt Red",
+      "CD Projekt Red / ANN",
+      "20 октября 2026"
+    ],
+    "img": "https://www.cdprojekt.com/en/wp-content/uploads-en/2026/10/cp-edgerunners2-launch-kv-16x9-rgb-1024x576.png",
+    "imgAlt": "Ключевой арт аниме «Киберпанк: Бегущие по краю 2»",
+    "lead": "Продолжение одного из самых успешных аниме Netflix — самостоятельная история с новым составом героев.",
+    "summary": "20 октября Netflix выпустил все десять серий «Киберпанк: Бегущие по краю 2», продолжения аниме 2022 года по вселенной игры Cyberpunk 2077. Его снова сделали польская CD Projekt Red и японская студия Trigger. Сезон самостоятельный: в нём новые герои, у каждого свои надежды и страхи, а действие уходит ещё глубже в хаос и насилие Найт-Сити. Героя первого сезона Дэвида Мартинеса не возвращают, хотя фанаты об этом просили. Локации Найт-Сити режиссёр второго сезона подбирал прямо внутри Cyberpunk 2077 с «виртуальной камерой». IGN поставил сезону 9 из 10. Вместе с премьерой CD Projekt Red анонсировала Update 2.5 для игры: обновление с контентом по мотивам аниме вышло 22 октября на PC, PlayStation 5 и Xbox Series S|X, версия для Nintendo Switch 2 выйдет позже. Подробности обновления CD Projekt Red раскрыла 21 октября в эфире REDstreams.",
+    "url": "https://www.cdprojekt.com/en/media/news/cyberpunk-edgerunners-2-premieres-on-netflix-new-update-announced-for-cyberpunk-2077/",
+    "urlLabel": "CD Projekt Red: премьера «Бегущих по краю 2» на Netflix"
+  },
+  "s_justwatch_tv": {
+    "kicker": "Сериалы · Главные новости · Индустрия",
+    "title": "JustWatch из гида по стримингам стал стримингом: запущен JustWatch TV",
+    "meta": [
+      "JustWatch · Давид Кройе",
+      "Deadline",
+      "20 октября 2026"
+    ],
+    "img": "https://deadline.com/wp-content/uploads/2026/10/JustWatch-devices.png?w=1024",
+    "imgAlt": "Интерфейс JustWatch TV на телевизоре, планшете и смартфоне",
+    "lead": "Компания, двенадцать лет работавшая навигатором по чужим каталогам, начала показывать фильмы и сериалы сама.",
+    "summary": "20 октября JustWatch Group официально запустила JustWatch TV. Сервис встроен в приложения и сайт JustWatch, которыми пользуются 50 млн человек. В нём есть бесплатный просмотр с рекламой (AVOD и FAST), покупка и аренда тайтлов, а премиальный тариф без рекламы стоит 3,99 доллара в месяц. На старте платформа работает в 11 странах: США, Канаде, Великобритании, Ирландии, Германии, Австрии, Франции, Италии, Испании, Австралии и Новой Зеландии. Контент дают 30 партнёров. Среди новых — Cineverse в США, Leonine Studios в Германии, SND во Франции и Altitude в Великобритании и Ирландии. Ранее были объявлены Paramount, New Regency, Fremantle, Bleecker Street и Vortex Media. Основатель и CEO Давид Кройе назвал запуск самым важным событием в двенадцатилетней истории компании: платформа должна закрыть пробелы и помочь найти редкие тайтлы прямо в приложении. Планы сервиса раскрыли в сентябре. В JustWatch Group больше 200 сотрудников, штаб-квартира в Берлине, офисы в Лос-Анджелесе, Лондоне, Париже, Риме, Мадриде, Мюнхене, Дубае и Сиднее.",
+    "url": "https://deadline.com/2026/10/streaming-guide-justwatch-launches-service-1237168555/",
+    "urlLabel": "Deadline: JustWatch запускает собственный сервис"
+  },
+  "rs_lisa2": {
+    "kicker": "Сериалы · Россия · Окко",
+    "title": "«Как приручить лису 2»: Okko показал тизер нового сезона, Дина — главная подозреваемая",
+    "meta": [
+      "Okko · «Место силы» · реж. Юлиана Закревская",
+      "Okko / Работники ТВ",
+      "19 октября 2026"
+    ],
+    "img": "https://www.rabotnikitv.com/wp-content/uploads/2026/10/kak-priruchit-lisu-2.jpg",
+    "imgAlt": "Тизерный постер второго сезона «Как приручить лису»: лиса за решёткой",
+    "lead": "Okko выпустил тизер и тизерный постер второго сезона детективного триллера с Кириллом Кяро, Таисьей Калининой и Максимом Стояновым.",
+    "summary": "19 октября Okko вместе с компанией «Место силы» и продюсерским центром Originals Production показал тизер и постер второго сезона «Как приручить лису». Действие начинается через полгода после исчезновения Дины (Таисья Калинина): полиция, родные и зоопсихолог Миронов (Кирилл Кяро) ищут её безрезультатно, пока в загородном особняке не находят убитыми членов семьи Скрябиных. На месте преступления остаются следы Дины, и она становится главной подозреваемой, а Миронову звонит сама Дина и просит прощения. Расследование снова ведут Миронов и следователь Тамалин (Максим Стоянов). Вернутся Ксения Кутепова, Дмитрий Быковский и Анатолий Кот, а Даниил Стеклов войдёт в основной состав. Шоураннер, автор сценария и режиссёр — снова Юлиана Закревская, оператор — Михаил Соловьёв, продюсеры — Александр Сысоев, Сергей Шишкин и Гавриил Гордеев. Сериал появился благодаря конкурсу «5 пилотов для Okko»: проект отобрали из 875 заявок, первый сезон из восьми 45-минутных серий вышел в 2025 году. Дата премьеры пока звучит как «скоро в Okko».",
+    "url": "https://t.me/okkomovies/29763",
+    "urlLabel": "Okko Кино — тизерный постер «Как приручить лису 2»"
+  },
+  "rs_volshebny3": {
+    "kicker": "Сериалы · Россия · Окко",
+    "title": "«Волшебный участок» уходит в 1997-й: Okko начал снимать третий сезон",
+    "meta": [
+      "Okko · «Место силы» · Originals Production",
+      "Okko / Работники ТВ",
+      "20 октября 2026"
+    ],
+    "img": "https://www.rabotnikitv.com/wp-content/uploads/2026/10/volshebnyj-uchastok-1-1024x682.webp",
+    "imgAlt": "Кадр из сериала «Волшебный участок»",
+    "lead": "Один из флагманских сериалов Okko возвращается с прежним составом и новыми режиссёрами.",
+    "summary": "20 октября Okko, «Место силы» и Originals Production объявили о старте съёмок третьего сезона сказочного комедийного детектива «Волшебный участок». В первом сезоне сотрудники ОБСП ловили нечисть в Москве, во втором — в Петербурге. Теперь они попадают в 1997 год и сталкиваются с самым опасным противником в истории отдела. Чудо-Юдо добрался до Песков времени и собирает артефакты, чтобы построить машину времени и исправить своё трагическое прошлое. Лёха тем временем учится быть лидером, мучается видениями будущего и ищет способ вернуться к Васе. Сценарий написали автор вселенной Александр Носков и Янина Костицына, режиссёры — Юрий Коробейников и Марк Нуриев. Вернутся Николай Наумов, Илья Соболев, Алексей Золотовицкий, Дарья Мельникова, Мария Смольникова, Алексей Кирсанов, Андрей Добровольский и Ева Смирнова. Первый сезон стал самым успешным оригиналом Okko на момент выхода и получил четыре премии АПКиТ, включая награду за лучший комедийный сериал. Второй взял ещё две, за грим и визуальные эффекты.",
+    "url": "https://www.rabotnikitv.com/2026/10/20/ne-lihie-a-skazochnye-volshebnyj-uchastok-otpravitsja-v-90-e/",
+    "urlLabel": "Работники ТВ — Okko начал съёмки «Волшебного участка 3»"
+  },
+  "rs_kapitanskaya": {
+    "kicker": "Сериалы · Россия · КИОН",
+    "title": "«Капитанская дочка»: КИОН показал первую встречу Гринёва и Маши Мироновой",
+    "meta": [
+      "КИОН · реж. Дима Литвиненко · Олег Савостюк",
+      "КИОН / Блог КИОН",
+      "19 октября 2026"
+    ],
+    "img": "https://blog.kion.ru/api/corpsite/v1/news/images/public/8904d725-3355-423f-9a62-c592ffa98e61",
+    "imgAlt": "Кадр из сериала «Капитанская дочка»: герои за праздничным столом при свечах",
+    "lead": "КИОН приурочил новые материалы исторической драмы к 19 октября: в этот день в 1836 году Пушкин закончил «Капитанскую дочку».",
+    "summary": "19 октября КИОН выпустил тизер-сцену и тизер-постер «Капитанской дочки», многосерийной эпической драмы по повести Пушкина. Дату выбрали со смыслом: 19 октября 1836 года Пушкин завершил работу над повестью, ставшей его последним прозаическим произведением. Сцена показывает первую встречу Петра Гринёва и Маши Мироновой, а на постере — исполнители главных ролей Олег Савостюк и Евгения Леонова. Режиссёр — Дима Литвиненко. Действие разворачивается на фоне восстания Пугачёва, объявившего себя свергнутым императором: по воле рока молодой офицер Гринёв оказывается в самом центре событий. Савостюк говорит о своём герое, что тот по сути подросток, который впервые проживает боль, предательство и любовь. В ролях также Егор Корешков, Евгений Ткачук, Фёдор Добронравов, Антон Лапенко, Александр Мизёв, Никита Павленко, Софья Гершевич, Сергей Безруков и Виктория Исакова. Первый тизер с Безруковым, дающим герою наставление «береги честь смолоду», КИОН показал ещё в сентябре. Дата премьеры не названа, в анонсах пока звучит «скоро на КИОН».",
+    "url": "https://blog.kion.ru/novosti/kion-predstavil-pervyj-tizer-seriala-kapitanskaya-dochka-po-povesti-pushkina",
+    "urlLabel": "Блог КИОН — тизер «Капитанской дочки»"
+  },
+  "rs_16let": {
+    "kicker": "Сериалы · Россия · PREMIER",
+    "title": "«16 лет и 9 месяцев»: PREMIER выпустил драмеди о школьнице, которая узнала о беременности",
+    "meta": [
+      "PREMIER · ТВ-3 · реж. Анна Курбатова",
+      "PREMIER / ИнтерМедиа",
+      "21 октября 2026"
+    ],
+    "img": "https://www.intermedia.ru/img/news_x350/407581.jpg?t=1792581783",
+    "imgAlt": "Дарья Матвеева и Олег Савостюк на постере сериала «16 лет и 9 месяцев»",
+    "lead": "Сериал «Смарт Фильма», снятый по заказу ТВ-3, сначала вышел онлайн на PREMIER.",
+    "summary": "21 октября на PREMIER состоялась премьера драмеди «16 лет и 9 месяцев» режиссёра Анны Курбатовой. Шестнадцатилетняя Тоня Сахарова (Дарья Матвеева) хорошо учится, занимается танцами и мечтает поступить в Лондонскую академию дизайна. Она влюблена в главного красавца школы Семёна Ковалёва (Олег Савостюк) и, чтобы произвести на него впечатление, устраивает вечеринку и притворяется опытнее, чем есть. Для Семёна их сближение — развлечение, для Тони — первый серьёзный опыт. Через несколько недель она узнаёт, что беременна, и оказывается перед тяжёлым выбором: родители (Юлия Александрова и Кирилл Гребенщиков) осуждают её, Семён сомневается, а поддерживает только давно влюблённый в неё одноклассник Митя (Денис Косиков). В ролях также Александра Флоринская, Анатолий Кот, Юлия Франц, Наталья Батрак и Мария Столярова. Сериал снят кинокомпанией «Смарт Фильм» по заказу ТВ-3, где, по данным «ИнтерМедиа», позже пройдёт телепремьера. PREMIER подаёт его как «драму нового поколения». Олег Савостюк на этой же неделе появился и в тизере «Капитанской дочки» КИОН, где играет Петра Гринёва.",
+    "url": "https://www.intermedia.ru/news/407581",
+    "urlLabel": "ИнтерМедиа — «16 лет и 9 месяцев» вышел на PREMIER"
+  }
+};
+const overlay=document.getElementById('overlay');
+const modal=document.getElementById('modal');
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function openItem(id){
+  const it=ITEMS[id];
+  if(!it)return;
+  const metaHtml=it.meta.map(m=>esc(m)).join(' <span class="dot"></span> ');
+  let visual='';
+  if(it.img){
+    const fb = it.img.indexOf('img.youtube.com')>-1 ? it.img.replace('maxresdefault','hqdefault') : '';
+    visual='<img class="m-img" src="'+it.img+'" alt="'+esc(it.imgAlt||it.title)+'"'+(fb?' onerror="this.onerror=null;this.src=\''+fb+'\';"':'')+'>';
+  } else if(it.graphic){
+    visual='<div class="m-graphic gmod '+it.graphic+'"><span class="mono" style="font-size:34px">'+esc(it.graphicText||'')+'</span></div>';
+  }
+  let depicts = it.depicts ? '<div class="m-block"><h4>Что на визуале</h4><p>'+esc(it.depicts)+'</p></div>' : '';
+  modal.innerHTML =
+    visual+
+    '<div class="m-body">'+
+      '<div class="m-kicker">'+esc(it.kicker)+'</div>'+
+      '<h2>'+esc(it.title)+'</h2>'+
+      '<div class="m-meta">'+metaHtml+'</div>'+
+      '<p class="m-lead">'+esc(it.lead)+'</p>'+
+      depicts+
+      '<div class="m-block"><h4>Суть</h4><p>'+esc(it.summary)+'</p></div>'+
+                  '<a class="m-source" href="'+it.url+'" target="_blank" rel="noopener">'+esc(it.urlLabel||'Первоисточник')+' ↗</a>'+
+    '</div>';
+  modal.scrollTop=0;
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeItem(){
+  overlay.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.querySelectorAll('[data-id]').forEach(el=>{
+  el.addEventListener('click',()=>openItem(el.getAttribute('data-id')));
+  el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openItem(el.getAttribute('data-id'));} });
+});
+document.getElementById('mClose').addEventListener('click',closeItem);
+overlay.addEventListener('click',e=>{ if(e.target===overlay)closeItem(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeItem(); });
+
+/* ---------- tabs ---------- */
+const tabBtns=document.querySelectorAll('.tab-btn');
+const panels=document.querySelectorAll('.tab-panel');
+const drBig=document.getElementById('dr-big');
+function showTab(name,push){
+  tabBtns.forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  panels.forEach(p=>{
+    const on=p.id==='tab-'+name;
+    p.classList.toggle('active',on);
+    if(on&&p.dataset.range)drBig.textContent=p.dataset.range;
+  });
+  try{localStorage.setItem('fomo-tab',name);}catch(e){}
+  if(push!==false)history.replaceState(null,'','#'+name);
+  window.scrollTo({top:0});
+}
+tabBtns.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+(function(){
+  let start=(location.hash||'').replace('#','');
+  if(!['ai','film','series'].includes(start)){
+    try{start=localStorage.getItem('fomo-tab')||'ai';}catch(e){start='ai';}
+  }
+  if(!['ai','film','series'].includes(start))start='ai';
+  showTab(start,false);
+})();
+</script>
+
+<!-- fomo-zine-skin -->
+<script>
+/* =========================================================================
+   FOMO ZINE — веб-скин. Тот же приём, что в деке (tools/build_deck.py):
+   превью-фотографии пикселятся (treat(): даунсемпл + NEAREST-апскейл),
+   в модалке показывается оригинал без обработки.
+   Скрипт подключается ПОСЛЕ основного — переопределяет openItem().
+   ========================================================================= */
+(function(){
+  "use strict";
+
+  /* ---------- 1. пикселизация превью ---------- */
+  // ar — пропорции кадра, cols — сколько «пикселей» по ширине (в деке 130–170)
+  var CTX = [
+    {sel:'.hero .img-wrap',  ar:4/3,  cols:152},
+    {sel:'.card .img-wrap',  ar:16/9, cols:126},
+    {sel:'.g-card.feat .ph', ar:16/9, cols:126},
+    {sel:'.g-card .ph',      ar:1/1,  cols:104},
+    {sel:'.cover-cut',       ar:4/3,  cols:118}
+  ];
+
+  function placeholder(box, text){
+    if(box.querySelector('.noimg')) return;
+    var d = document.createElement('div');
+    d.className = 'noimg';
+    d.innerHTML = '<b>FOMO</b><span>фото не загрузилось</span>';
+    d.setAttribute('role', 'img');
+    d.setAttribute('aria-label', text || 'Иллюстрация недоступна');
+    box.appendChild(d);
+  }
+
+  function pixelate(box, img, cols, ar, label){
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if(!iw || !ih){ img.hidden = true; placeholder(box, label); return; }
+    var c = document.createElement('canvas');
+    c.className = 'pix';
+    c.width  = cols;
+    c.height = Math.max(1, Math.round(cols / ar));
+    var ctx = c.getContext('2d');
+    if(!ctx){ return; }
+    ctx.imageSmoothingEnabled = true;          // усреднение при даунсемпле
+    // cover-кроп исходника под пропорции кадра
+    var cr = c.width / c.height, ir = iw / ih, sw, sh, sx, sy;
+    if(ir > cr){ sh = ih; sw = sh * cr; sx = (iw - sw) / 2; sy = 0; }
+    else       { sw = iw; sh = sw / cr; sx = 0; sy = (ih - sh) / 2; }
+    try{ ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height); }
+    catch(e){ return; }                        // не трогаем картинку, если рисовать нельзя
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', img.getAttribute('alt') || label || '');
+    img.parentNode.insertBefore(c, img);
+    img.hidden = true;                          // оригинал остаётся в DOM для модалки
+  }
+
+  function labelFor(box){
+    var card = box.closest('.hero, .card, .g-card');
+    if(!card) return '';
+    var t = card.querySelector('h3, .cap .t');
+    return t ? t.textContent.trim() : '';
+  }
+
+  function runPixels(){
+    var seen = [];
+    CTX.forEach(function(cfg){
+      document.querySelectorAll(cfg.sel).forEach(function(box){
+        if(seen.indexOf(box) > -1) return;      // .g-card.feat .ph не обрабатываем дважды
+        seen.push(box);
+        var img = box.querySelector('img');
+        if(!img || img.dataset.pixed) return;
+        img.dataset.pixed = '1';
+        var label = labelFor(box);
+        var go = function(){ pixelate(box, img, cfg.cols, cfg.ar, label); };
+        if(img.complete && img.naturalWidth) go();
+        else{
+          img.addEventListener('load', go, {once:true});
+          img.addEventListener('error', function(){
+            if(box.classList.contains('cover-cut')){ box.remove(); return; }
+            img.hidden = true; placeholder(box, label);
+          }, {once:true});
+        }
+      });
+    });
+  }
+
+  /* ---------- 2. нумерация секций и карточек ---------- */
+  function numberSections(){
+    document.querySelectorAll('.tab-panel').forEach(function(panel){
+      panel.querySelectorAll('.sec-head').forEach(function(h, i){
+        h.setAttribute('data-num', String(i + 1).padStart(2, '0'));
+        h.setAttribute('data-accent', String(i % 4));
+      });
+      var n = 0;
+      panel.querySelectorAll('.hero, .card').forEach(function(card){
+        var box = card.querySelector('.img-wrap');
+        if(!box || box.querySelector('.starnum')) return;
+        n += 1;
+        var s = document.createElement('span');
+        s.className = 'starnum';
+        s.setAttribute('aria-hidden', 'true');
+        s.innerHTML = '<i>' + String(n).padStart(2, '0') + '</i>';
+        box.appendChild(s);
+      });
+    });
+  }
+
+  /* ---------- 3. скотч на главных фото ---------- */
+  function addTape(){
+    document.querySelectorAll('.hero .img-wrap').forEach(function(box){
+      if(box.querySelector('.tape')) return;
+      ['t1','t2'].forEach(function(cls){
+        var t = document.createElement('span');
+        t.className = 'tape ' + cls;
+        t.setAttribute('aria-hidden', 'true');
+        box.appendChild(t);
+      });
+    });
+  }
+
+  /* ---------- 4. звезда «N-й выпуск» и искры на обложке ---------- */
+  function sparkSVG(color, size){
+    var r = size / 2, d = r * 0.62, w = Math.max(3, Math.round(size / 9));
+    return '<svg class="spark" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size +
+      '" aria-hidden="true" fill="none" stroke="' + color + '" stroke-width="' + w + '" stroke-linecap="butt">' +
+      '<line x1="0" y1="' + r + '" x2="' + size + '" y2="' + r + '"/>' +
+      '<line x1="' + r + '" y1="0" x2="' + r + '" y2="' + size + '"/>' +
+      '<line x1="' + (r - d) + '" y1="' + (r - d) + '" x2="' + (r + d) + '" y2="' + (r + d) + '"/>' +
+      '<line x1="' + (r - d) + '" y1="' + (r + d) + '" x2="' + (r + d) + '" y2="' + (r - d) + '"/></svg>';
+  }
+
+  function decorateMasthead(){
+    var head = document.querySelector('header.masthead');
+    if(!head || head.querySelector('.burst')) return;
+    var tag = head.querySelector('.issue-tag');
+    var m = tag ? (tag.textContent || '').match(/№\s*(\d+)/) : null;
+    if(m){
+      var b = document.createElement('div');
+      b.className = 'burst';
+      b.setAttribute('aria-hidden', 'true');
+      b.innerHTML = '<b>' + m[1] + '-й</b><span>выпуск</span>';
+      head.appendChild(b);
+    }
+    var lead = document.querySelector('.hero .img-wrap img');
+    var leadSrc = lead ? lead.getAttribute('src') : '';
+    if(leadSrc){
+      var cut = document.createElement('div');
+      cut.className = 'cover-cut';
+      cut.setAttribute('aria-hidden', 'true');
+      var cimg = document.createElement('img');
+      cimg.src = leadSrc; cimg.alt = '';
+      cut.appendChild(cimg);
+      var ctape = document.createElement('span');
+      ctape.className = 'tape';
+      cut.appendChild(ctape);
+      head.appendChild(cut);
+    }
+    var sparks = [
+      {c:'#6A28D9', s:50, css:'top:44px;right:34%;'},
+      {c:'#2C58FF', s:36, css:'top:184px;right:23%;'},
+      {c:'#FF5294', s:42, css:'bottom:52px;left:40%;'}
+    ];
+    sparks.forEach(function(sp){
+      var box = document.createElement('span');
+      box.className = 'spark';
+      box.setAttribute('style', 'position:absolute;z-index:2;pointer-events:none;' + sp.css);
+      box.innerHTML = sparkSVG(sp.c, sp.s);
+      head.appendChild(box);
+    });
+  }
+
+  /* ---------- 5. модалка: фотография в оригинале ---------- */
+  function zesc(s){
+    return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  var overlay = document.getElementById('overlay');
+  var modal   = document.getElementById('modal');
+
+  window.openItem = function(id){
+    var store = (typeof ITEMS !== 'undefined') ? ITEMS : (window.ITEMS || {});
+    var it = store[id];
+    if(!it || !modal) return;
+    var metaHtml = (it.meta || []).map(zesc).join(' <span class="dot"></span> ');
+    var visual = '';
+    if(it.img){
+      var fb = it.img.indexOf('img.youtube.com') > -1 ? it.img.replace('maxresdefault', 'hqdefault') : '';
+      visual = '<div class="m-shot">' +
+               '<img class="m-img" src="' + it.img + '" alt="' + zesc(it.imgAlt || it.title) + '"' +
+               (fb ? ' onerror="this.onerror=null;this.src=\'' + fb + '\';"' : '') + '>' +
+               '<span class="m-orig">оригинал · без пикселей</span></div>';
+    } else if(it.graphic){
+      visual = '<div class="m-graphic gmod ' + it.graphic + '"><span class="mono" style="font-size:34px">' +
+               zesc(it.graphicText || '') + '</span></div>';
+    }
+    var depicts = it.depicts ? '<div class="m-block"><h4>Что на визуале</h4><p>' + zesc(it.depicts) + '</p></div>' : '';
+    modal.innerHTML =
+      visual +
+      '<div class="m-body">' +
+        '<div class="m-kicker">' + zesc(it.kicker) + '</div>' +
+        '<h2>' + zesc(it.title) + '</h2>' +
+        '<div class="m-meta">' + metaHtml + '</div>' +
+        '<p class="m-lead">' + zesc(it.lead) + '</p>' +
+        depicts +
+        '<div class="m-block"><h4>Суть</h4><p>' + zesc(it.summary) + '</p></div>' +
+        '<a class="m-source" href="' + zesc(it.url) + '" target="_blank" rel="noopener">' +
+          zesc(it.urlLabel || 'Первоисточник') + ' ↗</a>' +
+      '</div>';
+    modal.scrollTop = 0;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  /* ---------- запуск ---------- */
+  function boot(){
+    numberSections();
+    addTape();
+    decorateMasthead();
+    runPixels();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
+</body>
+</html>
